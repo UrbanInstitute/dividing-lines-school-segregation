@@ -1,0 +1,9 @@
+*.mbtiles
+.DS_Store
+*.geojson
+*.shp
+*.zip
+*.dbf
+*.prj
+*.xlsx
+*.csv
