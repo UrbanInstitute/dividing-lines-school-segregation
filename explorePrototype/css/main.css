@@ -1,8 +1,20 @@
+#containerMap{
+    display: inline-block;
+    vertical-align: top;
+}
+
 #exploreMap{
     width: 500px;
     height: 500px;
+    margin-top: 10px;
 }
 
 .pieContainer{
     display: inline-block;
+}
+
+#exploreList{
+    width:  170px;
+    display: inline-block;
+    margin-left: 15px;
 }
