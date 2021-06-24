@@ -1,260 +1,263 @@
-    const pieWidth = 70,
-          timeOutLength = 100;
+const pieWidth = 70,
+timeOutLength = 200;
+
+let msa = "Atlanta-Sandy Springs-Marietta, GA";
+
+// defines map
+mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
+var map = new mapboxgl.Map({
+  container: 'exploreMap', // container ID
+  style: "mapbox://styles/urbaninstitute/ckp8nbuj31u8s18qrv0uwod6b/draft", // style URL
+  center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
+  zoom: 12.5 // starting zoom
+});
+
+// piechart builder
+function buildRacePie( container, d, ab) {
+  var black = +d["black" + ab + "_bdy"],
+  hisp = +d["hispa" + ab + "_bdy"],
+  enr = +d["pop" + ab + "_bdy"]
+
+  let arc = d3.arc()
+  .innerRadius(pieWidth / 5)
+  .outerRadius(pieWidth / 2 - 1)
+
+  const arcs = d3.pie()([ black, hisp, enr-black-hisp ]);
+
+  let svg = d3.select(container).append("svg").attr("width", pieWidth).attr("height", pieWidth)
+  .append("g")
+  .attr("transform", "translate(" + pieWidth/2 + "," + pieWidth/2 + ")")
+  .attr("stroke", "white")
+
+  const t = svg.transition()
+    .duration(750);
+
+  let pies = svg.selectAll("path")
+  .data(arcs)
+
+  console.log(ab, arcs)
+
+  pies.join(
+    enter => enter.append("path")
+    .attr("id", (d, i) => {
+      return d.value
+    })
+    .attr("fill", function(d, i){
+      if(i === 0) return "#fdbf11"
+      else if(i === 1) return "#fce39e"
+      else return "#1696d2"
+    })
+    .attr("d", arc)
+    .call(enter => enter),
+    update => update
+    .call(update => update),
+    exit => exit
+    .call(exit => exit
+    .remove())
+  )
+
+}  // buildRacePie() ends here
 
 
-    // defines map
-    mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
-    var map = new mapboxgl.Map({
-    container: 'exploreMap', // container ID
-    style: "mapbox://styles/urbaninstitute/ckp7c1wva1q4217t9oajquwyx/draft", // style URL
-    center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
-    zoom: 12.5 // starting zoom
-    });
+// centerMap()
+function centerMap(bb, bbox) {
+  let thisSchoolA = bb[0].schida,
+  thisSchoolB = bb[0].schidb,
+  thisSchoolNameA = bb[0].schnamea,
+  thisSchoolNameB = bb[0].schnameb;
 
+  // getNamesSchools(thisSchoolNameA, thisSchoolNameB)
+  let thisCatchment = bbox.filter(t => t.schida === thisSchoolA && t.schidb === thisSchoolB)[0]
 
-
-    // piechart builder
-    function buildRacePie( container, d, ab){
-        // console.log("data pie", d)
-        var black = +d["black" + ab + "_bdy"],
-            hisp = +d["hispa" + ab + "_bdy"],
-            enr = +d["pop" + ab + "_bdy"]
-
-        // let pie = d3.pie()
-        //     .sort(null)
-        //     .value(d => d.value)
-
-
-    let arc = d3.arc()
-        .innerRadius(pieWidth/5)
-        .outerRadius(pieWidth / 2 - 1)
-
-
-    const arcs = d3.pie()([ black, hisp, enr-black-hisp ]);
-
-        let svg = d3.select(container).append("svg").attr("width", pieWidth).attr("height", pieWidth)
-                    .append("g")
-                    .attr("transform", "translate(" + pieWidth/2 + "," + pieWidth/2 + ")")
-          .attr("stroke", "white") 
-
-        .selectAll("path")
-        .data(arcs)
-        .join("path")
-          .attr("fill", function(d){
-            if(d.index == 1) return "#fdbf11"
-            else if(d.index == 2) return "#fce39e"
-            else return "#1696d2"
-          })
-          .attr("d", arc)
-        // .append("title")
-        //   .text(d => `${d.data.name}: ${d.data.value.toLocaleString()}`);
-
-
-    }  // buildRacePie ends here
-
-
-    function updatePies(container, d, ab) {
-        // df = df.sort(function(a,b){ return +a.bbindex - +b.bbindex })
-        var containers = d3.select("#exploreList").selectAll(".exploreContainer")
-        var paths  = containers.selectAll("path")
-        console.log(paths)
+  map.fitBounds(
+    [
+      [+thisCatchment.xmin, +thisCatchment.ymin], // southwestern corner of the bounds
+      [+thisCatchment.xmax, +thisCatchment.ymax] // northeastern corner of the bounds
+    ],
+    {
+      // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
+      "duration": 1000,
+      "linear": true,
+      "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
+      "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
     }
+  );
+}
 
-    function getExploreTitle(d,i){
-        return "Boundary " + (i+1)
+function getExploreTitle(d,i){
+  let schools = `${d.schnamea} and ${d.schnameb}`;
+  return schools
+  // return "Boundary " + (i+1)
+}
 
-    }
+function getNamesSchools(thisSchoolA, thisSchoolB) {
 
+  document.getElementById("schoolA").innerHTML = thisSchoolA;
+  document.getElementById("schoolB").innerHTML = thisSchoolB;
+}
 
-    // builds the list of cachments and adds piecharts
+// builds the list of cachments and adds piecharts
 
-    function buildExploreList(bb, bbox) {
+function buildExploreList(bb, bbox, msa) {
 
-        bb = bb.sort(function(a,b){ return +a.bbindex - +b.bbindex })
-        var container = d3.select("#exploreList")
-            .selectAll(".exploreContainer")
-            .data(bb)
-            .enter()
-            .append("div")
-            .attr("class", "exploreContainer")
+  //https://stackoverflow.com/questions/4777077/removing-elements-by-class-name
+    function removeElementsByClass(className){
+      const elements = document.getElementsByClassName(className);
+      while(elements.length > 0){
+          elements[0].parentNode.removeChild(elements[0]);
+      }
+  }
 
+  bb = bb.filter(function(o){ return o.maname == msa})
 
-        container.append("div")
-            .attr("class", "exploreTitle")
-            .text(function(d,i){
-                return getExploreTitle(d,i)
-            })
+  bb = bb.sort(function(a,b){ return +b.bbindex - +a.bbindex })
 
-        var pieA = container.append("div")
-            .attr("class", "pieContainer pieA")
-        
-        pieA.each(function(d){
-            buildRacePie(this, d, "a")
-        })
-        
+    console.log(bb[0].hispab_bdy, bb[0].popb_bdy, bb[0].blackb_bdy, (bb[0].popb_bdy - bb[0].hispab_bdy - bb[0].blackb_bdy))
 
-        var pieB = container.append("div")
-                    .attr("class", "pieContainer pieB")
+    console.log(bb)
 
-        pieB.each(function(d){
-            buildRacePie(this, d, "b")
-        })
-        
+  // function addPct(bb, container) {
+  //   let enrol
+  // }
 
-        container.on("click", function(event, d){
-            var bboxD = bbox.filter(function(o){
-                
-                return o.schida == d.schida && o.schidb == d.schidb
-            })[0]
+  let container = d3.select("#exploreList")
+  .selectAll(".exploreContainer")
+  .data(bb)
+  .join("div")
+  .attr("class", d => {
+    return "exploreContainer"
+  })
 
-            console.log(bboxD)
+  container.join(
+    enter => enter.append("div")
+      .call(enter => enter),
+    update => update
+      .call(update => update),
+    exit => exit
+      .call(exit => exit
+      .remove())
+  )
+
+  removeElementsByClass("exploreTitle")
+
+  container.append("div")
+  .attr("class", "exploreTitle")
+  .text(function(d,i){
+    return getExploreTitle(d,i)
+  })
+
+  removeElementsByClass("pieA")
+  removeElementsByClass("pieB")
+  removeElementsByClass("floater")
+
+  let floater = container.append("div")
+  .attr("class", "floater")
+
+  var pieA = container.append("div")
+  .attr("class", "pieContainer pieA")
+
+  pieA.each(function(d){
+    buildRacePie(this, d, "a")
+  })
+
+  var pieB = container.append("div")
+  .attr("class", "pieContainer pieB")
+
+  pieB.each(function(d){
+    buildRacePie(this, d, "b")
+  })
+
+  let firstContainer = document.getElementsByClassName("exploreContainer")[0];
+  firstContainer.className += " selected";
+
+  centerMap(bb, bbox);
+
+  container.on("click", function(event, d) {
+
+    let bboxD = bbox.filter(function(o){
+
+      return o.schida == d.schida && o.schidb == d.schidb
+    })[0]
+
+    let thisSchoolA = d.schnamea,
+    thisSchoolB = d.schnameb,
+    thisSelected = document.getElementsByClassName("selected")[0];
+
+    thisSelected.classList.remove("selected");
+
+    selectedDiv = $(this)[0];
+
+    selectedDiv.className += " selected";
 
     map.fitBounds(
-        [
-            [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
-            [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
-        ],
-                        {
-                            // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
-                            "duration": 1000,
-                            "linear": true,
-                            "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
-                            "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
-                        }
+      [
+        [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
+        [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
+      ],
+      {
+        // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
+        "duration": 1000,
+        "linear": true,
+        "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
+        "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
+      }
     );
 
+    setTimeout(function(){
 
-    // console.log(map.getStyle().layers)
+      var allVisible = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] })
+      var f1 = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] }).filter(function(o){
+        return +o.properties.schid == +d.schida || +o.properties.schid == +d.schidb
+      })
 
+      for(var i = 0; i < allVisible.length; i++){
+        map.setFeatureState(allVisible[i], { "active": false })
+      }
 
-                setTimeout(function(){
-                    //add the overlay layer back
-                    // map.setLayoutProperty('schooldistricts-fill', 'visibility', 'visible');
+      for(var i = 0; i < f1.length; i++){
+        map.setFeatureState(f1[i], { "active": true })
+      }
 
-                    // //show/set active the new district
-                    // var f2 = map.queryRenderedFeatures({"source": "composite", "layer": "schooldistricts-fill"}).filter(function(o){
-                    //     return o.id == geoid
-                    // })
-                    // for(var i = 0; i < f2.length; i++){
-                    //     map.setFeatureState(f2[i], { "active": true })
-                    // }
-                    // var fs2 = map.queryRenderedFeatures({"layer": "schooldistricts-stroke"}).filter(function(o){
-                    //     return o.id == geoid
-                    // })
-                    // for(var i = 0; i < fs2.length; i++){
-                    //     map.setFeatureState(fs2[i], { "active": true })
-                    // }
-                    // isTransitioning = false;
-
-                var allVisible = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] })
-                var f1 = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] }).filter(function(o){
-                    // console.log(+o.sdida)
-                    return +o.properties.schid == +d.schida || +o.properties.schid == +d.schidb
-                    // console.log(o.properties, d)
-                })
-
-                //console.log(f1)
+    },timeOutLength)
 
 
-                    for(var i = 0; i < allVisible.length; i++){
-                        map.setFeatureState(allVisible[i], { "active": false })
-                    }
+  }) //on.click ends here
 
 
-                    for(var i = 0; i < f1.length; i++){
-                        map.setFeatureState(f1[i], { "active": true })
-                    }
-
-                },timeOutLength)
+} // buildExploreList ends here
 
 
+Promise.all([
+  d3.csv("data/source/BB_ALL.csv"),
+  d3.csv("data/source/badbdy.csv"),
+]).then(function(allData) {
+  // files[0] will contain file1.csv
+  var bboxData = allData[0],
+  bbData = allData[1]
 
+  let uniqueMetros = [
+    ...new Set(
+      bbData.map(function(o){
+        return o.maname
+      })
+      .sort(function(a,b){
+        return (a<b) ? - 1: 1;
+      })
+    )
+  ];
 
+  buildExploreList(bbData, bboxData, msa)
 
-                // var boundary = boundaries.filter(function(o){ return o.geoid == districtId})[0]
+  $("#exploreAutocomplete").autocomplete({
+    source: uniqueMetros,
+    select: function(event, ui) {
+      var msa  = ui.item.value;
+      document.getElementById("thisMsa").innerHTML = msa;
+      buildExploreList(bbData, bboxData, msa)
+      document.getElementById("exploreList").scrollTo({top: 0, behavior: 'smooth'});
+    }
+  });
 
-                //hide/set inactive the currently selected district
-
-                // for(var i = 0; i < f1.length; i++){
-                //     map.setFeatureState(f1[i], { "active": false })
-                // }
-                // var fs1 = map.queryRenderedFeatures({layer: "schooldistricts-stroke"}).filter(function(o){
-                //     return o.id == geoid
-                // })
-                // for(var i = 0; i < fs1.length; i++){
-                //     map.setFeatureState(fs1[i], { "active": false })
-                // }
-
-                // //now set new geoid
-                // geoid = boundary["geoid"]
-
-                // //hide overlay white layer while zooming, to get a sense
-                // //of movement/change in location within US
-                // map.setLayoutProperty('schooldistricts-fill', 'visibility', 'none');
-
-        })
-
-
-    } // buildExploreList ends here
-
-
-    Promise.all([
-        d3.csv("data/source/BB_ALL.csv"),
-        d3.csv("data/source/badbdy.csv"),
-    ]).then(function(allData) {
-        // files[0] will contain file1.csv
-        // console.log("data", allData)
-        var bboxData = allData[0],
-            bbData = allData[1]
-
-        console.log(bboxData, bbData)
-
-        // console.log(d3.set( bbData.map(function(o){ return o.maname }) ), bbData.map(function(o){ return o.maname }) )
-        // console.log( d3.set( bbData.map(function(o){ return o.maname }) ).values() )
-        let uniqueMetros = [
-            ...new Set(
-                bbData.map(function(o){
-                 return o.maname 
-                })
-                .sort(function(a,b){
-                    return (a<b) ? - 1: 1;
-                }) 
-                )
-            ];
-        // console.log(uniqueMetros)
-
-
-        $("#exploreAutocomplete").autocomplete({
-            source: uniqueMetros,
-            select: function(event, ui) {
-                var msa  = ui.item.value
-                buildExploreList(bbData.filter(function(o){ return o.maname == msa}), bboxData)
-                
-            }
-        });
-
-
-    buildExploreList(bbData.filter(function(o){ return o.maname == "Akron, OH"}), bboxData)
-    updatePies();
-
-
-
-        // files[1] will contain file2.csv
-    }).catch(function(err) {
-        // handle error here
-    })
-
-
-
-    
-    // *  When a user clicks the button, `fitBounds()` zooms and pans
-    // *  the viewport to contain a bounding box that surrounds Kenya.
-    // *  The [lng, lat] pairs are the southwestern and northeastern
-    // *  corners of the specified geographical bounds.
-
-    // document.getElementById('fit').addEventListener('click', function () {
-    // map.fitBounds([
-    // [32.958984, -5.353521], // southwestern corner of the bounds
-    // [43.50585, 5.615985] // northeastern corner of the bounds
-    // ]);
-    // });
+}).catch(function(err) {
+  // handle error here
+})

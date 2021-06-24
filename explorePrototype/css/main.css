@@ -1,20 +1,154 @@
-#containerMap{
+* {
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+h6 {
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 700;
+  color: #353535;
+  margin: 0px 0px 24px 5px;
+}
+
+#wrapGraphic {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+#containerMap {
     display: inline-block;
     vertical-align: top;
+    width: 400px;
 }
 
-#exploreMap{
-    width: 500px;
-    height: 500px;
-    margin-top: 10px;
+#thisMsa {
+  font-weight: 700;
+  margin: 0px;
 }
 
-.pieContainer{
+#colorLegend {
+  margin-top: 17px;
+}
+
+.legendContainer {
+  display: inline-block;
+  margin-right: 7px;
+}
+
+.legendContainer > div {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 3px;
+}
+
+.legendContainer > .hispanic {
+  background-color: #fce39e;
+}
+
+.legendContainer > .black {
+  background-color: #fdbf11;
+}
+
+.legendContainer > .other {
+  background-color: #1696d2;
+}
+
+.legendContainer > p {
+  display: inline-block;
+  line-height: 0;
+}
+
+#exploreMap {
+    width: 100%;
+    height: 400px;
+    margin-top: 5px;
+}
+
+#containerExplore {
+  max-width: 305px;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+#containerExplore > input {
+  width: 300px;
+  height: 43px;
+  padding: 11px 16px;
+  color: #696969;
+  line-height: 24px;
+  font-size: 16px !important;
+  margin-bottom: 25px;
+  margin-left: 5px;
+  border: 1px #D2D2D2 solid;
+}
+
+#containerExplore > input:focus {
+  outline: thin dotted;
+}
+
+#exploreList {
+    width: 100%;
+    height: 335px;
+    overflow: auto;
+}
+
+.exploreContainer {
+    margin: 0 auto;
+    margin-bottom: 15px;
+    border-bottom: 1px #D2D2D2 solid;
+    padding-bottom: 15px;
+    padding-left: 0px;
+    max-width: 94%;
+}
+
+.exploreContainer:last-of-type {
+  border-bottom: 0px #D2D2D2 solid;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.exploreContainer.selected > .floater {
+    height: 70px;
+    background: black;
+    width: 5px;
+    display: inline-block;
+    margin-left: -9px;
+    margin-right: 4px;
+}
+
+.exploreTitle {
+  margin-bottom: 10px;
+}
+
+.exploreContainer.selected > .exploreTitle {
+  font-weight: 700;
+}
+
+.pieContainer {
     display: inline-block;
 }
 
-#exploreList{
-    width:  170px;
-    display: inline-block;
-    margin-left: 15px;
+.pieA {
+  margin-right: 10px;
+  padding-left: 5px;
+}
+
+/* CSS scroll bar */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E3E3E3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9d9d9d;
 }
