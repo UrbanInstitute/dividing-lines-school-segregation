@@ -9,15 +9,9 @@
 </head>
 <body>
   <div id="wrapGraphic">
+    <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h6>
     <div id="containerExplore">
-      <h6>Lorem ipsum dolor sit amet, consectetur adipiscing elit</h6>
       <input id="exploreAutocomplete" placeholder="Search for your city">
-      <div id="exploreList"></div>
-    </div>
-    <div id="containerMap">
-      <div id="containerText">
-        <p id="thisMsa">Atlanta-Sandy Springs-Marietta, GA</p>
-      </div>
       <div id="colorLegend">
         <div class="legendContainer">
           <div class="black"></div>
@@ -25,17 +19,24 @@
         </div>
         <div class="legendContainer">
           <div class="hispanic"></div>
-          <p>Hispanic students</p>
+          <p>Hispanic</p>
         </div>
         <div class="legendContainer">
           <div class="other"></div>
           <p>Other</p>
         </div>
       </div>
+      <div id="exploreList"></div>
+    </div>
+    <div id="containerMap">
+      <div id="containerText">
+        <p id="thisMsa">Atlanta-Sandy Springs-Marietta, GA</p>
+      </div>
       <div id="exploreMap"></div>
+      <div id="borders"></div>
     </div>
   </div>
-  
+
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>

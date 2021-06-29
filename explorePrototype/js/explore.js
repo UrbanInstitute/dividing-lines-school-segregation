@@ -1,19 +1,33 @@
-const pieWidth = 70,
+const pieWidth = 65,
 timeOutLength = 200;
 
 let msa = "Atlanta-Sandy Springs-Marietta, GA";
 
 // defines map
 mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
-var map = new mapboxgl.Map({
+
+let map = new mapboxgl.Map({
   container: 'exploreMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckp8nbuj31u8s18qrv0uwod6b/draft", // style URL
   center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
   zoom: 12.5 // starting zoom
+
 });
 
+function showLabels(mapCityA, mapCityB) {
+
+  let layerLabels = map.getStyle().layers[80].id,
+  filtersLabels = ["all", ['in', 'schname', mapCityA, mapCityB]]
+  map.setFilter(layerLabels, filtersLabels);
+  map.setLayoutProperty('schoolloc-badbdy-42ky8k', 'visibility', 'visible');
+}
+
+// map.on('load', function() {
+//   showLabels('Chamblee Middle School', 'Sequoyah Middle School')
+// });
+
 // piechart builder
-function buildRacePie( container, d, ab) {
+function buildRacePie(container, d, ab) {
   var black = +d["black" + ab + "_bdy"],
   hisp = +d["hispa" + ab + "_bdy"],
   enr = +d["pop" + ab + "_bdy"]
@@ -34,8 +48,6 @@ function buildRacePie( container, d, ab) {
 
   let pies = svg.selectAll("path")
   .data(arcs)
-
-  console.log(ab, arcs)
 
   pies.join(
     enter => enter.append("path")
@@ -62,12 +74,9 @@ function buildRacePie( container, d, ab) {
 // centerMap()
 function centerMap(bb, bbox) {
   let thisSchoolA = bb[0].schida,
-  thisSchoolB = bb[0].schidb,
-  thisSchoolNameA = bb[0].schnamea,
-  thisSchoolNameB = bb[0].schnameb;
+  thisSchoolB = bb[0].schidb;
 
-  // getNamesSchools(thisSchoolNameA, thisSchoolNameB)
-  let thisCatchment = bbox.filter(t => t.schida === thisSchoolA && t.schidb === thisSchoolB)[0]
+  let thisCatchment = bbox.filter(t => t.schida === thisSchoolA && t.schidb === thisSchoolB)[0];
 
   map.fitBounds(
     [
@@ -108,17 +117,9 @@ function buildExploreList(bb, bbox, msa) {
       }
   }
 
-  bb = bb.filter(function(o){ return o.maname == msa})
+  bb = bb.filter(function(o){ return o.maname == msa});
 
-  bb = bb.sort(function(a,b){ return +b.bbindex - +a.bbindex })
-
-    console.log(bb[0].hispab_bdy, bb[0].popb_bdy, bb[0].blackb_bdy, (bb[0].popb_bdy - bb[0].hispab_bdy - bb[0].blackb_bdy))
-
-    console.log(bb)
-
-  // function addPct(bb, container) {
-  //   let enrol
-  // }
+  bb = bb.sort(function(a,b){ return +b.bbindex - +a.bbindex });
 
   let container = d3.select("#exploreList")
   .selectAll(".exploreContainer")
@@ -172,12 +173,19 @@ function buildExploreList(bb, bbox, msa) {
 
   centerMap(bb, bbox);
 
+  let thisSchoolA = bb[0].schnamea,
+  thisSchoolB = bb[0].schnameb;
+
+  showLabels(thisSchoolA, thisSchoolB);
+
   container.on("click", function(event, d) {
 
     let bboxD = bbox.filter(function(o){
 
       return o.schida == d.schida && o.schidb == d.schidb
     })[0]
+
+    console.log(bboxD);
 
     let thisSchoolA = d.schnamea,
     thisSchoolB = d.schnameb,
@@ -202,6 +210,8 @@ function buildExploreList(bb, bbox, msa) {
         "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
       }
     );
+
+    showLabels(thisSchoolA, thisSchoolB);
 
     setTimeout(function(){
 
