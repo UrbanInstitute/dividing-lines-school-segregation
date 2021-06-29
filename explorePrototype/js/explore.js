@@ -16,15 +16,21 @@ let map = new mapboxgl.Map({
 
 function showLabels(mapCityA, mapCityB) {
 
-  let layerLabels = map.getStyle().layers[80].id,
-  filtersLabels = ["all", ['in', 'schname', mapCityA, mapCityB]]
+  console.log(mapCityA, mapCityB)
+
+  console.log(map.getStyle().layers[83].id)
+
+  let layerLabels = map.getStyle().layers[83].id,
+  filtersLabels = ["all", ['in', 'schid', mapCityA, mapCityB]]
   map.setFilter(layerLabels, filtersLabels);
-  map.setLayoutProperty('schoolloc-badbdy-42ky8k', 'visibility', 'visible');
+  map.setLayoutProperty('labels-schools', 'visibility', 'visible');
 }
 
-// map.on('load', function() {
-//   showLabels('Chamblee Middle School', 'Sequoyah Middle School')
-// });
+map.on('load', function() {
+  var test = map.queryRenderedFeatures({ layers: ['labels-schools']});
+
+  console.log(typeof(test[0].properties.schid));
+});
 
 // piechart builder
 function buildRacePie(container, d, ab) {
@@ -93,17 +99,11 @@ function centerMap(bb, bbox) {
   );
 }
 
-function getExploreTitle(d,i){
+function getExploreTitle(d,i) {
   let schools = `${d.schnamea} and ${d.schnameb}`;
-  return schools
-  // return "Boundary " + (i+1)
+  return schools;
 }
 
-function getNamesSchools(thisSchoolA, thisSchoolB) {
-
-  document.getElementById("schoolA").innerHTML = thisSchoolA;
-  document.getElementById("schoolB").innerHTML = thisSchoolB;
-}
 
 // builds the list of cachments and adds piecharts
 
@@ -173,8 +173,10 @@ function buildExploreList(bb, bbox, msa) {
 
   centerMap(bb, bbox);
 
-  let thisSchoolA = bb[0].schnamea,
-  thisSchoolB = bb[0].schnameb;
+  let thisSchoolA = +bb[0].schida,
+  thisSchoolB = +bb[0].schidb;
+
+  console.log(typeof(thisSchoolA), typeof(thisSchoolB))
 
   showLabels(thisSchoolA, thisSchoolB);
 
@@ -185,10 +187,8 @@ function buildExploreList(bb, bbox, msa) {
       return o.schida == d.schida && o.schidb == d.schidb
     })[0]
 
-    console.log(bboxD);
-
-    let thisSchoolA = d.schnamea,
-    thisSchoolB = d.schnameb,
+    let thisSchoolA = +d.schida,
+    thisSchoolB = +d.schidb,
     thisSelected = document.getElementsByClassName("selected")[0];
 
     thisSelected.classList.remove("selected");
@@ -242,6 +242,7 @@ Promise.all([
   d3.csv("data/source/badbdy.csv"),
 ]).then(function(allData) {
   // files[0] will contain file1.csv
+
   var bboxData = allData[0],
   bbData = allData[1]
 
