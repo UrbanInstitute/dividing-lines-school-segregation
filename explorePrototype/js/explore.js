@@ -14,22 +14,42 @@ let map = new mapboxgl.Map({
 
 });
 
-function showLabels(mapCityA, mapCityB) {
+map.dragPan.disable();
+map.dragRotate.disable();
+map.keyboard.disable();
 
-  console.log(mapCityA, mapCityB)
+function showLabels(thisSchool, layerNumber, thisLayer) {
 
-  console.log(map.getStyle().layers[83].id)
-
-  let layerLabels = map.getStyle().layers[83].id,
-  filtersLabels = ["all", ['in', 'schid', mapCityA, mapCityB]]
+  let layerLabels = map.getStyle().layers[layerNumber].id,
+  filtersLabels = ["all", ['in', 'schid', thisSchool]]
   map.setFilter(layerLabels, filtersLabels);
-  map.setLayoutProperty('labels-schools', 'visibility', 'visible');
+  map.setLayoutProperty(thisLayer, 'visibility', 'visible');
+
+}
+
+
+// function showLabels(thisSchoolA, thisSchoolB) {
+//
+//   let layerLabels = map.getStyle().layers[85].id,
+//   filtersLabels = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
+//   map.setFilter(layerLabels, filtersLabels);
+//   map.setLayoutProperty('labels-schools-test', 'visibility', 'visible');
+//
+// }
+
+function showBoundary(thisSchoolA, thisSchoolB) {
+  let layerBoundaries = map.getStyle().layers[65].id,
+  filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
+  map.setFilter(layerBoundaries, filterBoundaries);
+  map.setLayoutProperty('boundaries', 'visibility', 'visible');
+
 }
 
 map.on('load', function() {
-  var test = map.queryRenderedFeatures({ layers: ['labels-schools']});
+  console.log(map.getStyle().layers)
+  var test = map.queryRenderedFeatures({ layers: ['boundaries']});
 
-  console.log(typeof(test[0].properties.schid));
+  console.log(test)
 });
 
 // piechart builder
@@ -178,7 +198,17 @@ function buildExploreList(bb, bbox, msa) {
 
   console.log(typeof(thisSchoolA), typeof(thisSchoolB))
 
-  showLabels(thisSchoolA, thisSchoolB);
+  // showLabels(thisSchoolA, thisSchoolB)
+
+  showLabels(thisSchoolA, 83, 'labels-schools-a');
+  showLabels(thisSchoolB, 84, 'labels-schools-b');
+
+  showBoundary(thisSchoolA, thisSchoolB);
+
+
+  // $("#exploreList").on("scroll", function(event, d) {
+  //   console.log(d)
+  // })
 
   container.on("click", function(event, d) {
 
@@ -211,7 +241,14 @@ function buildExploreList(bb, bbox, msa) {
       }
     );
 
-    showLabels(thisSchoolA, thisSchoolB);
+
+
+    showLabels(thisSchoolA, 83, 'labels-schools-a');
+    showLabels(thisSchoolB, 84, 'labels-schools-b');
+
+    // showLabels(thisSchoolA, thisSchoolB);
+
+    showBoundary(thisSchoolA, thisSchoolB);
 
     setTimeout(function(){
 
