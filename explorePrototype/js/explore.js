@@ -38,19 +38,20 @@ function showLabels(thisSchool, layerNumber, thisLayer) {
 // }
 
 function showBoundary(thisSchoolA, thisSchoolB) {
-  let layerBoundaries = map.getStyle().layers[65].id,
+
+  let layerBoundaries = map.getStyle().layers[79].id,
   filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
   map.setFilter(layerBoundaries, filterBoundaries);
   map.setLayoutProperty('boundaries', 'visibility', 'visible');
 
 }
 
-map.on('load', function() {
-  console.log(map.getStyle().layers)
-  var test = map.queryRenderedFeatures({ layers: ['boundaries']});
-
-  console.log(test)
-});
+// map.on('load', function() {
+//   console.log(map.getStyle().layers)
+//   var test = map.queryRenderedFeatures({ layers: ['boundaries']});
+//
+//   console.log(test)
+// });
 
 // piechart builder
 function buildRacePie(container, d, ab) {
@@ -66,6 +67,7 @@ function buildRacePie(container, d, ab) {
 
   let svg = d3.select(container).append("svg").attr("width", pieWidth).attr("height", pieWidth)
   .append("g")
+  .attr("class", "pie")
   .attr("transform", "translate(" + pieWidth/2 + "," + pieWidth/2 + ")")
   .attr("stroke", "white")
 
@@ -94,7 +96,35 @@ function buildRacePie(container, d, ab) {
     .remove())
   )
 
+  let text = d3.select(container).append("div")
+  .attr("class", "text")
+
+  let thisText = text.selectAll('p')
+  .data(arcs)
+
+  thisText.join(
+    enter => enter.append("p")
+
+  )
+
+  let thePs = container.getElementsByTagName("P"),
+  other = enr- (black + hisp),
+  blackPct = `${((black / enr) * 100).toFixed(0)}%`,
+  hispPct = `${((hisp / enr) * 100).toFixed(0)}%`,
+  otherPct = `${((other / enr) * 100).toFixed(0)}%`;
+
+  thePs[0].innerHTML = `${blackPct}`;
+  thePs[1].innerHTML = `${hispPct}`;
+  thePs[2].innerHTML = `${otherPct}`;
+  //
+  //
+  thePs[0].className = "label black";
+  thePs[1].className = "label hisp";
+  thePs[2].className = "label other";
+
+
 }  // buildRacePie() ends here
+
 
 
 // centerMap()
@@ -196,19 +226,12 @@ function buildExploreList(bb, bbox, msa) {
   let thisSchoolA = +bb[0].schida,
   thisSchoolB = +bb[0].schidb;
 
-  console.log(typeof(thisSchoolA), typeof(thisSchoolB))
-
   // showLabels(thisSchoolA, thisSchoolB)
 
   showLabels(thisSchoolA, 83, 'labels-schools-a');
   showLabels(thisSchoolB, 84, 'labels-schools-b');
 
   showBoundary(thisSchoolA, thisSchoolB);
-
-
-  // $("#exploreList").on("scroll", function(event, d) {
-  //   console.log(d)
-  // })
 
   container.on("click", function(event, d) {
 
@@ -240,8 +263,6 @@ function buildExploreList(bb, bbox, msa) {
         "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
       }
     );
-
-
 
     showLabels(thisSchoolA, 83, 'labels-schools-a');
     showLabels(thisSchoolB, 84, 'labels-schools-b');
@@ -275,8 +296,8 @@ function buildExploreList(bb, bbox, msa) {
 
 
 Promise.all([
-  d3.csv("data/source/BB_ALL.csv"),
-  d3.csv("data/source/badbdy.csv"),
+  d3.csv("../data/source/BB_ALL.csv"),
+  d3.csv("../data/source/badbdy.csv"),
 ]).then(function(allData) {
   // files[0] will contain file1.csv
 

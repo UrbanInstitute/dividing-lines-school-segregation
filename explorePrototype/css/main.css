@@ -10,7 +10,12 @@ h6 {
   line-height: 27px;
   font-weight: 700;
   color: #353535;
-  margin: 0px 0px 24px 5px;
+  margin: 0px 0px 15px 5px;
+}
+
+p.dek {
+  margin-left: 5px;
+  margin-bottom: 24;
 }
 
 #wrapGraphic {
@@ -98,13 +103,14 @@ h6 {
 }
 
 .exploreContainer {
-    margin: 0 auto;
+    /* margin: 0 auto; */
     margin-bottom: 15px;
     border-bottom: 1px #D2D2D2 solid;
     padding-bottom: 15px;
-    padding-left: 0px;
+    margin-left: 5px;
     max-width: 94%;
     cursor: pointer;
+    border-top: white 2px solid;
 }
 
 .exploreContainer:last-of-type {
@@ -115,19 +121,24 @@ h6 {
 
 .exploreContainer.selected {
   cursor: default;
+  background-color: rgba(234,234,234,0.25);
+  border-top: black 2px solid;
+
 }
 
-.exploreContainer.selected > .floater {
+/* .exploreContainer.selected > .floater {
     height: 65px;
-    background: #d2d2d2;
+    background: #c36fb9;
     width: 5px;
     display: inline-block;
     margin-left: -9px;
     margin-right: 4px;
-}
+} */
 
 .exploreTitle {
   margin-bottom: 10px;
+  padding-left: 10px;
+  padding-top: 7px;
 }
 
 .exploreContainer.selected > .exploreTitle {
@@ -139,9 +150,48 @@ h6 {
 }
 
 .pieA {
-  margin-right: 10px;
-  padding-left: 5px;
+  padding-left: 10px;
 }
+
+.pieA, .pieB {
+  width: 47%;
+}
+
+svg {
+  display: inline-block;
+}
+
+.text {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: top;
+}
+
+.text > p {
+  font-size: 15px;
+  line-height: 1.2;
+  margin: 0px 0px 5px 0px;
+}
+
+.exploreContainer.selected > .pieContainer > .text > p {
+  font-weight: 700;
+}
+
+.text > p:first-of-type {
+  color: #fdbf11;
+}
+
+.text > p:nth-of-type(2n+0) {
+  color: #fce39e;
+}
+
+.text > p:last-of-type {
+  color: #1696d2;
+}
+
+/* p.label {
+
+} */
 
 /* CSS scroll bar */
 
