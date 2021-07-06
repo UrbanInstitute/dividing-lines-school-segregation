@@ -126,6 +126,10 @@ p.dek {
 
 }
 
+.exploreContainer:hover {
+  border-top: black 2px solid;
+}
+
 /* .exploreContainer.selected > .floater {
     height: 65px;
     background: #c36fb9;

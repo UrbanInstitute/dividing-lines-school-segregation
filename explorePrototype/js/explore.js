@@ -20,6 +20,8 @@ map.keyboard.disable();
 
 function showLabels(thisSchool, layerNumber, thisLayer) {
 
+  console.log(thisSchool);
+
   let layerLabels = map.getStyle().layers[layerNumber].id,
   filtersLabels = ["all", ['in', 'schid', thisSchool]]
   map.setFilter(layerLabels, filtersLabels);
@@ -33,7 +35,7 @@ function showLabels(thisSchool, layerNumber, thisLayer) {
 //   let layerLabels = map.getStyle().layers[85].id,
 //   filtersLabels = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
 //   map.setFilter(layerLabels, filtersLabels);
-//   map.setLayoutProperty('labels-schools-test', 'visibility', 'visible');
+//   map.setLayoutProperty('labels-schools', 'visibility', 'visible');
 //
 // }
 
@@ -44,14 +46,16 @@ function showBoundary(thisSchoolA, thisSchoolB) {
   map.setFilter(layerBoundaries, filterBoundaries);
   map.setLayoutProperty('boundaries', 'visibility', 'visible');
 
+  console.log(map.queryRenderedFeatures({ layers: ['boundaries']}))
 }
 
-// map.on('load', function() {
-//   console.log(map.getStyle().layers)
-//   var test = map.queryRenderedFeatures({ layers: ['boundaries']});
-//
-//   console.log(test)
-// });
+map.on('load', function() {
+  console.log(map.getStyle().layers)
+  // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
+  var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
+  //
+  console.log(test2)
+});
 
 // piechart builder
 function buildRacePie(container, d, ab) {
@@ -230,6 +234,7 @@ function buildExploreList(bb, bbox, msa) {
 
   showLabels(thisSchoolA, 83, 'labels-schools-a');
   showLabels(thisSchoolB, 84, 'labels-schools-b');
+
 
   showBoundary(thisSchoolA, thisSchoolB);
 
