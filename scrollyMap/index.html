@@ -1,15 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel = "stylesheet" href = "css/main.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel = "stylesheet" href = "css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
 
-  </body>
+<body>
+
+  <div id="scrollyContainer">
+    <div id="graphic">
+      <div id="sections">
+        <section class="step">
+          <p>Before John Lewis opened, Woodward and Montclair Elementary Schools (both majority-Black and majority-Hispanic schools) were overcrowded. Ashford Park (a majority-white school) was not.</p>
+        </section>
+
+        <section class="step">
+          <p>To alleviate the overcrowding, Dekalb Countyofficials purchased land for the new John Lewis school in the Ashford Park zone.</p>
+        </section>
+
+        <section class="step">
+          <p>Rezoning drew more than 200 students from Woodward and Montclair to John Lewis but drew only 22 from Ashford Park.</p>
+        </section>
+
+        <section class="step">
+          <p>The new boundary between the two schools runs along the John Lewis campus, dividing the white families to the north from the Black and Hispanic families to the south.</p>
+        </section>
+
+        <section class="step">
+          <p>Seventy-nine percent of families living within 500 meters of the boundaryon the John Lewis sideare Black or Hispanic. On the Ashford Park side, that share falls to 13 percent. </p>
+        </section>
+      </div>
+
+      <div id="chart">
+        <p>HOLA</p>
+      </div>
+
+      <div id="extra-space"></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src = "js/scroller.js"></script>
+  <script src = "js/sections.js"></script>
+  <script src = "js/scrolly.js"></script>
+</body>
 </html>

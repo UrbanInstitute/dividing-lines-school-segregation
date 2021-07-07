@@ -1,0 +1,40 @@
+#scrollyContainer {
+  max-width: 1200px;
+  width: 100%;
+}
+
+#graphic {
+  padding-top: 60px;
+}
+
+#sections {
+  position: relative;
+  display: inline-block;
+  width: 250px;
+  top: 0px;
+  z-index: 90;
+  padding-bottom: 200px;
+}
+
+.step {
+  margin-bottom: 200px;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+
+#extra-space {
+  height: 300px;
+}
+
+#chart {
+  display: inline-block;
+  position: fixed;
+  top: 60px;
+  z-index: 1;
+  margin-left: 10px;
+  width: 600px;
+  height: 400px;
+  background-color: pink;
+
+}

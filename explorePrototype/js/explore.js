@@ -301,8 +301,8 @@ function buildExploreList(bb, bbox, msa) {
 
 
 Promise.all([
-  d3.csv("../data/source/BB_ALL.csv"),
-  d3.csv("../data/source/badbdy.csv"),
+  d3.csv("data/source/BB_ALL.csv"),
+  d3.csv("data/source/badbdy.csv"),
 ]).then(function(allData) {
   // files[0] will contain file1.csv
 
