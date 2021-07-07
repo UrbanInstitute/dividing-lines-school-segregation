@@ -10,7 +10,7 @@
 <body>
   <div id="wrapGraphic">
     <h6>Where School Boundaries Segregate Black and Hispanic Students</h6>
-    <p class="dek">This tool highlights the top 1 percent of segregated school boundaries nationwide, and only includes boundaries that separate schools with a 25 percentage-point difference in representation of Black or Hispanic students.</p>
+    <p class="dek">This tool highlights <span class="underlineBoundaries">racially unequal boundaries</span> racially unequal boundaries nationwide, and only includes boundaries that separate schools with a 25 percentage-point difference in representation of <span class="roundSpan black"></span> Black or <span class="roundSpan hispanic"></span> Hispanic students.</p>
     <div id="containerExplore">
       <input id="exploreAutocomplete" placeholder="Search for your city">
       <div id="colorLegend">
@@ -23,7 +23,7 @@
           <p>Hispanic</p>
         </div>
         <div class="legendContainer">
-          <div class="other"></div>
+          <div class="rest"></div>
           <p>Other</p>
         </div>
       </div>
@@ -32,6 +32,28 @@
     <div id="containerMap">
       <div id="containerText">
         <p id="thisMsa">Atlanta-Sandy Springs-Marietta, GA</p>
+      </div>
+      <div id="colorLegend">
+        <div class="legendContainer">
+          <div class="black"></div>
+          <p>Black</p>
+        </div>
+        <div class="legendContainer">
+          <div class="hispanic"></div>
+          <p>Hispanic</p>
+        </div>
+        <div class="legendContainer">
+          <div class="white"></div>
+          <p>White</p>
+        </div>
+        <div class="legendContainer">
+          <div class="asian"></div>
+          <p>Asian</p>
+        </div>
+        <div class="legendContainer">
+          <div class="other"></div>
+          <p>2 or more/other</p>
+        </div>
       </div>
       <div id="exploreMap"></div>
       <div id="borders"></div>

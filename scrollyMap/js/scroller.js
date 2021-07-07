@@ -7,7 +7,6 @@
  *
  */
 function scroller() {
-  console.log("HOLA")
   var container = d3.select('body');
   // event dispatcher
   var dispatch = d3.dispatch('active', 'progress');
@@ -35,8 +34,6 @@ function scroller() {
    */
   function scroll(els) {
     sections = els;
-
-    console.log(els)
 
     // when window is scrolled call
     // position. When it is resized

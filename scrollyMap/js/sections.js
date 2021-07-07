@@ -102,7 +102,9 @@ var scrollVis = function () {
    *  example, we will be drawing it in #vis
    */
   var chart = function (selection) {
+    console.log("selection", selection)
     selection.each(function (rawData) {
+      console.log(rawData)
       // create svg and give it a width and height
       // svg = d3.select(this).selectAll('svg').data([wordData]);
       // var svgE = svg.enter().append('svg');
@@ -142,8 +144,12 @@ var scrollVis = function () {
       // setupVis(wordData, fillerCounts, histData);
 
       setupSections();
+
+
     });
   };
+
+  // chart ends here
 
 
   /**
@@ -330,6 +336,7 @@ var scrollVis = function () {
     // for all scrolling and so are set to
     // no-op functions.
     for (var i = 0; i < 6; i++) {
+      console.log("that", i)
       updateFunctions[i] = function () {};
     }
     // updateFunctions[7] = updateCough;
@@ -679,25 +686,25 @@ var scrollVis = function () {
    *
    * @param rawData - data read in from file
    */
-  // function getWords(rawData) {
-  //   return rawData.map(function (d, i) {
-  //     // is this word a filler word?
-  //     d.filler = (d.filler === '1') ? true : false;
-  //     // time in seconds word was spoken
-  //     d.time = +d.time;
-  //     // time in minutes word was spoken
-  //     d.min = Math.floor(d.time / 60);
-  //
-  //     // positioning for square visual
-  //     // stored here to make it easier
-  //     // to keep track of.
-  //     d.col = i % numPerRow;
-  //     d.x = d.col * (squareSize + squarePad);
-  //     d.row = Math.floor(i / numPerRow);
-  //     d.y = d.row * (squareSize + squarePad);
-  //     return d;
-  //   });
-  // }
+  function getWords(rawData) {
+    return rawData.map(function (d, i) {
+      // is this word a filler word?
+      d.filler = (d.filler === '1') ? true : false;
+      // time in seconds word was spoken
+      d.time = +d.time;
+      // time in minutes word was spoken
+      d.min = Math.floor(d.time / 60);
+
+      // positioning for square visual
+      // stored here to make it easier
+      // to keep track of.
+      d.col = i % numPerRow;
+      d.x = d.col * (squareSize + squarePad);
+      d.row = Math.floor(i / numPerRow);
+      d.y = d.row * (squareSize + squarePad);
+      return d;
+    });
+  }
 
   /**
    * getFillerWords - returns array of
@@ -705,9 +712,10 @@ var scrollVis = function () {
    *
    * @param data - word data from getWords
    */
-  function getFillerWords(data) {
-    return data.filter(function (d) {return d.filler; });
-  }
+  // function getFillerWords(data) {
+  //
+  //   return data.filter(function (d) {return d.filler; });
+  // }
 
   /**
    * getHistogram - use d3's histogram layout
@@ -755,10 +763,9 @@ var scrollVis = function () {
     activeIndex = index;
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
     var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
-    console.log(scrolledSections)
-    // scrolledSections.forEach(function (i) {
-    //   activateFunctions[i]();
-    // });
+    scrolledSections.forEach(function (i) {
+      activateFunctions[i]();
+    });
     lastIndex = activeIndex;
   };
 
@@ -775,6 +782,7 @@ var scrollVis = function () {
   // return chart function
   return chart;
 };
+//scrollvis ends here
 
 
 /**
@@ -786,12 +794,13 @@ var scrollVis = function () {
  * @param data - loaded tsv data
  */
 function display(data) {
+  console.log(data)
   // create a new plot and
   // display it
   var plot = scrollVis();
-  // d3.select('#vis')
+  d3.select('#chart')
   //   .datum(data)
-  //   .call(plot);
+    .call(plot);
 
   // setup scroll functionality
   var scroll = scroller()

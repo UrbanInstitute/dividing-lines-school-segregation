@@ -89,7 +89,7 @@ function buildRacePie(container, d, ab) {
     .attr("fill", function(d, i){
       if(i === 0) return "#fdbf11"
       else if(i === 1) return "#fce39e"
-      else return "#1696d2"
+      else return "#D2D2D2"
     })
     .attr("d", arc)
     .call(enter => enter),
