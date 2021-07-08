@@ -25,9 +25,8 @@ p.dek {
   background-color: #ec008b2e;
 }
 
-span.roundSpan:before {
+/* span.roundSpan:before {
   content:"\A";
-  background-color: blue;
   border-radius: 20px;
   width: 7px;
   height: 7px;
@@ -42,7 +41,7 @@ span.roundSpan.black:before {
 
 span.roundSpan.hispanic:before {
   background-color: #fce39e;
-}
+} */
 
 #wrapGraphic {
   max-width: 760px;
@@ -62,6 +61,11 @@ span.roundSpan.hispanic:before {
   line-height: 13px;
   margin-top: 0px;
   margin-bottom: 15px;
+}
+
+#note {
+  font-size: 14px;
+  color: #9d9d9d;
 }
 
 #colorLegend {
@@ -84,6 +88,7 @@ span.roundSpan.hispanic:before {
   width: 12px;
   height: 12px;
   margin-right: 3px;
+  margin-bottom: -1px;
 }
 
 #containerMap > #colorLegend > .legendContainer > div {
@@ -92,6 +97,7 @@ span.roundSpan.hispanic:before {
   border-radius: 20px;
   vertical-align: middle;
   margin-right: 1px;
+  margin-bottom: 2px;
 }
 
 #containerMap > #colorLegend > .legendContainer:last-of-type {
@@ -99,27 +105,34 @@ span.roundSpan.hispanic:before {
 }
 
 .legendContainer > .hispanic {
-  background-color: #fce39e;
+  background-color: #55b748;
+  border: 1px #55b748 solid;
+;
 }
 
 .legendContainer > .black {
   background-color: #fdbf11;
+  border: 1px #fdbf11 solid;
 }
 
 .legendContainer > .rest {
-  background-color: #D2D2D2;
+  background-color: #fafafa;
+  border: 1px #848081 solid;
 }
 
 .legendContainer > .white {
   background-color: #1696d2;
+  border: 1px #1696d2 solid;
 }
 
 .legendContainer > .asian {
-  background-color: #a2d4ec;
+  background-color: #ec008b;
+  border: 1px #ec008b solid
 }
 
 .legendContainer > .other {
-  background-color: #cfe8f3;
+  background-color: #d2d2d2;
+  border: 1px #d2d2d2 solid
 }
 
 .legendContainer > p {
@@ -176,13 +189,16 @@ span.roundSpan.hispanic:before {
 
 .exploreContainer.selected {
   cursor: default;
-  background-color: rgba(234,234,234,0.25);
+  background-color: #fafafa;
   border-top: black 2px solid;
+  box-shadow: #bdbdbd -1px 4px 4px -2px;
 
 }
 
 .exploreContainer:hover {
   border-top: black 2px solid;
+  background-color: #fafafa;
+  box-shadow: #bdbdbd -1px 4px 4px -2px;
 }
 
 .exploreTitle {
@@ -211,6 +227,10 @@ svg {
   display: inline-block;
 }
 
+.pie {
+  shape-rendering: geometricPrecision;
+}
+
 .text {
   display: inline-block;
   margin-left: 5px;
@@ -232,11 +252,11 @@ svg {
 }
 
 .text > p:nth-of-type(2n+0) {
-  color: #fce39e;
+  color: #55b748;
 }
 
 .text > p:last-of-type {
-  color: #D2D2D2;
+  color: #848081;
 }
 
 
