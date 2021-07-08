@@ -20,8 +20,6 @@ map.keyboard.disable();
 
 function showLabels(thisSchool, layerNumber, thisLayer) {
 
-  console.log(thisSchool);
-
   let layerLabels = map.getStyle().layers[layerNumber].id,
   filtersLabels = ["all", ['in', 'schid', thisSchool]]
   map.setFilter(layerLabels, filtersLabels);
@@ -49,13 +47,13 @@ function showBoundary(thisSchoolA, thisSchoolB) {
   console.log(map.queryRenderedFeatures({ layers: ['boundaries']}))
 }
 
-map.on('load', function() {
-  console.log(map.getStyle().layers)
-  // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
-  var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
-  //
-  console.log(test2)
-});
+// map.on('load', function() {
+//   console.log(map.getStyle().layers)
+//   // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
+//   var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
+//   //
+//   console.log(test2)
+// });
 
 // piechart builder
 function buildRacePie(container, d, ab) {
@@ -67,36 +65,13 @@ function buildRacePie(container, d, ab) {
   .innerRadius(pieWidth / 5)
   .outerRadius(pieWidth / 2 - 1)
 
-  const arcs = d3.pie()([ black, hisp, enr-black-hisp ]);
-
-  let defs = d3.select(container).append("svg")
-      .attr("width", 0)
-      .attr("height", 0)
-      .append('defs')
-        .append('pattern')
-        .attr('id', 'diagonalHatch')
-        .attr('patternUnits', 'userSpaceOnUse')
-        .attr('width', 4)
-        .attr('height', 4)
-        .append('rect')
-        .attr('width', 4)
-        .attr('height', 4)
-        .attr('x', 0)
-        .attr('x', 0)
-        .attr('fill', '#848081');
-
-
-  d3.select('#diagonalHatch').append('path')
-            .attr('d', 'M-1,1 l2,-2 M0,4 l4,-4 M3,5 l2,-2')
-            .attr('stroke', 'white')
-            .attr('stroke-width', 0.2)
-            .attr("opacity", 0.5);
+  let arcs = d3.pie().sort(null)([ black, hisp, enr-black-hisp ])
 
   let svg = d3.select(container).append("svg").attr("width", pieWidth).attr("height", pieWidth)
   .append("g")
   .attr("class", "pie")
   .attr("transform", "translate(" + pieWidth/2 + "," + pieWidth/2 + ")")
-  .attr("stroke", "#848081")
+  .attr("stroke", "white")
   .attr('stroke-width', 1)
 
   const t = svg.transition()
@@ -112,8 +87,8 @@ function buildRacePie(container, d, ab) {
     })
     .attr("fill", function(d, i){
       if(i === 0) return "#fdbf11"
-      else if(i === 1) return "#55b748"
-      else return "#fafafa"
+      else if(i === 1) return "#1696d2"
+      else return "#d2d2d2"
     })
     .attr("d", arc)
     .call(enter => enter),
@@ -123,9 +98,6 @@ function buildRacePie(container, d, ab) {
     .call(exit => exit
     .remove())
   )
-
-
-  //else return 'url(#diagonalHatch)'
 
   let text = d3.select(container).append("div")
   .attr("class", "text")
