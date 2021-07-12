@@ -87,8 +87,8 @@ p.dek {
 }
 
 .legendContainer > .hispanic {
-  background-color: #1696d2;
-  border: 1px #1696d2 solid;
+  background-color: #55b748;
+  border: 1px #55b748 solid;
 ;
 }
 
@@ -98,8 +98,8 @@ p.dek {
 }
 
 .legendContainer > .other {
-  background-color: #d2d2d2;
-  border: 1px #d2d2d2 solid
+  background-color: #1696d2;
+  border: 1px #1696d2 solid
 }
 
 .legendContainer > p {
@@ -218,11 +218,11 @@ svg {
 }
 
 .text > p:nth-of-type(2n+0) {
-  color: #1696d2;
+  color: #55b748;
 }
 
 .text > p:last-of-type {
-  color: #d2d2d2;
+  color: #1696d2;
 }
 
 
