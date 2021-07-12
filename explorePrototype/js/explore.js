@@ -27,7 +27,6 @@ function showLabels(thisSchool, layerNumber, thisLayer) {
 
 }
 
-
 // function showLabels(thisSchoolA, thisSchoolB) {
 //
 //   let layerLabels = map.getStyle().layers[85].id,
@@ -39,21 +38,19 @@ function showLabels(thisSchool, layerNumber, thisLayer) {
 
 function showBoundary(thisSchoolA, thisSchoolB) {
 
-  let layerBoundaries = map.getStyle().layers[79].id,
+  let layerBoundaries = map.getStyle().layers[80].id,
   filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
   map.setFilter(layerBoundaries, filterBoundaries);
   map.setLayoutProperty('boundaries', 'visibility', 'visible');
 
-  console.log(map.queryRenderedFeatures({ layers: ['boundaries']}))
 }
 
-// map.on('load', function() {
-//   console.log(map.getStyle().layers)
-//   // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
-//   var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
-//   //
-//   console.log(test2)
-// });
+map.on('load', function() {
+  console.log(map.getStyle().layers)
+  // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
+  // var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
+  // console.log(test2)
+});
 
 // piechart builder
 function buildRacePie(container, d, ab) {
@@ -231,8 +228,8 @@ function buildExploreList(bb, bbox, msa) {
 
   // showLabels(thisSchoolA, thisSchoolB)
 
-  showLabels(thisSchoolA, 83, 'labels-schools-a');
-  showLabels(thisSchoolB, 84, 'labels-schools-b');
+  showLabels(thisSchoolA, 84, 'labels-schools-a');
+  showLabels(thisSchoolB, 85, 'labels-schools-b');
 
 
   showBoundary(thisSchoolA, thisSchoolB);
@@ -268,29 +265,29 @@ function buildExploreList(bb, bbox, msa) {
       }
     );
 
-    showLabels(thisSchoolA, 83, 'labels-schools-a');
-    showLabels(thisSchoolB, 84, 'labels-schools-b');
+    showLabels(thisSchoolA, 84, 'labels-schools-a');
+    showLabels(thisSchoolB, 85, 'labels-schools-b');
 
     // showLabels(thisSchoolA, thisSchoolB);
 
     showBoundary(thisSchoolA, thisSchoolB);
 
-    setTimeout(function(){
-
-      var allVisible = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] })
-      var f1 = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] }).filter(function(o){
-        return +o.properties.schid == +d.schida || +o.properties.schid == +d.schidb
-      })
-
-      for(var i = 0; i < allVisible.length; i++){
-        map.setFeatureState(allVisible[i], { "active": false })
-      }
-
-      for(var i = 0; i < f1.length; i++){
-        map.setFeatureState(f1[i], { "active": true })
-      }
-
-    },timeOutLength)
+    // setTimeout(function(){
+    //
+    //   var allVisible = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] })
+    //   var f1 = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] }).filter(function(o){
+    //     return +o.properties.schid == +d.schida || +o.properties.schid == +d.schidb
+    //   })
+    //
+    //   for(var i = 0; i < allVisible.length; i++){
+    //     map.setFeatureState(allVisible[i], { "active": false })
+    //   }
+    //
+    //   for(var i = 0; i < f1.length; i++){
+    //     map.setFeatureState(f1[i], { "active": true })
+    //   }
+    //
+    // },timeOutLength)
 
 
   }) //on.click ends here
