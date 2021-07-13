@@ -10,13 +10,15 @@ let map = new mapboxgl.Map({
   container: 'exploreMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckp8nbuj31u8s18qrv0uwod6b/draft", // style URL
   center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
-  zoom: 12.5 // starting zoom
+  zoom: 12.5, // starting zoom
+  interactive: false
 
 });
 
-map.dragPan.disable();
-map.dragRotate.disable();
-map.keyboard.disable();
+// map.dragPan.disable();
+// map.dragRotate.disable();
+// map.keyboard.disable();
+// map.scrollZoom.disable();
 
 function showLabels(thisSchool, layerNumber, thisLayer) {
 

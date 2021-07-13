@@ -322,8 +322,8 @@ var scrollVis = function () {
   var setupSections = function () {
     // activateFunctions are called each
     // time the active section changes
-    activateFunctions[0] = hola1;
-    activateFunctions[1] = hola2;
+    activateFunctions[0] = openMap;
+    activateFunctions[1] = addDots;
     activateFunctions[2] = hola3;
     activateFunctions[3] = hola4;
     activateFunctions[4] = hola5;
