@@ -19,7 +19,7 @@
 #sections {
   position: relative;
   display: inline-block;
-  width: 250px;
+  width: 300px;
   top: 0px;
   z-index: 90;
   padding-bottom: 200px;
@@ -30,6 +30,34 @@
   margin-bottom: 200px;
   font-size: 16px;
   line-height: 23px;
+}
+
+
+.step >  p > span {
+  font-weight: 700;
+}
+
+span#black-span {
+  color: #fdbf11;
+}
+
+span#hispanic-span {
+  color: #55b748;
+}
+
+span#white-span {
+  color: #1696d2;
+}
+
+span#all-dot {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  -moz-border-radius: 7.5px;
+  -webkit-border-radius: 7.5px;
+  border-radius: 7.5px;
+  background-color: darkgray;
 }
 
 

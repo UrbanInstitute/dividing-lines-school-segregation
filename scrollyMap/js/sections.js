@@ -324,9 +324,9 @@ var scrollVis = function () {
     // time the active section changes
     activateFunctions[0] = openMap;
     activateFunctions[1] = addDots;
-    activateFunctions[2] = hola3;
-    activateFunctions[3] = hola4;
-    activateFunctions[4] = hola5;
+    activateFunctions[2] = newBoundaries;
+    activateFunctions[3] = theWorm;
+    activateFunctions[4] = blocksMap;
     activateFunctions[5] = hola6;
 
     // updateFunctions are called while
