@@ -102,9 +102,7 @@ var scrollVis = function () {
    *  example, we will be drawing it in #vis
    */
   var chart = function (selection) {
-    console.log("selection", selection)
     selection.each(function (rawData) {
-      console.log(rawData)
       // create svg and give it a width and height
       // svg = d3.select(this).selectAll('svg').data([wordData]);
       // var svgE = svg.enter().append('svg');
@@ -295,26 +293,6 @@ var scrollVis = function () {
    *
    */
 
-  function hola1() {
-    console.log("HOLA 1")
-  }
-
-  function hola2() {
-    console.log("HOLA 2")
-  }
-
-  function hola3() {
-    console.log("HOLA 3")
-  }
-
-  function hola4() {
-    console.log("HOLA 4")
-  }
-
-  function hola5() {
-    console.log("HOLA 5")
-  }
-
   function hola6() {
     console.log("HOLA 6")
   }
@@ -327,7 +305,7 @@ var scrollVis = function () {
     activateFunctions[2] = newBoundaries;
     activateFunctions[3] = theWorm;
     activateFunctions[4] = blocksMap;
-    activateFunctions[5] = hola6;
+    activateFunctions[5] = scatter;
 
     // updateFunctions are called while
     // in a particular section to update
@@ -336,7 +314,7 @@ var scrollVis = function () {
     // for all scrolling and so are set to
     // no-op functions.
     for (var i = 0; i < 6; i++) {
-      console.log("that", i)
+      // console.log("that", i)
       updateFunctions[i] = function () {};
     }
     // updateFunctions[7] = updateCough;
@@ -762,11 +740,15 @@ var scrollVis = function () {
   chart.activate = function (index) {
     activeIndex = index;
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
+    console.log("sign", sign)
     var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
+    console.log("scrolledSectionss", scrolledSections)
     scrolledSections.forEach(function (i) {
+      console.log(activateFunctions[i])
       activateFunctions[i]();
     });
     lastIndex = activeIndex;
+    console.log("lastIndex", lastIndex)
   };
 
   /**
@@ -794,7 +776,6 @@ var scrollVis = function () {
  * @param data - loaded tsv data
  */
 function display(data) {
-  console.log(data)
   // create a new plot and
   // display it
   var plot = scrollVis();

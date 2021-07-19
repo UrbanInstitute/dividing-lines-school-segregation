@@ -73,11 +73,38 @@ span#all-dot {
   margin-left: 10px;
   width: 700px;
   height: 600px;
-
 }
 
 
 #exploreMap {
   width: 700px;
   height: 600px;
+}
+
+
+/*CSS SCATTER PLOT*/
+#scatter {
+  color: #353535;
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 400;
+}
+
+.tick > text {
+  fill: #353535 !important;
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.label-axis {
+  font-size: 14px;
+  font-style: italic;
+  fill: #353535;
+}
+
+
+.school-names {
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 400;
+  max-width: 50px;
 }
