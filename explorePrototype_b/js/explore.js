@@ -8,7 +8,7 @@ mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZ
 
 let map = new mapboxgl.Map({
   container: 'exploreMap', // container ID
-  style: "mapbox://styles/urbaninstitute/ckp8nbuj31u8s18qrv0uwod6b/draft", // style URL
+  style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
   zoom: 12.5, // starting zoom
   interactive: false
@@ -21,6 +21,8 @@ let map = new mapboxgl.Map({
 // map.scrollZoom.disable();
 
 function showLabels(thisSchool, layerNumber, thisLayer) {
+
+    console.log(map.getStyle().layers)
 
   let layerLabels = map.getStyle().layers[layerNumber].id,
   filtersLabels = ["all", ['in', 'schid', thisSchool]]
@@ -50,13 +52,14 @@ function showBoundary(thisSchoolA, thisSchoolB) {
   map.setFilter(layerCatchment, filterCatchment);
   map.setLayoutProperty('catchments', 'visibility', 'visible');
 
+
 }
 
 map.on('load', function() {
-  console.log(map.getStyle().layers)
   // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
   // var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
   // console.log(test2)
+      console.log(map.queryRenderedFeatures({ layers: ['catchments']}))
 });
 
 // piechart builder
@@ -91,8 +94,8 @@ function buildRacePie(container, d, ab) {
     })
     .attr("fill", function(d, i){
       if(i === 0) return "#fdbf11"
-      else if(i === 1) return "#55b748"
-      else return "#1696d2"
+      else if(i === 1) return "#ca5800"
+      else return "#9d9d9d"
     })
     .attr("d", arc)
     .call(enter => enter),

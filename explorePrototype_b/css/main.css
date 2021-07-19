@@ -1,0 +1,261 @@
+* {
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+h6 {
+  font-size: 18px;
+  line-height: 27px;
+  font-weight: 700;
+  color: #353535;
+  margin: 0px 0px 15px 5px;
+}
+
+p.dek {
+  margin-left: 5px;
+  margin-bottom: 24;
+  max-width: 690px;
+}
+
+.underlineBoundaries {
+  border-bottom: 2px #ec008b solid;
+  padding: 0px 2px 2px 2px;
+  /* background-color: #ec008b2e; */
+}
+
+#wrapGraphic {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+
+#containerMap {
+    display: inline-block;
+    vertical-align: top;
+    width: 400px;
+}
+
+#thisMsa {
+  font-weight: 700;
+  line-height: 13px;
+  margin-top: 0px;
+  margin-bottom: 15px;
+}
+
+#note {
+  font-size: 14px;
+  color: #9d9d9d;
+}
+
+#colorLegend {
+  margin-bottom: 15px;
+  margin-left: 5px;
+}
+
+#containerMap > #colorLegend {
+  margin-left: 0;
+  margin-bottom: 5px;
+}
+
+.legendContainer {
+  display: inline-block;
+  margin-right: 7px;
+}
+
+.legendContainer > div {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 2px;
+  margin-bottom: -1px;
+}
+
+#containerMap > #colorLegend > .legendContainer > div {
+  width: 7px;
+  height: 7px;
+  border-radius: 20px;
+  vertical-align: middle;
+  margin-right: 1px;
+  margin-bottom: 2px;
+}
+
+#containerMap > #colorLegend > .legendContainer:last-of-type {
+  margin-right: 0;
+}
+
+.legendContainer > .hispanic {
+  background-color: #ca5800;
+  border: 1px #ca5800 solid;
+;
+}
+
+.legendContainer > .black {
+  background-color: #fdbf11;
+  border: 1px #fdbf11 solid;
+}
+
+.legendContainer > .white {
+  background-color: #1696d2;
+  border: 1px #1696d2 solid
+}
+
+.legendContainer > .asian {
+  background-color: #55b748;
+  border: 1px #55b748 solid
+}
+
+.legendContainer > .other {
+  background-color: #d5d5d4;
+  border: 1px #d5d5d4 solid
+}
+
+.legendContainer > .rest {
+  background-color: #9d9d9d;
+  border: 1px #9d9d9d solid
+}
+
+.legendContainer > p {
+  display: inline-block;
+  line-height: 0;
+}
+
+
+#containerExplore > #colorLegend > .legendContainer > div {
+
+}
+
+#exploreMap {
+    width: 100%;
+    height: 400px;
+    margin-top: 5px;
+}
+
+#containerExplore {
+  max-width: 305px;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+#containerExplore > input {
+  width: 300px;
+  height: 43px;
+  padding: 11px 16px;
+  color: #696969;
+  line-height: 24px;
+  font-size: 16px !important;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  border: 1px #D2D2D2 solid;
+}
+
+#exploreList {
+    width: 100%;
+    height: 402px;
+    overflow: auto;
+}
+
+.exploreContainer {
+    margin-bottom: 15px;
+    border-bottom: 1px #D2D2D2 solid;
+    padding-bottom: 15px;
+    margin-left: 5px;
+    max-width: 94%;
+    cursor: pointer;
+    border-top: white 2px solid;
+}
+
+.exploreContainer:last-of-type {
+  border-bottom: 0px #D2D2D2 solid;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+.exploreContainer.selected {
+  cursor: default;
+  background-color: #fafafa;
+  border-top: black 2px solid;
+  box-shadow: #bdbdbd -1px 4px 4px -2px;
+
+}
+
+.exploreContainer:hover {
+  border-top: black 2px solid;
+  background-color: #fafafa;
+  box-shadow: #bdbdbd -1px 4px 4px -2px;
+}
+
+.exploreTitle {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+
+.exploreContainer.selected > .exploreTitle {
+  font-weight: 700;
+}
+
+.pieContainer {
+    display: inline-block;
+}
+
+.pieA {
+  padding-left: 10px;
+}
+
+.pieA, .pieB {
+  width: 47%;
+}
+
+svg {
+  display: inline-block;
+}
+
+.pie {
+  shape-rendering: geometricPrecision;
+}
+
+.text {
+  display: inline-block;
+  margin-left: 5px;
+  vertical-align: top;
+}
+
+.text > p {
+  font-size: 15px;
+  line-height: 1.2;
+  margin: 0px 0px 5px 0px;
+}
+
+.exploreContainer.selected > .pieContainer > .text > p {
+  font-weight: 700;
+}
+
+.text > p:first-of-type {
+  color: #fdbf11;
+}
+
+.text > p:nth-of-type(2n+0) {
+  color: #ca5800;
+}
+
+.text > p:last-of-type {
+  color: #9d9d9d;
+}
+
+
+/* CSS scroll bar */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #E3E3E3;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D2D2D2;
+}
