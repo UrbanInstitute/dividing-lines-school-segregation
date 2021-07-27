@@ -11,18 +11,16 @@ let map = new mapboxgl.Map({
   style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
   zoom: 12.5, // starting zoom
-  interactive: false
+  interactive: true
 
 });
 
-// map.dragPan.disable();
-// map.dragRotate.disable();
-// map.keyboard.disable();
-// map.scrollZoom.disable();
+map.dragPan.disable();
+map.dragRotate.disable();
+map.keyboard.disable();
+map.scrollZoom.disable();
 
 function showLabels(thisSchool, layerNumber, thisLayer) {
-
-    console.log(map.getStyle().layers)
 
   let layerLabels = map.getStyle().layers[layerNumber].id,
   filtersLabels = ["all", ['in', 'schid', thisSchool]]
@@ -42,12 +40,12 @@ function showLabels(thisSchool, layerNumber, thisLayer) {
 
 function showBoundary(thisSchoolA, thisSchoolB) {
 
-  let layerBoundaries = map.getStyle().layers[80].id,
+  let layerBoundaries = map.getStyle().layers[81].id,
   filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
   map.setFilter(layerBoundaries, filterBoundaries);
   map.setLayoutProperty('boundaries', 'visibility', 'visible');
 
-  let layerCatchment = map.getStyle().layers[65].id,
+  let layerCatchment = map.getStyle().layers[62].id,
   filterCatchment = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
   map.setFilter(layerCatchment, filterCatchment);
   map.setLayoutProperty('catchments', 'visibility', 'visible');
@@ -59,7 +57,8 @@ map.on('load', function() {
   // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
   // var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
   // console.log(test2)
-      console.log(map.queryRenderedFeatures({ layers: ['catchments']}))
+      // console.log(map.queryRenderedFeatures({ layers: ['catchments']}))
+      console.log(map.getStyle().layers)
 });
 
 // piechart builder
