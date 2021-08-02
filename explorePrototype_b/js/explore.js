@@ -10,7 +10,7 @@ let map = new mapboxgl.Map({
   container: 'exploreMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
-  zoom: 12.5, // starting zoom
+  zoom: 13, // starting zoom
   interactive: true
 
 });
@@ -45,11 +45,10 @@ function showBoundary(thisSchoolA, thisSchoolB) {
   map.setFilter(layerBoundaries, filterBoundaries);
   map.setLayoutProperty('boundaries', 'visibility', 'visible');
 
-  let layerCatchment = map.getStyle().layers[62].id,
+  let layerCatchment = map.getStyle().layers[64].id,
   filterCatchment = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
   map.setFilter(layerCatchment, filterCatchment);
   map.setLayoutProperty('catchments', 'visibility', 'visible');
-
 
 }
 

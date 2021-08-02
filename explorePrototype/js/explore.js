@@ -1,17 +1,14 @@
-const pieWidth = 65,
-timeOutLength = 200;
-
 let msa = "Atlanta-Sandy Springs-Marietta, GA";
 
 // defines map
 mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
 
 let map = new mapboxgl.Map({
-  container: 'exploreMap', // container ID
-  style: "mapbox://styles/urbaninstitute/ckp8nbuj31u8s18qrv0uwod6b/draft", // style URL
+  container: 'theMap', // container ID
+  style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position ([lng, lat] for Mombasa, Kenya)
-  zoom: 12.5 // starting zoom
-  // interactive: false
+  zoom: 11, // starting zoom
+  interactive: true
 
 });
 
@@ -20,37 +17,6 @@ let map = new mapboxgl.Map({
 // map.keyboard.disable();
 // map.scrollZoom.disable();
 
-function showLabels(thisSchool, layerNumber, thisLayer) {
-
-  let layerLabels = map.getStyle().layers[layerNumber].id,
-  filtersLabels = ["all", ['in', 'schid', thisSchool]]
-  map.setFilter(layerLabels, filtersLabels);
-  map.setLayoutProperty(thisLayer, 'visibility', 'visible');
-
-}
-
-// function showLabels(thisSchoolA, thisSchoolB) {
-//
-//   let layerLabels = map.getStyle().layers[85].id,
-//   filtersLabels = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
-//   map.setFilter(layerLabels, filtersLabels);
-//   map.setLayoutProperty('labels-schools', 'visibility', 'visible');
-//
-// }
-
-function showBoundary(thisSchoolA, thisSchoolB) {
-
-  let layerBoundaries = map.getStyle().layers[80].id,
-  filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
-  map.setFilter(layerBoundaries, filterBoundaries);
-  map.setLayoutProperty('boundaries', 'visibility', 'visible');
-
-  let layerCatchment = map.getStyle().layers[65].id,
-  filterCatchment = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
-  map.setFilter(layerCatchment, filterCatchment);
-  map.setLayoutProperty('catchments', 'visibility', 'visible');
-
-}
 
 map.on('load', function() {
   console.log(map.getStyle().layers)
@@ -59,92 +25,112 @@ map.on('load', function() {
   // console.log(test2)
 });
 
-// piechart builder
-function buildRacePie(container, d, ab) {
-  var black = +d["black" + ab + "_bdy"],
-  hisp = +d["hispa" + ab + "_bdy"],
-  enr = +d["pop" + ab + "_bdy"]
+function showLabels(thisSchool, layerNumber, thisLayer) {
 
-  let arc = d3.arc()
-  .innerRadius(pieWidth / 5)
-  .outerRadius(pieWidth / 2 - 1)
+  var thisSchool = parseInt(thisSchool)
 
-  let arcs = d3.pie().sort(null)([ black, hisp, enr-black-hisp ])
+  let layerLabels = map.getStyle().layers[layerNumber].id,
+  filtersLabels = ["all", ['in', 'schid', thisSchool]]
+  map.setFilter(layerLabels, filtersLabels);
+  map.setLayoutProperty(thisLayer, 'visibility', 'visible');
 
-  let svg = d3.select(container).append("svg").attr("width", pieWidth).attr("height", pieWidth)
-  .append("g")
-  .attr("class", "pie")
-  .attr("transform", "translate(" + pieWidth/2 + "," + pieWidth/2 + ")")
-  .attr("stroke", "white")
-  .attr('stroke-width', 1)
+}
 
-  const t = svg.transition()
-    .duration(750);
+function showBoundary(thisSchoolA, thisSchoolB) {
 
-  let pies = svg.selectAll("path")
-  .data(arcs)
+  var thisSchoolA = parseInt(thisSchoolA),
+  thisSchoolB = parseInt(thisSchoolB);
 
-  pies.join(
-    enter => enter.append("path")
-    .attr("id", (d, i) => {
-      return d.value
-    })
-    .attr("fill", function(d, i){
-      if(i === 0) return "#fdbf11"
-      else if(i === 1) return "#55b748"
-      else return "#1696d2"
-    })
-    .attr("d", arc)
-    .call(enter => enter),
-    update => update
-    .call(update => update),
-    exit => exit
-    .call(exit => exit
-    .remove())
-  )
+  let layerBoundaries = map.getStyle().layers[81].id,
+  filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
+  map.setFilter(layerBoundaries, filterBoundaries);
+  map.setLayoutProperty('boundaries', 'visibility', 'visible');
 
-  let text = d3.select(container).append("div")
-  .attr("class", "text")
+  let layerCatchment = map.getStyle().layers[64].id,
+  filterCatchment = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
+  map.setFilter(layerCatchment, filterCatchment);
+  map.setLayoutProperty('catchments', 'visibility', 'visible');
 
-  let thisText = text.selectAll('p')
-  .data(arcs)
+}
 
-  thisText.join(
-    enter => enter.append("p")
+function drawBars(bb) {
+  var dataParsed = d3.groups(bb, function(d) {
+    return d.borderid;
+  }),
+  dataLength = dataParsed.length;
 
-  )
+  var containerGraphics = document.querySelector("#exploreList")
 
-  let thePs = container.getElementsByTagName("P"),
-  other = enr- (black + hisp),
-  blackPct = `${((black / enr) * 100).toFixed(0)}%`,
-  hispPct = `${((hisp / enr) * 100).toFixed(0)}%`,
-  otherPct = `${((other / enr) * 100).toFixed(0)}%`;
+  containerGraphics.innerHTML = "";
 
-  thePs[0].innerHTML = `${blackPct}`;
-  thePs[1].innerHTML = `${hispPct}`;
-  thePs[2].innerHTML = `${otherPct}`;
-  //
-  //
-  thePs[0].className = "label black";
-  thePs[1].className = "label hisp";
-  thePs[2].className = "label other";
+  console.log(dataParsed)
+
+  for(i = 0; i < dataLength; i++) {
+    var data = dataParsed[i][1][0],
+    withinLength = (dataParsed[i][1].length) - 1,
+    blackPctA = data.pct_black_a + "%",
+    blackPctB = data.pct_black_b + "%",
+    hispPctA = data.pct_hisp_a + "%",
+    hispPctB = data.pct_hisp_b + "%",
+    whitePctA = data.pct_white_a + "%",
+    whitePctB = data.pct_white_b + "%",
+    otherPctA = data.pct_other_a + "%",
+    otherPctB = data.pct_other_b + "%",
+    schidA = data.schida,
+    schidB = data.schidb,
+    thisBoundary = i + 1,
+    allTheSchools = [],
+    finalSchools = "";
+
+    if(data.leabdy == 1) {
+      var boundaryType = "district";
+    } else {
+      var boundaryType = "attendance";
+    }
+
+    var blockBoundary = "<div class=" + boundaryType + "><p class=number><span>" + thisBoundary + " </span>" + "of " + dataLength + " boundaries</p></div>"
+
+    if(withinLength == 0 ) {
+      var textOthers = "";
+    } else if(withinLength == 1) {
+      var textOthers = "<p class=otherSchools>Other pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
+    } else {
+      var textOthers = "<p class=otherSchools>Other " + withinLength + " pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
+    }
 
 
-}  // buildRacePie() ends here
+    if(dataParsed[i][1].length > 1) {
+      for(p = 1; p < dataParsed[i][1].length; p++) {
+        var schoolA = dataParsed[i][1][p].schnamea;
+        var schoolB = dataParsed[i][1][p].schnameb;
+        var bothSchools = '&#x1F3EB' + " " + schoolA + " and " + '&#x1F3EB' + " " + schoolB;
+        allTheSchools.push(bothSchools);
+
+        var finalSchools = allTheSchools.join(' | ')
+      }
+    } else {
+    }
+
+    console.log(finalSchools)
+
+    containerGraphics.innerHTML += "<div class=schoolContainer>" + blockBoundary + "<div class=schoolA id=" + schidA +  "> <p>" + data.schnamea + " and " + data.schnameb + "</p> <div class=graphicSchool> <div class=ticks><div class=tick0>0%</div> <div class=tick50>50%</div> <div class=tick100>100%</div></div> <div class=marks><div class=mark0></div> <div class=mark50></div> <div class=mark100></div></div> <div class=barchart> <div class=blackPct style=width:" + blackPctA + ";></div> <div class=hispPct style=width:"+ hispPctA + ";></div><div class=whitePct style=width:"+ whitePctA + ";></div> <div class=otherPct style=width:"+ otherPctA + ";></div> </div> </div> </div> <div class=schoolB id=" + schidB + "> <p>" + "</p> <div class=graphicSchool> <div class=marks><div class=mark0></div> <div class=mark50></div> <div class=mark100></div></div> <div class=barchart> <div class=blackPct style=width:" + blackPctB + ";></div> <div class=hispPct style=width:"+ hispPctB + ";></div><div class=whitePct style=width:"+ whitePctB + ";></div> <div class=otherPct style=width:"+ otherPctB + ";></div> </div> </div> </div>" + textOthers + "</div>";
+
+    document.getElementsByClassName("schoolContainer")[i].setAttribute("data-schools", finalSchools)
+
+  } // ends loop i
+}
 
 
+function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
-// centerMap()
-function centerMap(bb, bbox) {
-  let thisSchoolA = bb[0].schida,
-  thisSchoolB = bb[0].schidb;
-
-  let thisCatchment = bbox.filter(t => t.schida === thisSchoolA && t.schidb === thisSchoolB)[0];
+  let bboxD = bbox.filter(function(o){
+    return o.schida == thisSchoolA && o.schidb == thisSchoolB
+  })[0];
 
   map.fitBounds(
     [
-      [+thisCatchment.xmin, +thisCatchment.ymin], // southwestern corner of the bounds
-      [+thisCatchment.xmax, +thisCatchment.ymax] // northeastern corner of the bounds
+      [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
+      [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
     ],
     {
       // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
@@ -152,160 +138,79 @@ function centerMap(bb, bbox) {
       "linear": true,
       "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
       "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
-    }
-  );
+    });
 }
-
-function getExploreTitle(d,i) {
-  let schools = `${d.schnamea} and ${d.schnameb}`;
-  return schools;
-}
-
 
 // builds the list of cachments and adds piecharts
 
 function buildExploreList(bb, bbox, msa) {
 
-  //https://stackoverflow.com/questions/4777077/removing-elements-by-class-name
-    function removeElementsByClass(className){
-      const elements = document.getElementsByClassName(className);
-      while(elements.length > 0){
-          elements[0].parentNode.removeChild(elements[0]);
-      }
-  }
-
   bb = bb.filter(function(o){ return o.maname == msa});
 
-  bb = bb.sort(function(a,b){ return +b.bbindex - +a.bbindex });
+  var thisSchoolA = bb[0].schida,
+  thisSchoolB = bb[0].schidb;
 
-  let container = d3.select("#exploreList")
-  .selectAll(".exploreContainer")
-  .data(bb)
-  .join("div")
-  .attr("class", d => {
-    return "exploreContainer"
-  })
+  centerMap(bbox, thisSchoolA, thisSchoolB)
 
-  container.join(
-    enter => enter.append("div")
-      .call(enter => enter),
-    update => update
-      .call(update => update),
-    exit => exit
-      .call(exit => exit
-      .remove())
-  )
+  drawBars(bb)
 
-  removeElementsByClass("exploreTitle")
-
-  container.append("div")
-  .attr("class", "exploreTitle")
-  .text(function(d,i){
-    return getExploreTitle(d,i)
-  })
-
-  removeElementsByClass("pieA")
-  removeElementsByClass("pieB")
-  removeElementsByClass("floater")
-
-  let floater = container.append("div")
-  .attr("class", "floater")
-
-  var pieA = container.append("div")
-  .attr("class", "pieContainer pieA")
-
-  pieA.each(function(d){
-    buildRacePie(this, d, "a")
-  })
-
-  var pieB = container.append("div")
-  .attr("class", "pieContainer pieB")
-
-  pieB.each(function(d){
-    buildRacePie(this, d, "b")
-  })
-
-  let firstContainer = document.getElementsByClassName("exploreContainer")[0];
-  firstContainer.className += " selected";
-
-  centerMap(bb, bbox);
-
-  let thisSchoolA = +bb[0].schida,
-  thisSchoolB = +bb[0].schidb;
-
-  // showLabels(thisSchoolA, thisSchoolB)
+  showBoundary(thisSchoolA, thisSchoolB)
 
   showLabels(thisSchoolA, 84, 'labels-schools-a');
   showLabels(thisSchoolB, 85, 'labels-schools-b');
 
+  allContainers = document.querySelectorAll(".schoolContainer");
 
-  showBoundary(thisSchoolA, thisSchoolB);
+  allContainers[0].className += " selected";
 
-  container.on("click", function(event, d) {
+  var theOtherSchools = allContainers[0].getAttribute("data-schools");
 
-    let bboxD = bbox.filter(function(o){
+  theOtherSchools.replace(/,(?=[^\s])/g, ", ");
 
-      return o.schida == d.schida && o.schidb == d.schidb
-    })[0]
-
-    let thisSchoolA = +d.schida,
-    thisSchoolB = +d.schidb,
-    thisSelected = document.getElementsByClassName("selected")[0];
-
-    thisSelected.classList.remove("selected");
-
-    selectedDiv = $(this)[0];
-
-    selectedDiv.className += " selected";
-
-    map.fitBounds(
-      [
-        [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
-        [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
-      ],
-      {
-        // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
-        "duration": 1000,
-        "linear": true,
-        "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
-        "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
-      }
-    );
-
-    showLabels(thisSchoolA, 84, 'labels-schools-a');
-    showLabels(thisSchoolB, 85, 'labels-schools-b');
-
-    // showLabels(thisSchoolA, thisSchoolB);
-
-    showBoundary(thisSchoolA, thisSchoolB);
-
-    // setTimeout(function(){
-    //
-    //   var allVisible = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] })
-    //   var f1 = map.queryRenderedFeatures({layers: ["sab-badbdy-dh08w0 (1)"] }).filter(function(o){
-    //     return +o.properties.schid == +d.schida || +o.properties.schid == +d.schidb
-    //   })
-    //
-    //   for(var i = 0; i < allVisible.length; i++){
-    //     map.setFeatureState(allVisible[i], { "active": false })
-    //   }
-    //
-    //   for(var i = 0; i < f1.length; i++){
-    //     map.setFeatureState(f1[i], { "active": true })
-    //   }
-    //
-    // },timeOutLength)
+  if(theOtherSchools !== "") {
+  document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+} else {
+  document.getElementById("otherSchools").innerHTML = "";
+}
 
 
-  }) //on.click ends here
+  for(j = 0; j < allContainers.length; j++) {
+    allContainers[j].addEventListener("click", function() {
 
+      var theSelected = document.getElementsByClassName("selected")[0]
+      theSelected.className = "schoolContainer";
 
+      this.className += " selected";
+
+      var theOtherSchools = this.getAttribute("data-schools");
+
+      theOtherSchools.replace(/,(?=[^\s])/g, ", ");
+
+      console.log(theOtherSchools);
+
+      if(theOtherSchools !== "") {
+      document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+    } else {
+      document.getElementById("otherSchools").innerHTML = "";
+    }
+
+      var schoolAId = this.querySelectorAll(".schoolA")[0].id,
+      schoolBId = this.querySelectorAll(".schoolB")[0].id;
+
+      centerMap(bbox, schoolAId, schoolBId)
+
+      showBoundary(schoolAId, schoolBId)
+
+      showLabels(schoolAId, 84, 'labels-schools-a');
+      showLabels(schoolBId, 85, 'labels-schools-b');
+    })
+  } // ends loop j
 } // buildExploreList ends here
 
 
 Promise.all([
   d3.csv("data/source/BB_ALL.csv"),
-  d3.csv("data/source/badbdy.csv"),
+  d3.csv("data/source/badboundaries.csv"),
 ]).then(function(allData) {
   // files[0] will contain file1.csv
 
@@ -330,8 +235,7 @@ Promise.all([
     select: function(event, ui) {
       var msa  = ui.item.value;
       document.getElementById("thisMsa").innerHTML = msa;
-      buildExploreList(bbData, bboxData, msa)
-      document.getElementById("exploreList").scrollTo({top: 0, behavior: 'smooth'});
+      buildExploreList(bbData, bboxData, msa);
     }
   });
 

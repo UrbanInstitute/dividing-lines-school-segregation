@@ -58,6 +58,7 @@ p.dek {
 #containerMap > #colorLegend {
   margin-left: 0;
   margin-bottom: 5px;
+  max-width: 280px;
 }
 
 .legendContainer {
@@ -80,6 +81,11 @@ p.dek {
   vertical-align: middle;
   margin-right: 1px;
   margin-bottom: 2px;
+}
+
+#containerMap > #colorLegend > .legendContainer > p {
+  margin-bottom: 5px !important;
+  margin-top: 0px !important;
 }
 
 #containerMap > #colorLegend > .legendContainer:last-of-type {
@@ -108,8 +114,13 @@ p.dek {
 }
 
 .legendContainer > .other {
-  background-color: #d5d5d4;
-  border: 1px #d5d5d4 solid
+  background-color: #9d9d9d;
+  border: 1px #9d9d9d solid
+}
+
+.legendContainer > .mixed {
+  background-color: #d2d2d2;
+  border: 1px #d2d2d2 solid
 }
 
 .legendContainer > .rest {
