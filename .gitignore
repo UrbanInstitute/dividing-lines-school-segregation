@@ -1,5 +1,5 @@
 *.mbtiles
-.DS_Store
+**/.DS_Store
 *.geojson
 *.zip
 *.dbf

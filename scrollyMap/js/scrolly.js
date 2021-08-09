@@ -3,52 +3,75 @@ mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZ
 let map = new mapboxgl.Map({
   container: 'exploreMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckqv6bmld0mu917qsfxupq41d/draft", // style URL
-  center: [-84.319,33.854], // starting position ([lng, lat] for Mombasa, Kenya)
-  zoom: 12.3, // starting zoom
+  center: [-84.319,33.855], // starting position ([lng, lat] for Mombasa, Kenya)
+  zoom: 12.35, // starting zoom
   interactive: false
 
 });
 
+function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
+  map.setPaintProperty(thisLayer, thisStyle, setTo);
+
+  map.getLayer(thisLayer).setPaintProperty(transitionStyle, {duration: thisDuration, delay: 0})
+}
+
 
 function setMap() {
-  map.setPaintProperty("ashfordlewis-new-worm", 'line-opacity', 0);
+
+  document.getElementById("exploreMap").style.display = "block";
+  document.getElementById("scatter").style.display = "none";
 
   let layerLabels = map.getStyle().layers[82].id,
   filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
   map.setFilter(layerLabels, filtersLabels);
 
-  map.setPaintProperty("ashfordlewis-old-sab", 'line-opacity', 1);
+  setStyles("ashfordlewis-old-sab", 'line-opacity', 1, 'line-opacity-transition', 1000)
 
-  map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+  setStyles("scrollyschools-labels", 'text-opacity', 1, 'text-opacity-transition', 2000)
 
-  map.setPaintProperty("scrollyschools-labels", 'text-opacity', 1);
+  setStyles("scrollyschools-labels", 'icon-opacity', 1, 'icon-opacity-transition', 2000)
 
-  map.getLayer("scrollyschools-labels").setPaintProperty('text-opacity-transition', {duration: 2000, delay: 0})
+  if(map.queryRenderedFeatures({ layers: ['dots-black-hispanic']})[0].layer.paint["circle-radius"]!== 0) {
 
-  map.setPaintProperty("scrollyschools-labels", 'icon-opacity', 1);
+    setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000);
+    setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000);
 
-  map.getLayer("scrollyschools-labels").setPaintProperty('icon-opacity-transition', {duration: 2000, delay: 0})
+  }
 }
 
-function openMap(sign) {
-  
-    map.on('load', function() {
-      // console.log(map.getStyle().layers)
-      setMap()
-
-    });
-
-  document.getElementById("scatter").style.display = "none";
-}
+// function openMap(sign) {
+//
+//     map.on('load', function() {
+//       // console.log(map.getStyle().layers)
+//       setMap()
+//
+//     });
+//
+//   document.getElementById("scatter").style.display = "none";
+// }
 
 function addDots() {
-  map.setPaintProperty("dots-black-hispanic", 'circle-radius', 1.5);
 
-  map.getLayer("dots-black-hispanic").setPaintProperty('circle-radius-transition', {duration: 700, delay: 0})
+  document.getElementById("exploreMap").style.display = "block";
+  document.getElementById("scatter").style.display = "none";
 
-  map.setPaintProperty("dots-others", 'circle-radius', 1.5);
+  setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
+  setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
 
-  map.getLayer("dots-others").setPaintProperty('circle-radius-transition', {duration: 2000, delay: 0})
+
+  if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-sab']})[0].layer.paint["line-opacity"] !== 0) {
+
+    setStyles("ashfordlewis-new-sab", 'line-opacity', 0, 'line-opacity-transition', 1000)
+    setStyles("ashfordlewis-old-sab", 'line-opacity', 1, 'line-opacity-transition', 2000)
+
+    let layerLabels = map.getStyle().layers[82].id,
+    filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
+    map.setFilter(layerLabels, filtersLabels);
+
+    // map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
+    //
+    // map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+  }
 
 }
 
@@ -64,11 +87,26 @@ function newBoundaries() {
   map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
 
   map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
+
+  if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-worm']})[0].layer.paint["line-opacity"] !== 0) {
+    let layerLabels = map.getStyle().layers[82].id,
+    filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
+    map.setFilter(layerLabels, filtersLabels);
+
+    let layerSab = map.getStyle().layers[79].id,
+    filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
+    map.setFilter(layerSab, filtersSab);
+
+    setStyles("ashfordlewis-new-worm", 'line-opacity', 0, 'line-opacity-transition', 1000)
+
+
+  }
 }
 
 function theWorm() {
-  // console.log(test[0].geometry)
-  console.log(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-worm']}))
+
+  document.getElementById("exploreMap").style.display = "block";
+  document.getElementById("scatter").style.display = "none";
 
   let layerSab = map.getStyle().layers[79].id,
   filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
@@ -80,21 +118,23 @@ function theWorm() {
 
   map.setPaintProperty("ashfordlewis-new-worm", 'line-opacity', 1);
   map.getLayer("ashfordlewis-new-worm").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+
+  if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
+
+      setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 2000)
+
+  }
 }
 
 function blocksMap() {
-  map.setPaintProperty("dots-black-hispanic", 'circle-radius', 0);
 
-  map.getLayer("dots-black-hispanic").setPaintProperty('circle-radius-transition', {duration: 1000, delay: 0})
+  document.getElementById("exploreMap").style.display = "block";
+  document.getElementById("scatter").style.display = "none";
 
-  map.setPaintProperty("dots-others", 'circle-radius', 0);
+  setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000)
+  setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000)
 
-  map.getLayer("dots-others").setPaintProperty('circle-radius-transition', {duration: 500, delay: 0})
-
-  map.setPaintProperty("blocks_choropleth", 'fill-opacity', 1);
-
-  map.getLayer("blocks_choropleth").setPaintProperty('fill-opacity-transition', {duration: 2000, delay: 0})
-
+  setStyles("blocks_choropleth", 'fill-opacity', 1, 'fill-opacity-transition', 2000)
 }
 
 
@@ -102,16 +142,16 @@ function scatter() {
 
   document.getElementById("exploreMap").style.display = "none";
   document.getElementById("scatter").style.display = "block";
-    document.getElementById("scatter").innerHTML = '';
+  document.getElementById("scatter").innerHTML = '';
 
   function plot(data) {
 
     var colors = ["#fff3d1", "#fce39e", "#fdd870", "#fdbf11"]
 
     var widthWindow = (document.getElementById("scatter").offsetWidth),
-    margin = {top: 25, right: 20, bottom: 50, left: 35},
+    margin = {top: 25, right: 20, bottom: 70, left: 35},
     width = (widthWindow) - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom
+    height = 600 - margin.top - margin.bottom
 
     var svg = d3.select("#scatter")
       .append("svg")
@@ -197,6 +237,7 @@ function scatter() {
       .data(data)
       .enter()
       .append("circle")
+      .attr("r", 0)
       .attr("class", "bubble")
       .attr("id", function(d) {
         return d.gisjoin
@@ -206,9 +247,6 @@ function scatter() {
       })
       .attr("cy", function(d) {
         return yScale(+d.BLACKHISP_PCT)
-      })
-      .attr("r", function(d) {
-        return rScale(+d.pop)
       })
       .style("fill", function(d) {
         if(+d.BLACKHISP_PCT < 25) {
@@ -223,6 +261,11 @@ function scatter() {
       })
       .style("opacity", "0.6")
       .attr("stroke", "black")
+      .transition()
+      .duration(1000)
+      .attr("r", function(d) {
+        return rScale(+d.pop)
+      })
 
       svg
       .append("text")
@@ -236,9 +279,41 @@ function scatter() {
       .append("text")
         .attr("text-anchor", "start")
         .attr("class", "label-axis")
-        .attr("x", -margin.left + 5)
-        .attr("y", -12)
+        .attr("x", -margin.left + 2)
+        .attr("y", -14)
         .text("Black or Hispanic share")
+
+      svg
+      .append("text")
+      .attr("tex-anchor", "start")
+      .attr("class", "school-names")
+      .attr("x", 0)
+      .attr("y", (height / 2) -50)
+      .text("John Lewis")
+
+      svg
+      .append("text")
+      .attr("tex-anchor", "start")
+      .attr("class", "school-names")
+      .attr("x", 0)
+      .attr("y", (height / 2) -30)
+      .text("Elementary")
+
+      svg
+      .append("text")
+      .attr("tex-anchor", "start")
+      .attr("class", "school-names")
+      .attr("x", width - 100)
+      .attr("y", (height / 2) -50)
+      .text("Ashford Park")
+
+      svg
+      .append("text")
+      .attr("tex-anchor", "start")
+      .attr("class", "school-names")
+      .attr("x", width -100)
+      .attr("y", (height / 2) -30)
+      .text("Elementary")
   }
 
   d3.csv("data/ashfordlewis_blocks.csv", plot)

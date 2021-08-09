@@ -112,7 +112,6 @@ function buildRacePie(container, d, ab) {
 
   thisText.join(
     enter => enter.append("p")
-
   )
 
   let thePs = container.getElementsByTagName("P"),

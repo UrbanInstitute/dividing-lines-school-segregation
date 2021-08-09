@@ -150,157 +150,10 @@ var scrollVis = function () {
   // chart ends here
 
 
-  /**
-   * setupVis - creates initial elements for all
-   * sections of the visualization.
-   *
-   * @param wordData - data object for each word.
-   * @param fillerCounts - nested data that includes
-   *  element for each filler word type.
-   * @param histData - binned histogram data
-   */
-  // var setupVis = function (wordData, fillerCounts, histData) {
-  //   // axis
-  //   g.append('g')
-  //     .attr('class', 'x axis')
-  //     .attr('transform', 'translate(0,' + height + ')')
-  //     .call(xAxisBar);
-  //   g.select('.x.axis').style('opacity', 0);
-  //
-  //   // count openvis title
-  //   g.append('text')
-  //     .attr('class', 'title openvis-title')
-  //     .attr('x', width / 2)
-  //     .attr('y', height / 3)
-  //     .text('2013');
-  //
-  //   g.append('text')
-  //     .attr('class', 'sub-title openvis-title')
-  //     .attr('x', width / 2)
-  //     .attr('y', (height / 3) + (height / 5))
-  //     .text('OpenVis Conf');
-  //
-  //   g.selectAll('.openvis-title')
-  //     .attr('opacity', 0);
-  //
-  //   // count filler word count title
-  //   g.append('text')
-  //     .attr('class', 'title count-title highlight')
-  //     .attr('x', width / 2)
-  //     .attr('y', height / 3)
-  //     .text('180');
-  //
-  //   g.append('text')
-  //     .attr('class', 'sub-title count-title')
-  //     .attr('x', width / 2)
-  //     .attr('y', (height / 3) + (height / 5))
-  //     .text('Filler Words');
-  //
-  //   g.selectAll('.count-title')
-  //     .attr('opacity', 0);
-  //
-  //   // square grid
-  //   // @v4 Using .merge here to ensure
-  //   // new and old data have same attrs applied
-  //   var squares = g.selectAll('.square').data(wordData, function (d) { return d.word; });
-  //   var squaresE = squares.enter()
-  //     .append('rect')
-  //     .classed('square', true);
-  //   squares = squares.merge(squaresE)
-  //     .attr('width', squareSize)
-  //     .attr('height', squareSize)
-  //     .attr('fill', '#fff')
-  //     .classed('fill-square', function (d) { return d.filler; })
-  //     .attr('x', function (d) { return d.x;})
-  //     .attr('y', function (d) { return d.y;})
-  //     .attr('opacity', 0);
-  //
-  //   // barchart
-  //   // @v4 Using .merge here to ensure
-  //   // new and old data have same attrs applied
-  //   var bars = g.selectAll('.bar').data(fillerCounts);
-  //   var barsE = bars.enter()
-  //     .append('rect')
-  //     .attr('class', 'bar');
-  //   bars = bars.merge(barsE)
-  //     .attr('x', 0)
-  //     .attr('y', function (d, i) { return yBarScale(i);})
-  //     .attr('fill', function (d, i) { return barColors[i]; })
-  //     .attr('width', 0)
-  //     .attr('height', yBarScale.bandwidth());
-  //
-  //   var barText = g.selectAll('.bar-text').data(fillerCounts);
-  //   barText.enter()
-  //     .append('text')
-  //     .attr('class', 'bar-text')
-  //     .text(function (d) { return d.key + '…'; })
-  //     .attr('x', 0)
-  //     .attr('dx', 15)
-  //     .attr('y', function (d, i) { return yBarScale(i);})
-  //     .attr('dy', yBarScale.bandwidth() / 1.2)
-  //     .style('font-size', '110px')
-  //     .attr('fill', 'white')
-  //     .attr('opacity', 0);
-  //
-  //   // histogram
-  //   // @v4 Using .merge here to ensure
-  //   // new and old data have same attrs applied
-  //   var hist = g.selectAll('.hist').data(histData);
-  //   var histE = hist.enter().append('rect')
-  //     .attr('class', 'hist');
-  //   hist = hist.merge(histE).attr('x', function (d) { return xHistScale(d.x0); })
-  //     .attr('y', height)
-  //     .attr('height', 0)
-  //     .attr('width', xHistScale(histData[0].x1) - xHistScale(histData[0].x0) - 1)
-  //     .attr('fill', barColors[0])
-  //     .attr('opacity', 0);
-  //
-  //   // cough title
-  //   g.append('text')
-  //     .attr('class', 'sub-title cough cough-title')
-  //     .attr('x', width / 2)
-  //     .attr('y', 60)
-  //     .text('cough')
-  //     .attr('opacity', 0);
-  //
-  //   // arrowhead from
-  //   // http://logogin.blogspot.com/2013/02/d3js-arrowhead-markers.html
-  //   svg.append('defs').append('marker')
-  //     .attr('id', 'arrowhead')
-  //     .attr('refY', 2)
-  //     .attr('markerWidth', 6)
-  //     .attr('markerHeight', 4)
-  //     .attr('orient', 'auto')
-  //     .append('path')
-  //     .attr('d', 'M 0,0 V 4 L6,2 Z');
-  //
-  //   g.append('path')
-  //     .attr('class', 'cough cough-arrow')
-  //     .attr('marker-end', 'url(#arrowhead)')
-  //     .attr('d', function () {
-  //       var line = 'M ' + ((width / 2) - 10) + ' ' + 80;
-  //       line += ' l 0 ' + 230;
-  //       return line;
-  //     })
-  //     .attr('opacity', 0);
-  // };
-
-  /**
-   * setupSections - each section is activated
-   * by a separate function. Here we associate
-   * these functions to the sections based on
-   * the section's index.
-   *
-   */
-
-  function hola6() {
-    console.log("HOLA 6")
-  }
-
   var setupSections = function () {
     // activateFunctions are called each
     // time the active section changes
-    activateFunctions[0] = openMap;
+    activateFunctions[0] = setMap;
     activateFunctions[1] = addDots;
     activateFunctions[2] = newBoundaries;
     activateFunctions[3] = theWorm;
@@ -664,25 +517,25 @@ var scrollVis = function () {
    *
    * @param rawData - data read in from file
    */
-  function getWords(rawData) {
-    return rawData.map(function (d, i) {
-      // is this word a filler word?
-      d.filler = (d.filler === '1') ? true : false;
-      // time in seconds word was spoken
-      d.time = +d.time;
-      // time in minutes word was spoken
-      d.min = Math.floor(d.time / 60);
-
-      // positioning for square visual
-      // stored here to make it easier
-      // to keep track of.
-      d.col = i % numPerRow;
-      d.x = d.col * (squareSize + squarePad);
-      d.row = Math.floor(i / numPerRow);
-      d.y = d.row * (squareSize + squarePad);
-      return d;
-    });
-  }
+  // function getWords(rawData) {
+  //   return rawData.map(function (d, i) {
+  //     // is this word a filler word?
+  //     d.filler = (d.filler === '1') ? true : false;
+  //     // time in seconds word was spoken
+  //     d.time = +d.time;
+  //     // time in minutes word was spoken
+  //     d.min = Math.floor(d.time / 60);
+  //
+  //     // positioning for square visual
+  //     // stored here to make it easier
+  //     // to keep track of.
+  //     d.col = i % numPerRow;
+  //     d.x = d.col * (squareSize + squarePad);
+  //     d.row = Math.floor(i / numPerRow);
+  //     d.y = d.row * (squareSize + squarePad);
+  //     return d;
+  //   });
+  // }
 
   /**
    * getFillerWords - returns array of
@@ -740,15 +593,12 @@ var scrollVis = function () {
   chart.activate = function (index) {
     activeIndex = index;
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
-    console.log("sign", sign)
+    console.log(sign)
     var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
-    console.log("scrolledSectionss", scrolledSections)
     scrolledSections.forEach(function (i) {
-      console.log(activateFunctions[i])
       activateFunctions[i]();
     });
     lastIndex = activeIndex;
-    console.log("lastIndex", lastIndex)
   };
 
   /**
@@ -776,6 +626,7 @@ var scrollVis = function () {
  * @param data - loaded tsv data
  */
 function display(data) {
+  
   // create a new plot and
   // display it
   var plot = scrollVis();

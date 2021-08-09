@@ -105,6 +105,6 @@ span#all-dot {
 
 .school-names {
   font-family: 'Lato', 'Arial', sans-sans-serif;
-  font-weight: 400;
-  max-width: 50px;
+  font-weight: 700;
+  fill: #353535;
 }
