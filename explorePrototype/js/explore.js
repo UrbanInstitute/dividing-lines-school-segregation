@@ -19,7 +19,8 @@ let map = new mapboxgl.Map({
 
 
 map.on('load', function() {
-  // console.log(map.getStyle().layers)
+    // map.resize();
+  console.log(map.getStyle().layers)
   // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
   // var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
   // console.log(test2)
@@ -41,7 +42,7 @@ function showBoundary(thisSchoolA, thisSchoolB) {
   var thisSchoolA = parseInt(thisSchoolA),
   thisSchoolB = parseInt(thisSchoolB);
 
-  let layerBoundaries = map.getStyle().layers[81].id,
+  let layerBoundaries = map.getStyle().layers[79].id,
   filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
   map.setFilter(layerBoundaries, filterBoundaries);
   map.setLayoutProperty('boundaries', 'visibility', 'visible');
@@ -169,8 +170,8 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
     showBoundary(thisSchoolA, thisSchoolB)
 
-    showLabels(thisSchoolA, 84, 'labels-schools-a');
-    showLabels(thisSchoolB, 85, 'labels-schools-b');
+    showLabels(thisSchoolA, 80, 'labels-schools-a');
+    showLabels(thisSchoolB, 81, 'labels-schools-b');
 
     var allContainers = document.querySelectorAll(".schoolContainer");
 
@@ -205,8 +206,8 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
         showBoundary(schoolAId, schoolBId)
 
-        showLabels(schoolAId, 84, 'labels-schools-a');
-        showLabels(schoolBId, 85, 'labels-schools-b');
+        showLabels(schoolAId, 80, 'labels-schools-a');
+        showLabels(schoolBId, 81, 'labels-schools-b');
 
         pymChild.sendHeight();
       })
@@ -217,7 +218,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
   Promise.all([
     d3.csv("data/source/BB_ALL.csv"),
-    d3.csv("data/source/badboundaries.csv"),
+    d3.csv("data/source/badbdy.csv"),
   ]).then(function(allData) {
     // files[0] will contain file1.csv
 
