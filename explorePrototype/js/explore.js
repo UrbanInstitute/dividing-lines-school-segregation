@@ -87,9 +87,11 @@ function drawBars(bb) {
     finalSchools = "";
 
     if(data.leabdy == 1) {
-      var boundaryType = "district";
+      var boundaryType = "accrossTwo";
+      console.log(boundaryType)
     } else {
-      var boundaryType = "attendance";
+      var boundaryType = "withinOne";
+      console.log(boundaryType)
     }
 
     var blockBoundary = "<div class=" + boundaryType + "><p class=number><span>" + thisBoundary + " </span>" + "of " + dataLength + " boundaries</p></div>"

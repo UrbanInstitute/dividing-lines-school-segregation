@@ -77,17 +77,17 @@ p.dek {
   margin-bottom: 5px;
 }
 
-.district, .attendance {
+.withinOne, .accrossTwo {
   position: absolute;
   top: -11px;
   left: -9px;
   height: 25px;
-  /* border: 1px #eba9ca solid; */
+  padding-bottom: 2px;
 
 }
 
 
-.district {
+.accrossTwo {
   background: repeating-linear-gradient(
     45deg,
     #FAE9F2,
@@ -97,11 +97,11 @@ p.dek {
   )
 }
 
-.attendance {
+.withinOne {
   background: #FAE9F2;
 }
 
-.district > p, .attendance > p  {
+.withinOne > p, .accrossTwo > p  {
   display: inline-block;
   color: black;
   /* background-color: #fde8fa; */
@@ -302,7 +302,7 @@ p.dek {
   font-size: 16px;
 }
 
-.districtLegend {
+.acrossLegend {
   background: repeating-linear-gradient(
     45deg,
     #FAE9F2,
@@ -312,7 +312,7 @@ p.dek {
   );
 }
 
-.attendanceLegend {
+.withinLegend {
   background: #FAE9F2;
 }
 
