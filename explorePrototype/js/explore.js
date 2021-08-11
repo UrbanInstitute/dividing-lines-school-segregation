@@ -3,7 +3,7 @@ let msa = "Atlanta-Sandy Springs-Marietta, GA";
 // defines map
 mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
 
-let map = new mapboxgl.Map({
+let mapTool = new mapboxgl.Map({
   container: 'theMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position [lng, lat]
@@ -12,17 +12,17 @@ let map = new mapboxgl.Map({
 
 });
 
-// map.dragPan.disable();
-// map.dragRotate.disable();
-// map.keyboard.disable();
-// map.scrollZoom.disable();
+// mapTool.dragPan.disable();
+// mapTool.dragRotate.disable();
+// mapTool.keyboard.disable();
+  mapTool.scrollZoom.disable();
 
 
-map.on('load', function() {
-    // map.resize();
-  console.log(map.getStyle().layers)
-  // var test = map.queryRenderedFeatures({ layers: ['labels-schools-a']});
-  // var test2 = map.queryRenderedFeatures({ layers: ['boundaries']});
+mapTool.on('load', function() {
+    // mapTool.resize();
+  console.log(mapTool.getStyle().layers)
+  // var test = mapTool.queryRenderedFeatures({ layers: ['labels-schools-a']});
+  // var test2 = mapTool.queryRenderedFeatures({ layers: ['boundaries']});
   // console.log(test2)
 });
 
@@ -30,10 +30,10 @@ function showLabels(thisSchool, layerNumber, thisLayer) {
 
   var thisSchool = parseInt(thisSchool)
 
-  let layerLabels = map.getStyle().layers[layerNumber].id,
+  let layerLabels = mapTool.getStyle().layers[layerNumber].id,
   filtersLabels = ["all", ['in', 'schid', thisSchool]]
-  map.setFilter(layerLabels, filtersLabels);
-  map.setLayoutProperty(thisLayer, 'visibility', 'visible');
+  mapTool.setFilter(layerLabels, filtersLabels);
+  mapTool.setLayoutProperty(thisLayer, 'visibility', 'visible');
 
 }
 
@@ -42,22 +42,26 @@ function showBoundary(thisSchoolA, thisSchoolB) {
   var thisSchoolA = parseInt(thisSchoolA),
   thisSchoolB = parseInt(thisSchoolB);
 
-  let layerBoundaries = map.getStyle().layers[79].id,
+  let layerBoundaries = mapTool.getStyle().layers[78].id,
   filterBoundaries = ["all", ['in', 'schida', thisSchoolA], ['in', 'schidb', thisSchoolB]]
-  map.setFilter(layerBoundaries, filterBoundaries);
-  map.setLayoutProperty('boundaries', 'visibility', 'visible');
+  mapTool.setFilter(layerBoundaries, filterBoundaries);
+  mapTool.setLayoutProperty('boundaries', 'visibility', 'visible');
 
-  let layerCatchment = map.getStyle().layers[64].id,
+  let layerCatchment = mapTool.getStyle().layers[63].id,
   filterCatchment = ["all", ['in', 'schid', thisSchoolA, thisSchoolB]]
-  map.setFilter(layerCatchment, filterCatchment);
-  map.setLayoutProperty('catchments', 'visibility', 'visible');
+  mapTool.setFilter(layerCatchment, filterCatchment);
+  mapTool.setLayoutProperty('catchments', 'visibility', 'visible');
 
 }
 
 function drawBars(bb) {
-  var dataParsed = d3.groups(bb, function(d) {
-    return d.borderid;
-  }),
+
+  var dataParsed = d3.nest()
+    .key(function(d) {
+      return d.borderid
+    })
+    .entries(bb)
+
   dataLength = dataParsed.length;
 
   var containerGraphics = document.querySelector("#exploreList")
@@ -65,8 +69,9 @@ function drawBars(bb) {
   containerGraphics.innerHTML = "";
 
   for(i = 0; i < dataLength; i++) {
-    var data = dataParsed[i][1][0],
-    withinLength = (dataParsed[i][1].length) - 1,
+    var values = dataParsed[i].values,
+    data = values[0],
+    withinLength = values.length -1,
     blackPctA = data.pct_black_a + "%",
     blackPctB = data.pct_black_b + "%",
     hispPctA = data.pct_hisp_a + "%",
@@ -92,20 +97,23 @@ function drawBars(bb) {
     if(withinLength == 0 ) {
       var textOthers = "";
     } else if(withinLength == 1) {
-      var textOthers = "<p class=otherSchools>Other pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
+      var textOthers = "<p class=moreSchools>Other pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
     } else {
-      var textOthers = "<p class=otherSchools>Other " + withinLength + " pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
+      var textOthers = "<p class=moreSchools>Other " + withinLength + " pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
     }
 
+    var moreShools = values.length;
 
-    if(dataParsed[i][1].length > 1) {
-      for(p = 1; p < dataParsed[i][1].length; p++) {
-        var schoolA = dataParsed[i][1][p].schnamea;
-        var schoolB = dataParsed[i][1][p].schnameb;
+    if(moreShools > 1) {
+
+      for(p = 1; p < moreShools; p++) {
+        var thisData = values[p];
+        var schoolA = thisData.schnamea;
+        var schoolB = thisData.schnameb;
         var bothSchools = '&#x1F3EB' + " " + schoolA + " and " + '&#x1F3EB' + " " + schoolB;
         allTheSchools.push(bothSchools);
 
-        var finalSchools = allTheSchools.join(' | ')
+        var finalSchools = allTheSchools.join(' &#9658; ')
       }
     } else {
     }
@@ -115,12 +123,9 @@ function drawBars(bb) {
     document.getElementsByClassName("schoolContainer")[i].setAttribute("data-schools", finalSchools)
 
     if(i === 0) {
-      console.log(0)
       var theOtherSchools = document.getElementsByClassName("schoolContainer")[i].getAttribute("data-schools");
-      console.log(theOtherSchools)
       if(theOtherSchools !== "") {
-        document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
-        pymChild.sendHeight();
+        document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
       } else {
         document.getElementById("otherSchools").innerHTML = "";
       }
@@ -135,7 +140,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
     return o.schida == thisSchoolA && o.schidb == thisSchoolB
   })[0];
 
-  map.fitBounds(
+  mapTool.fitBounds(
     [
       [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
       [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
@@ -155,7 +160,6 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
     bb = bb.filter(function(o){ return o.maname == msa});
 
-
     if(msa === "Atlanta-Sandy Springs-Marietta, GA") {
       var thisSchoolA = bb[1].schida,
       thisSchoolB = bb[1].schidb;
@@ -170,8 +174,8 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
     showBoundary(thisSchoolA, thisSchoolB)
 
-    showLabels(thisSchoolA, 80, 'labels-schools-a');
-    showLabels(thisSchoolB, 81, 'labels-schools-b');
+    showLabels(thisSchoolA, 79, 'labels-schools-a');
+    showLabels(thisSchoolB, 80, 'labels-schools-b');
 
     var allContainers = document.querySelectorAll(".schoolContainer");
 
@@ -194,7 +198,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
         theOtherSchools.replace(/,(?=[^\s])/g, ", ");
 
         if(theOtherSchools !== "") {
-          document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+          document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
         } else {
           document.getElementById("otherSchools").innerHTML = "";
         }
@@ -206,47 +210,39 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
         showBoundary(schoolAId, schoolBId)
 
-        showLabels(schoolAId, 80, 'labels-schools-a');
-        showLabels(schoolBId, 81, 'labels-schools-b');
+        showLabels(schoolAId, 79, 'labels-schools-a');
+        showLabels(schoolBId, 80, 'labels-schools-b');
 
-        pymChild.sendHeight();
       })
     } // ends loop j
 
   } // buildExploreList ends here
 
+  d3.queue()
+    .defer(d3.csv, "data/source/BB_ALL.csv")
+    .defer(d3.csv, "data/source/badbdy.csv")
+    .await(function(error, bboxData, bbData) {
+      if(error) throw error;
 
-  Promise.all([
-    d3.csv("data/source/BB_ALL.csv"),
-    d3.csv("data/source/badbdy.csv"),
-  ]).then(function(allData) {
-    // files[0] will contain file1.csv
+        let uniqueMetros = [
+          ...new Set(
+            bbData.map(function(o){
+              return o.maname
+            })
+            .sort(function(a,b){
+              return (a<b) ? - 1: 1;
+            })
+          )
+        ];
 
-    var bboxData = allData[0],
-    bbData = allData[1]
+          setTimeout(buildExploreList(bbData, bboxData, msa), 500)
 
-    let uniqueMetros = [
-      ...new Set(
-        bbData.map(function(o){
-          return o.maname
-        })
-        .sort(function(a,b){
-          return (a<b) ? - 1: 1;
-        })
-      )
-    ];
-
-    buildExploreList(bbData, bboxData, msa)
-
-    $("#exploreAutocomplete").autocomplete({
-      source: uniqueMetros,
-      select: function(event, ui) {
-        var msa  = ui.item.value;
-        document.getElementById("thisMsa").innerHTML = msa;
-        buildExploreList(bbData, bboxData, msa);
-      }
-    });
-
-  }).catch(function(err) {
-    // handle error here
-  })
+          $("#exploreAutocomplete").autocomplete({
+            source: uniqueMetros,
+            select: function(event, ui) {
+              var msa  = ui.item.value;
+              document.getElementById("thisMsa").innerHTML = msa;
+              buildExploreList(bbData, bboxData, msa);
+            }
+          });
+    })

@@ -33,23 +33,26 @@
 }
 
 
-.step >  p > span {
+/* .step >  p > span {
   font-weight: 700;
+} */
+
+span.black {
+  border-bottom: 2px #fdbf11 solid;
+  padding: 0px 2px 2px 2px;
 }
 
-span#black-span {
-  color: #fdbf11;
+span.hispanic {
+  border-bottom: 2px #ca5800 solid;
+  padding: 0px 2px 2px 2px;
 }
 
-span#hispanic-span {
-  color: #55b748;
+span.white {
+  border-bottom: 2px #1696d2 solid;
+  padding: 0px 2px 2px 2px;
 }
 
-span#white-span {
-  color: #1696d2;
-}
-
-span#all-dot {
+span.allDot {
   content: '';
   display: inline-block;
   width: 6px;
@@ -80,6 +83,58 @@ span#all-dot {
   width: 700px;
   height: 600px;
 }
+
+#legendMap {
+  max-width: 250px;
+}
+
+#ranges > div {
+  display: inline-block;
+  width: 24%;
+  border-right: 1px black solid;
+  height: 15px;
+}
+
+#ranges > div:nth-child(4) {
+  border-right: 0px black solid;
+}
+
+#range1 {
+  background-color: #fff3d1;
+
+}
+
+#range2 {
+  background-color: #fce39e;
+
+}
+
+#range3 {
+  background-color: #fdd870;
+
+}
+
+#range4 {
+  background-color: #fdbf11;
+
+}
+
+#edition > p {
+  display: inline-block;
+  width: 21%;
+  margin: 0;
+  font-size: 15px;
+}
+
+#edition > p:nth-child(2) {
+  width: 24%;
+}
+
+#edition > p:nth-child(3) {
+  width: 23%;
+}
+
+
 
 
 /*CSS SCATTER PLOT*/

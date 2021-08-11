@@ -1,31 +1,265 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="navList">
 <head>
-    <style>
-       .container{
-            max-width: 1020px;
-        }
-    </style>
 
-    <title>School boundaries</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>School boundaries</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3.0, minimum-scale=1">
 
-    <link rel="stylesheet" type="text/css" href="css/main.css"/>
-    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic,900" rel="stylesheet" type="text/css">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" type="text/css" href="css/main.css"/>
+  <link rel="stylesheet" type="text/css" href="css/urban-header.css"/>
+  <link rel="stylesheet" type="text/css" href="css/tool.css"/>
+  <link rel="stylesheet" type="text/css" href="css/scrolly.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic,900" rel="stylesheet" type="text/css">
 
 </head>
 
 <body>
-    <div id="explorer"></div>
 
-    <script src="js/vendor/pym.v1.min.js"></script>
-    <script src="js/vendor/jquery-1.12.4.js"></script>
+  <!-- <div id = "sectionIndex" data-index="0"></div> -->
+  <!-- <div id = "isMobile"></div> -->
+  <!-- <div id = "isPhone"></div>
+  <div id = "isShort"></div> -->
 
-    <script>
-        var pymParent = new pym.Parent("explorer", "tool_explorer.html", {});
-    </script>
+  <!-- START HEADER -->
+  <div id="header-pinned" class="no-touch">
+    <a target="_blank" href="https://www.urban.org" title="Home" rel="home" class="site-logo"></a>
+    <div class="title"><span class="feature-link"><a href="https://www.urban.org/features" class="title-linkback" alt="Urban Institute logo">Features</a></span>
+    </div>
+    <div class="share-icons">
+      <div class="shareThisP">
+        <span onclick="toggle_visibility('shareBox');">
+          <div class="shareThisB"></div>
+        </span>
+        <div class="shareThisW" id="shareBox">
+
+          <div class="addthis_toolbox addthis_default_style  "addthis:title="" addthis:url="">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A//urbn.is/equitytool" target="_blank" class="addthis_button_facebook at300b" title="Facebook" onclick="toggle_visibility('shareBox');"><span class="at4-icon aticon-facebook" style="background-color: rgb(48, 88, 145);"><span class="at_a11y">Share on facebook</span></span></a>
+
+            <a href="https://twitter.com/intent/tweet?text=Spatial%20Equity%20Data%20Tool%3A%20%0AMeasuring%20Spatial%20Disparities%20in%20Your%20City.%20(via%20%40urbaninstitute)%20http%3A%2F%2Furbn.is%2Fequitytool" target="_blank" class="addthis_button_twitter at300b" title="Tweet" onclick="toggle_visibility('shareBox');"><span class="at4-icon aticon-twitter" style="background-color: rgb(44, 168, 210);"><span class="at_a11y">Share on twitter</span></span></a>
+
+            <a href="Email: mailto:%20?Subject=New Urban Institute tool&amp;Body=Hi! I thought you'd be interested in this new tool from the Urban Institute: &ldquo;Spatial Equity Data Tool&rdquo; http://urbn.is/equitytool" target="_blank" class="addthis_button_email at300b" target="_blank" title="Email" onclick="toggle_visibility('shareBox');"><span class="at4-icon aticon-email" style="background-color: rgb(115, 138, 141);"><span class="at_a11y">Share on email</span></span></a>
+            <div class="atclear"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="headerimage" id="heroimage">
+    <div class="wrapper headerwrapper">
+    </div>
+  </div>
+  <!-- END HEADER -->
+
+  <div id="containerFeature">
+
+        <div id="topText">
+
+          <div id="intro">
+            <h1>Dividing Lines</h1>
+            <h2>How School Districts Draw Attendance Boundaries to Perpetuate School Segregation</h2>
+
+            <p id="date">September 10, 2021</p>
+
+            <div class="arrowDown"></div>
+          </div>
+
+          <p class="general">Before John R. Lewis Elementary School opened its new permanent campus in fall 2019, officials for the Dekalb County School District in Atlanta needed to redraw attendance zones to assign students to the school. To do so, they used criteria previously set by the school board, including geography, school capacity, and public feedback, but under no circumstances could they consider race or ethnicity, income, or student performance. </p>
+
+          <p class="general">District officials omitted race, ethnicity, and socioeconomic status from zoning criteria to prevent “bad actors” from using those data to create segregated schools, according to Dan Drake, the district’s former chief operating officer. But without those data, the district officials also excused themselves from having to create more integrated schools. And the final boundary for John R. Lewis Elementary School, named for the iconic civil rights leader, shows how ignoring race and ethnicity can reinforce segregation.</p>
+
+          <p class="general">The John Lewis boundary borders five other elementary school attendance zones, four of which serve majority-Black or majority-Hispanic student bodies like John Lewis. But the fifth boundary, which narrowly snakes along a highway, separates John Lewis from the nearby Ashford Park Elementary School, which serves a majority-white student body.</p>
+
+          <p class="general">That boundary dividing John Lewis from Ashford Park is one of the most racially segregating school boundaries nationwide, according to an Urban Institute analysis.</p>
+
+          <p class="general">Unequal school boundaries are those that have stark demographic differences in the populations living on either side, resulting in similarly stark differences in enrollment demographics between neighboring schools. These invisible lines that segregate school systems at a hyperlocal level can prevent Black and Hispanic students, who have been historically underserved by the US education system, from accessing <a href="https://academic.oup.com/qje/article-abstract/131/1/157/2461148?redirectedFrom=fulltext" target="_blank">the same educational resources and opportunities</a> as their white peers. With just small changes to these boundaries, district officials could create more integrated schools and potentially increase opportunities for Black and Hispanic students.</p>
+
+        </div>
+
+        <!-- <div id="scrollyContainer">
+          <div id="graphic">
+
+        <div id="sections">
+          <section class="step">
+            <p>Before John Lewis opened, Woodward and Montclair Elementary Schools were overcrowded. Ashford Park was not.</p>
+          </section>
+
+          <section class="step">
+            <p>To alleviate the overcrowding in the two predominately <span id="black-span">Black</span> and <span id="hispanic-span">Hispanic</span> districts, Dekalb County officials purchased land in the Ashford Park zone, which housed predominately <span id="white-span">white</span> residents.</p>
+
+            <p>Each dot <span id="all-dot"></span> represents a household </p>
+          </section>
+
+          <section class="step">
+            <p>The opening of John Lewis, and the new school attendance boundaries in the district, drew more than 200 students from Woodward and Montclair to the new school, but only 22 from Ashford Park.</p>
+          </section>
+
+          <section class="step">
+            <p>The new boundary between the new school and Ashford Park runs along the John Lewis campus, dividing the white families to the north from the Black and Hispanic families to the south.</p>
+          </section>
+
+          <section class="step">
+            <p>For neighborhoods along the boundary itself, the starkness of this dividing line remains apparent. These households share parks, transit stops, and stores, with the public school boundary the main difference between them.</p>
+
+            <p>Black or hispanic population within 500 meters of the boundary</p>
+          </section>
+
+          <section class="step lastStep">
+            <p>Seventy-nine percent of families living within 500 meters of the boundary on the John Lewis side are Black or Hispanic. On the Ashford Park side, that share falls to 13 percent. </p>
+          </section>
+        </div>
+
+        <div id="extra-space"></div>
+
+        <div id="chart">
+          <div id="exploreMap"></div>
+          <div id="scatter"></div>
+        </div>
+      </div>
+    </div> -->
+
+    <p class="general">By prioritizing existing boundaries and neighborhoods rather than race, ethnicity, or socioeconomics in zoning criteria, school districts can create <a href="https://www.urban.org/features/segregated-neighborhoods-segregated-schools" target="_blank">attendance boundaries that reinforce segregation patterns</a> stemming from decades of discriminatory policies. The <a href="https://apps.urban.org/features/school-segregation-index/" target="_blank">resulting school segregation</a> can have lasting effects. Research shows that education inequity can <a href="https://cepa.stanford.edu/content/60-years-after-brown-trends-and-consequences-school-segregation" target="_blank">negatively affect</a> test scores, graduation rates, and even <a href="https://www.nber.org/papers/w16664" target="_blank">adult income and life expectancy</a> for students of color.</p>
+
+    <p class="general">These data highlight attendance boundaries separating two schools in which there is at least a 25 percentage-point difference in the representation of Black or Hispanic students and households and in the representation of white households. Many of these boundaries, like the one between John Lewis and Ashford Park, are within one district, so these data can help district officials who care about integration understand where they can make small changes to produce large effects. <a href="https://www.urban.org/urban-wire/why-segregation-between-school-districts-matters">Other boundaries are jurisdictional</a>, crossing multiple school districts. In those cases, local and state officials could use these data to reconsider school systems at a macro level or better target underlying housing policies that have created segregated communities.</p>
+
+    <div id="containerTool">
+      <h6>Where School Boundaries Segregate Black and Hispanic Students</h6>
+      <p class="dek">    This tool highlights <span class="underlineBoundaries">racially unequal school boundaries</span> nationwide, which we define as boundaries that separate schools with a 25 percentage-point difference in representation of Black or Hispanic households and in the representation of white households. The map shows the race and ethnicity of all households in the districts displayed, whereas the charts show the share of households by race and ethnicity within 500 meters of the boundary. The charts also display school pairs in ranked order, starting with the most unequal boundary in each metro area, and indicate whether a boundary separates schools within one school district or across two districts.</p>
+
+      <div id="wrapGraphic">
+
+        <div id="containerExplore">
+          <input id="exploreAutocomplete" placeholder="Search for your city">
+          <div id="colorLegend">
+            <div class="legendContainer">
+              <div class="districtLegend"></div>
+              <p>Within one district</p>
+            </div>
+            <div class="legendContainer">
+              <div class="attendanceLegend"></div>
+              <p>Across two districts</p>
+            </div>
+          </div>
+          <div id="exploreList"></div>
+        </div>
+
+        <div id="containerMap">
+          <div id="containerText">
+            <p id="thisMsa">Atlanta-Sandy Springs-Marietta, GA</p>
+          </div>
+          <div id="colorLegend">
+            <div class="legendContainer">
+              <div class="black"></div>
+              <p>Black</p>
+            </div>
+            <div class="legendContainer">
+              <div class="hispanic"></div>
+              <p>Hispanic</p>
+            </div>
+            <div class="legendContainer">
+              <div class="white"></div>
+              <p>White</p>
+            </div>
+            <div class="legendContainer">
+              <div class="asian"></div>
+              <p>Asian</p>
+            </div>
+            <div class="legendContainer">
+              <div class="other"></div>
+              <p>Other races</p>
+            </div>
+            <div class="legendContainer">
+              <div class="mixed"></div>
+              <p>2 or more races</p>
+            </div>
+          </div>
+          <div id="exploreMap">
+            <div id="theMap"></div>
+            <div id="otherSchools"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3>How can school officials and policymakers address segregated attendance boundaries?</h3>
+
+    <p class="general">For school officials and policymakers invested in integrating public schools, rezoning can offer an avenue to address the most unequal boundaries, but <a href="https://housingmatters.urban.org/feature/why-schools-should-care-about-housing-voucher-discrimination" target="_blank">the inextricable links between school and neighborhood segregation</a> can pose a seemingly insurmountable barrier. Hans Williams, the director of planning for the Dekalb County School District, believes school zoning is primarily a geographic process, and until that changes, “school boundaries will only be as diverse as the communities they’re serving.”</p>
+
+    <p class="general">Although <a href="https://www.urban.org/features/segregated-neighborhoods-segregated-schools" target="_blank">addressing housing segregation</a> is necessary to create integrated neighborhoods and schools, policymakers and school officials have the tools <a href="https://www.urban.org/racial-equity-analytics-lab/structural-racism-explainer-collection/policies-available-school-districts-dismantle-racial-segregation-public-schools" target="_blank"> to work around community segregation</a> to address school segregation through rezoning. In places with these unequal boundaries, school district officials can make small changes without disrupting an entire school system and, as a result, can make a big difference in students’ lives.</p>
+
+    <p class="general">Of course, sometimes it might be necessary to disrupt—or at least reevaluate—an entire school system. Considering demographic data in this process could remedy unequal boundaries and create more integrated school districts.</p>
+
+    <p class="general">Over the past few years, the Minneapolis Public Schools (MPS) district has undertaken a larger systemwide redesign to integrate schools. To do so, officials commissioned a <a href="https://e14b80d7-d6c3-4274-a023-e63a169f350e.filesusr.com/ugd/f43dcf_d70344cf870d4f758ec200cb6f1b5dc4.pdf" target="_blank">district analysis (PDF)</a>, receiving feedback from more than 10,000 families. Like all rezoning decisions, MPS considered facility capacity, enrollment trends, transportation barriers, and other factors, but it prioritized increasing equity.</p>
+
+    <p class="general">“The first thing you have to do is acknowledge that our systems are racist,” said Eric Moore, MPS’s senior accountability, equity, and research officer. “The achievement gap is just a failure of our school systems being able to address the needs of students of color and low-income students, so the work has to be grounded in reality.”</p>
+
+    <p class="general">As a result of its analysis, MPS redesigned its attendance boundaries and its school choice system, investing more into the community schools where students are zoned. Through the redesign, MPS expects to <a href="https://www.startribune.com/read-minneapolis-public-schools-final-redistricting-proposal/569170121/" target="_blank"> reduce its number of racially identifiable schools</a> (defined as schools where more than 86 percent of students are students of color) from 21 schools to 10.</p>
+
+    <p class="general">“We were backwards. We were investing in choice, and a lot of parents would leave schools that they didn't feel met their needs,” said Moore. “You can't just change boundaries. You also have to show folks that you're taking those savings and investing in better schools.”</p>
+
+    <p class="general">The Minneapolis redesign did not receive significant pushback from families, according to Moore, but rezoning plans often do face negative feedback, especially from those who have benefited from the system. Some parents say they’re worried that rezoning could lead to decreased home values, even though there is little evidence of real estate depreciation during localized school rezoning, and others point to fears of longer bus rides and broken-up neighborhoods.</p>
+
+    <p class="general">These concerns—often rooted in racism and classism—are compounded by broader systemic inequities in education, housing, and social services. Families, both privileged and not, have learned to navigate a broken system to create the best situation for themselves. As a result, they have little faith that the system can fix itself, according to Moore.</p>
+
+
+    <p class="general">By using rezoning to address unequal boundaries, school officials will likely invite negative feedback from families who have grown accustomed to the existing system. But rezoning, whether as part of a larger redesign or for a single school boundary pair, offers school districts an effective tool to address the most unequal boundaries.</p>
+
+    <p class="general">Recently, Dekalb County has undertaken its own systemwide analysis to look at facilities across the district to see what capacity and rezoning needs may arise over the next 10 years. In terms of reducing segregation in Dekalb County schools, Williams said the comprehensive analysis is “a really good next step.”</p>
+
+    <p class="general">But redrawing school boundaries will not be part of the analysis, and if any rezoning needs arise, boundary changes will have to adhere to the rezoning criteria. And that means, under current district rules, they can’t consider race.</p>
+
+  </div>
+  <!-- containerFeature ends here -->
+
+  <footer>
+
+    <div class="content">
+
+      <h4>About the Data</h4>
+      <p>This feature uses a dataset corresponding to 2,375 neighboring school pairs that our research has identified as racially unequal. Neighboring school pairs are defined as public schools that share an attendance boundary line, meaning that their attendance zones are geographically adjacent. Residential demographics are based on census block data from the U.S. Census Bureau. School attendance boundary map data (for the school year 2019-20) is obtained from data services firm Precisely. School location data comes from the 2018-19 NCES Common Core of Data, accessed via Urban’ Education Data Portal.</p>
+
+      <p>We define racially unequal neighboring schools as those that satisfy the following four conditions: (1) there is at least 25 percentage point in the share of Black or Hispanic residents living within 500 meters of the shared attendance boundary; (2) a similar 25 percentage point or greater gap holds for the total population living in the two attendance boundaries; (3) a similar 25 percentage point or greater gap holds for the total student enrollment at the two schools; and (4) there is a 25 percentage point or greater gap in the  share of white residents living within 500 meters of the shared attendance boundary.</p>
+
+      <p>This definition guarantees that all neighboring school pairs in this dataset separate historically marginalized populations from white populations, thus constituting racially unequal boundaries.</p>
+
+      <p>For more information about the data definition and policy implications, please see our accompanying research report.</p>
+
+      <h4>Project credits</h4>
+      <div class="urbanstatement">This feature was funded by the [funder goes here]. We are grateful to them and to all our funders, who make it possible for Urban to advance its mission. The views expressed are those of the authors and should not be attributed to the Urban Institute, its trustees, or its funders. Funders do not determine research findings or the insights and recommendations of our experts.</div>
+
+      <h3 class="job">Research</h3>
+      <p class="creditsWho"><a  href = "https://www.urban.org/author/tomas-monarrez" target = "_blank">Tomas Monarrez</a>, <a  href = "https://truman.missouri.edu/truman-school/people/kisida" target = "_blank">Brian Kisida</a>, <a  href = "https://www.urban.org/author/matthew-chingos" target = "_blank">Matthew Chingos</a>, and <a  href = "https://www.urban.org/author/carina-chien" target = "_blank">Carina Chien</a></p>
+
+      <h3 class="job">Design</h3>
+      <p class="creditsWho">Allison Feldman</p>
+
+      <h3 class="job">Development</h3>
+      <p class="creditsWho">Luis Melgar and Jerry Ta</p>
+
+      <h3 class="job">Editing</h3>
+      <p class="creditsWho">David Hinson</p>
+
+      <h3 class="job">Writing</h3>
+      <p class="creditsWho">Wesley Jenkins</p>
+
+    </div>
+  </footer>
+
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="js/vendor/d3.v4.min.js"></script>
+  <!-- <script src = "js/scroller.js"></script>
+  <script src = "js/sections.js"></script>
+  <script src = "js/scrolly.js"></script> -->
+  <script src = "js/explore.js"></script>
 
 
 </body>

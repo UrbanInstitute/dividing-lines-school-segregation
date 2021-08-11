@@ -1,0 +1,122 @@
+
+
+#graphic {
+  padding-top: 60px;
+}
+
+#sections {
+  position: relative;
+  display: inline-block;
+  width: 400px;
+  top: 0px;
+  z-index: 90;
+  padding-bottom: 20px;
+  pointer-events: auto;
+}
+
+.step {
+  margin-bottom: 200px;
+  font-size: 16px;
+  line-height: 23px;
+}
+
+
+.step >  p > span {
+  font-weight: 700;
+}
+
+span#black-span {
+  color: #fdbf11;
+}
+
+span#hispanic-span {
+  color: #55b748;
+}
+
+span#white-span {
+  color: #1696d2;
+}
+
+span#all-dot {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  -moz-border-radius: 7.5px;
+  -webkit-border-radius: 7.5px;
+  border-radius: 7.5px;
+  background-color: darkgray;
+}
+
+
+#extra-space {
+  height: 0px
+}
+
+#chart {
+  display: inline-block;
+  z-index: 1;
+  margin-left: 0;
+  position: relative;
+  float: right;
+}
+
+#chart.posFixed{
+  position: fixed;
+  top: 20px;
+  padding-left: 10px;
+}
+#chart.posRelTop{
+  position: relative;
+  float: right;
+  padding-left: 10px;
+}
+#chart.posRelBottom{
+  position: relative;
+  float: inherit;
+  padding-left: 0px;
+  bottom: -110px;
+}
+#chart.posRelBottomSingleCol{
+  position: absolute;
+  float: inherit;
+  padding-left: 10px;
+}
+#chart.posRelTopSingleCol{
+   position: absolute;
+  float: inherit;
+  padding-left: 10px;
+}
+
+#exploreMap {
+  max-width: 700px;
+  height: 600px;
+}
+
+
+/*CSS SCATTER PLOT*/
+#scatter {
+  color: #353535;
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 400;
+}
+
+.tick > text {
+  fill: #353535 !important;
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.label-axis {
+  font-size: 14px;
+  font-style: italic;
+  fill: #353535;
+}
+
+
+.school-names {
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 700;
+  fill: #353535;
+}
