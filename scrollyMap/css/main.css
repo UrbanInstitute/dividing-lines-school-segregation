@@ -134,7 +134,10 @@ span.allDot {
   width: 23%;
 }
 
-
+span.avg {
+  border-bottom: 1px black dashed;
+  padding: 0px 2px 2px 2px;
+}
 
 
 /*CSS SCATTER PLOT*/
