@@ -7,10 +7,9 @@
  *
  */
 function scroller() {
-
   var container = d3.select('body');
   // event dispatcher
-  var dispatch = d3.dispatch('active','resized');
+  var dispatch = d3.dispatch('active', 'progress');
 
   // d3 selection of all the
   // text sections that will
@@ -24,22 +23,6 @@ function scroller() {
   var currentIndex = -1;
   // y coordinate of
   var containerStart = 0;
-
-
-  function visPosition(){
-    d3.select("#chart")
-    .style("left", function(){
-      if(IS_PHONE()){
-        return ( (window.innerWidth - PHONE_VIS_WIDTH - PHONE_MARGIN.left - PHONE_MARGIN.right)*.5 ) + "px"
-      }
-      if(IS_MOBILE()){
-        return ( (window.innerWidth - VIS_WIDTH - MARGIN.left - MARGIN.right - 40)*.5 ) + "px"
-      }else{
-        return "inherit"
-      }
-    })
-
-  }
   /**
    * scroll - constructor function.
    * Sets up scroller to monitor
@@ -87,7 +70,6 @@ function scroller() {
     // sectionPositions will be each sections
     // starting position relative to the top
     // of the first section.
-    visPosition()
     sectionPositions = [];
     var startPos;
     sections.each(function (d, i) {
@@ -98,91 +80,74 @@ function scroller() {
       sectionPositions.push(top - startPos);
     });
     containerStart = container.node().getBoundingClientRect().top + window.pageYOffset;
-    dispatch.call('resized', this);
   }
 
+  function fixVis() {
 
-  function fixVis(){
-    if(! IS_MOBILE()){
-      if(d3.select(".step").node().getBoundingClientRect().top <= 64){
-        var bump = (IS_SHORT()) ? -120: 150;
-        if(d3.selectAll(".step").nodes()[d3.selectAll(".step").nodes().length-1].getBoundingClientRect().bottom <= 600+200+20+bump){
-          d3.select("#chart")
-            .classed("posRelBottomSingleCol", false)
-            .classed("posRelTopSingleCol", false)
-            .classed("posRelBottom", true)
-            .classed("posRelTop", false)
-            .classed("posFixed", false)
-            .style("top", "inherit")
-          d3.select("#sections")
-            .style("z-index",90)
-        }else{
-          d3.select("#chart")
-            .classed("posRelBottomSingleCol", false)
-            .classed("posRelTopSingleCol", false)
-            .classed("posRelBottom", false)
-            .classed("posRelTop", false)
-            .classed("posFixed", true)
-            .style("top", "20px")
-          d3.select("#sections")
-            .style("z-index",90)
+    var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY - 10;
+    var thisBottom = document.getElementsByClassName("lastStep")[0].getBoundingClientRect().bottom + window.scrollY -400;
 
-        }
-      }else{
-          d3.select("#chart")
-            .classed("posRelBottomSingleCol", false)
-            .classed("posRelTopSingleCol", false)
-            .classed("posRelBottom", false)
-            .classed("posRelTop", true)
-            .classed("posFixed", false)
-            .style("top", "inherit")
-          d3.select("#sections")
-            .style("z-index",90)
-      }
-    }else{
-      if(d3.select(".lastStep").node().getBoundingClientRect().bottom <= 124){
-
-          d3.select("#chart")
-            .classed("posRelBottomSingleCol", true)
-            .classed("posRelTopSingleCol", false)
-            .classed("posRelTop", false)
-            .classed("posFixed", false)
-            .style("top", function(){
-              return (d3.select("#containerScrolly").node().getBoundingClientRect().height - 300 - 100 - 100 + 5) + "px"
-            })
-          d3.select("#sections")
-            .style("z-index",-1)
-      }else{
-          if(d3.select(".step").node().getBoundingClientRect().top >= 62){
-            d3.select("#chart")
-              .classed("posRelBottomSingleCol", false)
-              .classed("posRelTopSingleCol", true)
-              .classed("posRelBottom", false)
-              .classed("posRelTop", false)
-              .classed("posFixed", false)
-              .style("top", function(){
-              return (d3.select("#topText").node().getBoundingClientRect().height +30) + "px"
-            })
-            d3.select("#sections")
-              .style("z-index",90)
-          }else{
-            d3.select("#chart")
-              .classed("posRelBottomSingleCol", false)
-              .classed("posRelTopSingleCol", false)
-              .classed("posRelBottom", false)
-              .classed("posRelTop", false)
-              .classed("posFixed", true)
-              .style("top", "20px")
-            d3.select("#sections")
-              .style("z-index",90)
-          }
-      }
+    if(window.scrollY > thisTop && window.scrollY < thisBottom) {
+      d3.select("#chart")
+        .classed("stickyChart", true)
+        .classed("relativeTop", false)
+        .classed("relativeBottom", false)
+    } else if(window.scrollY < thisTop && window.scrollY < thisBottom) {
+      d3.select("#chart")
+        .classed("stickyChart", false)
+        .classed("relativeTop", true)
+        .classed("relativeBottom", false)
+    } else if(window.scrollY > thisTop && window.scrollY > thisBottom) {
+      d3.select("#chart")
+        .classed("stickyChart", false)
+        .classed("relativeTop", false)
+        .classed("relativeBottom", true)
     }
+
+    // var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY;
+
+    // if(true){
+    //   if(d3.select(".step").node().getBoundingClientRect().top <= 64){
+    //     if(d3.selectAll(".step").nodes()[d3.selectAll(".step").nodes().length-1].getBoundingClientRect().bottom <= 600+200+20){
+    //       d3.select("#chart")
+    //         .classed("posRelBottomSingleCol", false)
+    //         .classed("posRelTopSingleCol", false)
+    //         .classed("posRelBottom", true)
+    //         .classed("posRelTop", false)
+    //         .classed("posFixed", false)
+    //         .style("top", thisTop + 60 + "px")
+    //       d3.select("#sections")
+    //         .style("z-index",90)
+    //     }else{
+    //       d3.select("#chart")
+    //         .classed("posRelBottomSingleCol", false)
+    //         .classed("posRelTopSingleCol", false)
+    //         .classed("posRelBottom", false)
+    //         .classed("posRelTop", false)
+    //         .classed("posFixed", true)
+    //         .style("top", "20px")
+    //       d3.select("#sections")
+    //         .style("z-index",90)
+    //
+    //     }
+    //   }else{
+    //       d3.select("#chart")
+    //         .classed("posRelBottomSingleCol", false)
+    //         .classed("posRelTopSingleCol", false)
+    //         .classed("posRelBottom", false)
+    //         .classed("posRelTop", true)
+    //         .classed("posFixed", false)
+    //         .style("top", thisTop + 60 + "px")
+    //       d3.select("#sections")
+    //         .style("z-index",90)
+    //   }
+    // }
   }
   window.setInterval(function(){
     fixVis()
-    visPosition()
+    // visPosition()
   }, 20);
+
   /**
    * position - get current users position.
    * if user has scrolled to new section,
@@ -191,22 +156,22 @@ function scroller() {
    *
    */
   function position() {
-    visPosition()
-    var pos = window.pageYOffset - 100 - containerStart ;
-    fixVis();
-    var sectionIndex = d3.bisect(sectionPositions, pos) - 1;
-    sectionIndex = Math.max(0,Math.min(sections.size() -1, sectionIndex));
+    var pos = window.pageYOffset - 10 - containerStart;
+    var sectionIndex = d3.bisect(sectionPositions, pos);
+    fixVis()
+    sectionIndex = Math.min(sections.size() - 1, sectionIndex);
 
     if (currentIndex !== sectionIndex) {
       // @v4 you now `.call` the dispatch callback
       dispatch.call('active', this, sectionIndex);
       currentIndex = sectionIndex;
-      d3.select("#sectionIndex").attr("data-index",currentIndex)
     }
 
     var prevIndex = Math.max(sectionIndex - 1, 0);
     var prevTop = sectionPositions[prevIndex];
+    var progress = (pos - prevTop) / (sectionPositions[sectionIndex] - prevTop);
     // @v4 you now `.call` the dispatch callback
+    dispatch.call('progress', this, currentIndex, progress);
   }
 
   /**
@@ -233,3 +198,5 @@ function scroller() {
 
   return scroll;
 }
+
+scroller()

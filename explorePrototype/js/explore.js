@@ -12,15 +12,15 @@ let mapTool = new mapboxgl.Map({
 
 });
 
-// mapTool.dragPan.disable();
-// mapTool.dragRotate.disable();
+  mapTool.dragPan.disable();
+  mapTool.dragRotate.disable();
 // mapTool.keyboard.disable();
   mapTool.scrollZoom.disable();
 
 
 mapTool.on('load', function() {
     // mapTool.resize();
-  console.log(mapTool.getStyle().layers)
+  // console.log(mapTool.getStyle().layers)
   // var test = mapTool.queryRenderedFeatures({ layers: ['labels-schools-a']});
   // var test2 = mapTool.queryRenderedFeatures({ layers: ['boundaries']});
   // console.log(test2)
@@ -88,10 +88,8 @@ function drawBars(bb) {
 
     if(data.leabdy == 1) {
       var boundaryType = "accrossTwo";
-      console.log(boundaryType)
     } else {
       var boundaryType = "withinOne";
-      console.log(boundaryType)
     }
 
     var blockBoundary = "<div class=" + boundaryType + "><p class=number><span>" + thisBoundary + " </span>" + "of " + dataLength + " boundaries</p></div>"

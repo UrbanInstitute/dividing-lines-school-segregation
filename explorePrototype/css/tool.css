@@ -303,6 +303,8 @@ p.dek {
 }
 
 .acrossLegend {
+  font-size: 16px;
+  padding: 0 5px 2px 5px;
   background: repeating-linear-gradient(
     45deg,
     #FAE9F2,
@@ -313,6 +315,8 @@ p.dek {
 }
 
 .withinLegend {
+  font-size: 16px;
+  padding: 0 5px 2px 5px;
   background: #FAE9F2;
 }
 
@@ -328,7 +332,11 @@ p.dek {
   width: 100%;
 }
 
-#containerExplore > input {
+#searchInput {
+  position: relative;
+}
+
+#searchInput > input {
   width: 271px;
   padding: 11px 16px;
   color: #696969;
@@ -338,9 +346,16 @@ p.dek {
   border: 1px #D2D2D2 solid;
 }
 
+#searchInput > img {
+  position: absolute;
+  top: 15px;
+  right: 12px;
+  width: 17px;
+}
+
 #exploreList {
     width: 100%;
-    height: 430px;
+    height: 492px;
     overflow: auto;
 }
 

@@ -20,7 +20,7 @@ let map = new mapboxgl.Map({
 
 
 map.on("load", function() {
-  console.log(map.getStyle().layers)
+  // console.log(map.getStyle().layers)
   // var test = map.queryRenderedFeatures({ layers: ["labels-schools-a"]});
   // var test2 = map.queryRenderedFeatures({ layers: ["boundaries"]});
   // console.log(test2)
@@ -57,16 +57,16 @@ function showBoundary(thisSchoolA, thisSchoolB) {
 function drawBars(bb) {
 
   var dataParsed = d3.nest()
-    .key(function(d) { return d.borderid; })
-    .entries(bb)
+  .key(function(d) { return d.borderid; })
+  .entries(bb)
 
-  var margin = {top: 25, right: 0, bottom: 5, left: 70},
-  width = 310 - margin.left - margin.right,
-  height = 93 - margin.top - margin.bottom;
+  var margin = {top: 25, right: 20, bottom: 5, left: 0},
+  width = 260 - margin.left - margin.right,
+  height = 80 - margin.top - margin.bottom;
 
   var colorScale = d3.scaleOrdinal()
   .domain(["black", "hisp", "white", "other"])
-  .range(["#fdbf11", "#ca5800", "#1696d2", "white"]);
+  .range(["#fdbf11", "#ca5800", "#1696d2", "none"]);
 
   var xScale = d3.scaleLinear()
   .domain([0, 100])
@@ -78,7 +78,7 @@ function drawBars(bb) {
   .padding(.1);
 
   var axis = d3.axisTop()
-              .scale(xScale);
+  .scale(xScale);
 
   function update(dataParsed) {
 
@@ -86,73 +86,96 @@ function drawBars(bb) {
 
     var list = d3.select("#exploreList")
 
-    var div = list.selectAll("div")
+    var div = list.selectAll("div.schoolContainer")
     .data(function(d, i) {
       return dataParsed
     })
 
     div
-      .join("div")
-      .attr("class", "boundaries")
-      .attr("id", function(d, i) {
-        return d.key;
-      })
+    .enter()
+    .append("div")
+    .merge(div)
+    .attr("class", "schoolContainer")
+    .attr("id", function(d, i) {
+      return d.key;
+    })
 
-    var boundaries = d3.selectAll(".boundaries")
+    div.exit()
+    .remove();
 
-    var ranking = boundaries.selectAll("p.number")
+    var boundaries = d3.selectAll(".schoolContainer")
+
+    var ranking = boundaries.selectAll("div.bdy")
     .data(function(d, i) {
+
+      if(+d.values[0].leabdy === 1) {
+        var boundaryType = "accrossTwo";
+      } else {
+        var boundaryType = "withinOne";
+      }
+
       var thisData = [{
-        ranks: i + 1
+        ranks: i + 1,
+        typeOfBoundary: boundaryType
       }]
       return thisData
     })
 
     ranking
-      .join("p")
-      .attr("class", "number")
-      .html(function(d) {
-        return "<span>" + d.ranks + " of " + manyBoundaries + " boundaries"
-        // return "<p class=number><span>" + ranks + "</span> of xxx boundaries</p>"
-      })
+    .enter()
+    .append("div")
+    .merge(ranking)
+    .attr("class", function(d) {
+      return "bdy " + d.typeOfBoundary
+    })
+    .html(function(d) {
+      return "<p><span>" + d.ranks + "</span> of " + manyBoundaries + " boundaries</p>"
+    })
+
+    ranking.exit()
+    .remove()
 
     var names = boundaries.selectAll("p.nameSchool")
-      .data(function(d, i) {
-        var thisData = [{
-          schoolA: dataParsed[i].values[0].schnamea,
-          schoolB: dataParsed[i].values[0].schnameb
-        }]
-        return thisData
-      })
+    .data(function(d, i) {
+      var thisData = [{
+        schoolA: dataParsed[i].values[0].schnamea,
+        schoolB: dataParsed[i].values[0].schnameb
+      }]
+      return thisData
+    })
 
-      names
-        .join("p")
-        .attr("class", "nameSchool")
-        .html(function(d, i) {
-          return d.schoolA + " and " + d.schoolB;
-        })
+    names
+    .enter()
+    .append("p")
+    .merge(names)
+    .attr("class", "nameSchool")
+    .html(function(d, i) {
+      return d.schoolA + " and " + d.schoolB;
+    })
+
+    names.exit()
+    .remove()
+
 
     var svg = boundaries.selectAll("svg")
     .data([dataParsed])
 
     svg
-      .join("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
+    .enter()
+    .append("svg")
+    .merge(svg)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+
+    svg.exit()
+    .remove()
 
     var theSvg = d3.selectAll("svg")
 
     var scales = theSvg.selectAll("g.axis")
+    .data([dataParsed])
 
-    scales
-      .data([dataParsed])
-      .join("g")
-      .attr("class", "axis")
-      .attr("transform", "translate(10, " + margin.top + ")")
-      .call(axis
-      .ticks(3));
-
-    var gs = theSvg.selectAll("g.eachSchool")
+      var gs = theSvg.selectAll("g.eachSchool")
       .data(function(d, i) {
         var whereData = d[i].values[0];
         var thisData = [
@@ -176,141 +199,184 @@ function drawBars(bb) {
         return thisData
       })
 
-      gs.join("g")
-        .attr("transform", function(d, i) {
+      gs
+      .enter()
+      .append("g")
+      .merge(gs)
+      .attr("transform", function(d, i) {
 
-          return "translate(10," + ((i * 12) + margin.top) + ")"
+        return "translate(5," + ((i * 12) + margin.top) + ")"
 
-        })
-        .attr("id", function(d) {
-          return d.school
-        })
-        .attr("class", "eachSchool")
+      })
+      .attr("id", function(d) {
+        return d.school
+      })
+      .attr("class", "eachSchool")
+
+      gs.exit()
+      .remove()
 
       var theGs = d3.selectAll("g.eachSchool");
 
       var bars = theGs.selectAll("rect")
-        .data(function(d, i) {
+      .data(function(d, i) {
 
-          var c = [d];
+        var c = [d];
 
-          var stackGen = d3.stack()
-          .keys(["black", "hisp", "white", "other"]);
+        var stackGen = d3.stack()
+        .keys(["black", "hisp", "white", "other"]);
 
-          var stackedData = stackGen(c);
+        var stackedData = stackGen(c);
 
-          return(stackedData)
-        })
+        return(stackedData)
+      })
 
-        bars.join("rect")
-          .attr("y", function(d, i) {
-            return (+d[0].data.orderSchool -1 ) * 22
-          })
-          .attr("x", function(d) {
-            return xScale(d[0][0])
-          })
-          .attr("width", function(d) {
-            console.log(xScale(d[0][1]) - xScale(d[0][0]))
-            return +(xScale(d[0][1]) - xScale(d[0][0]))
-          })
-          .attr("height", yScale.bandwidth())
-          .attr("fill", function(d) {
-            return colorScale(d.index)
-          })
+      bars
+      .enter()
+      .append("rect")
+      .merge(bars)
+      .attr("y", function(d, i) {
+        return (+d[0].data.orderSchool -1 ) * 22
+      })
+      .attr("x", function(d) {
+        return xScale(d[0][0])
+      })
+      .attr("width", function(d) {
+        return +(xScale(d[0][1]) - xScale(d[0][0]))
+      })
+      .attr("height", yScale.bandwidth())
+      .attr("fill", function(d) {
+        return colorScale(d.index)
+      })
 
-          var otherSchools = boundaries.selectAll("p.otherSchools")
-          .data(function(d, i) {
+      bars.exit()
+      .remove()
 
-            console.log(d)
+      scales
+      .enter()
+      .append("g")
+      .attr("class", "axis")
+      .attr("transform", "translate(5, " + margin.top + ")")
+      .call(axis
+        .ticks(3)
+        .tickSize(-95))
+      .call(function(scale) {
+        scale.select(".domain").remove()
+      })
 
-            var theSchools = [{
-              numberOfSchools: d.values.length
-            }]
-            return theSchools
-          })
+      var otherSchools = boundaries.selectAll("p.otherSchools")
+      .data(function(d, i) {
 
-          otherSchools
-            .join("p")
-            .attr("class", "otherSchools")
-            .html(function(d) {
-              console.log(d.numberOfSchools)
-              if(d.numberOfSchools == 2) {
-                return "Another pair of schools share <span class=underlineBoundaries>this boundary</span>"
-              } else if(d.numberOfSchools > 2) {
-                return "Other " + d.numberOfSchools + " pair of schools share <span class=underlineBoundaries>this boundary</span>"
-              } else {
+        var allTheSchools = [],
+        finalSchools = ""
 
-              }
-            })
+        for(i=1; i < d.values.length; i ++) {
+          if(d.values.length > 1) {
+          var thisData = d.values[i];
+          var schoolA = thisData.schnamea;
+          var schoolB = thisData.schnameb;
+          var bothSchools = '&#x1F3EB' + " " + schoolA + " and " + '&#x1F3EB' + " " + schoolB;
+          allTheSchools.push(bothSchools);
+
+          var finalSchools = allTheSchools.join(' &#9658; ')
+
+        } else {
+          var finalSchools = ""
         }
-        // update ends here
-
-        update(dataParsed)
       }
 
+        var theSchools = [{
+          numberOfSchools: d.values.length - 1,
+          allTheSchools: finalSchools
+        }]
 
-      function centerMap(bbox, thisSchoolA, thisSchoolB) {
+        return theSchools
+      })
 
-        let bboxD = bbox.filter(function(o){
-          return o.schida == thisSchoolA && o.schidb == thisSchoolB
-        })[0];
+      scales.select('.domain').remove()
 
-        map.fitBounds(
-          [
-            [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
-            [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
-          ],
-          {
-            // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
-            "duration": 1000,
-            "linear": true,
-            "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
-            "minZoom": 0 // don"t hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn"t truncated
-          });
+      otherSchools
+      .enter()
+      .append("p")
+      .merge(otherSchools)
+      .attr("class", "otherSchools")
+      .attr("data-schools", function(d) {
+        return d.allTheSchools;
+      })
+      .html(function(d) {
+        if(d.numberOfSchools == 1) {
+          return "Another pair of schools share <span class=underlineBoundaries>this boundary</span>"
+        } else if(d.numberOfSchools > 1) {
+          return "Other " + d.numberOfSchools + " pair of schools share <span class=underlineBoundaries>this boundary</span>"
+        } else {
+
         }
-
-        // builds the list of cachments and adds piecharts
-
-        function buildExploreList(bb, bbox, msa) {
-
-          bb = bb.filter(function(o){ return o.maname == msa});
-
-          drawBars(bb)
-
-        } // buildExploreList ends here
+      })
 
 
-        Promise.all([
-          d3.csv("data/source/BB_ALL.csv"),
-          d3.csv("data/source/badboundaries.csv"),
-        ]).then(function(allData) {
-          // files[0] will contain file1.csv
+    }
+    // update ends here
 
-          var bboxData = allData[0],
-          bbData = allData[1]
+    update(dataParsed)
+  }
 
-          let uniqueMetros = [
-            ...new Set(
-              bbData.map(function(o){
-                return o.maname
-              })
-              .sort(function(a,b){
-                return (a<b) ? - 1: 1;
-              })
-            )
-          ];
 
-          buildExploreList(bbData, bboxData, msa)
+  function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
-          $("#exploreAutocomplete").autocomplete({
-            source: uniqueMetros,
-            select: function(event, ui) {
-              var msa  = ui.item.value;
-              document.getElementById("thisMsa").innerHTML = msa;
-              buildExploreList(bbData, bboxData, msa);
-            }
-          });
+    let bboxD = bbox.filter(function(o){
+      return o.schida == thisSchoolA && o.schidb == thisSchoolB
+    })[0];
 
-        }).catch(function(err) {
-          // handle error here
-        })
+    map.fitBounds(
+      [
+        [+bboxD.xmin, +bboxD.ymin], // southwestern corner of the bounds
+        [+bboxD.xmax, +bboxD.ymax] // northeastern corner of the bounds
+      ],
+      {
+        // "padding": {"top": 10, "bottom":25, "left": 10, "right": 10}, // padding around district, a bit more on bottom to accomodate logo
+        "duration": 1000,
+        "linear": true,
+        "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
+        "minZoom": 0 // don"t hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn"t truncated
+      });
+    }
+
+    // builds the list of cachments and adds piecharts
+
+    function buildExploreList(bb, bbox, msa) {
+
+      bb = bb.filter(function(o){ return o.maname == msa});
+
+      drawBars(bb)
+
+    } // buildExploreList ends here
+
+
+    d3.queue()
+    .defer(d3.csv, "data/source/BB_ALL.csv")
+    .defer(d3.csv, "data/source/badbdy.csv")
+    .await(function(error, bboxData, bbData) {
+      if(error) throw error;
+
+      let uniqueMetros = [
+        ...new Set(
+          bbData.map(function(o){
+            return o.maname
+          })
+          .sort(function(a,b){
+            return (a<b) ? - 1: 1;
+          })
+        )
+      ];
+
+      setTimeout(buildExploreList(bbData, bboxData, msa), 500)
+
+      $("#exploreAutocomplete").autocomplete({
+        source: uniqueMetros,
+        select: function(event, ui) {
+          var msa  = ui.item.value;
+          document.getElementById("thisMsa").innerHTML = msa;
+          buildExploreList(bbData, bboxData, msa);
+        }
+      });
+    })

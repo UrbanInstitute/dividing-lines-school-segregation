@@ -6,11 +6,7 @@
 * http://bost.ocks.org/mike/chart/
 */
 var scrollVis = function () {
-  // constants to define the size
-  // and margins of the vis area.
-  // var width = 600;
-  // var height = 520;
-  // var margin = { top: 0, left: 20, bottom: 40, right: 10 };
+
 
   // Keep track of which visualization
   // we are on and which was the last
@@ -19,70 +15,6 @@ var scrollVis = function () {
   // activate functions that they pass.
   var lastIndex = -1;
   var activeIndex = 0;
-
-  // Sizing for the grid visualization
-  // var squareSize = 6;
-  // var squarePad = 2;
-  // var numPerRow = width / (squareSize + squarePad);
-
-  // main svg used for visualization
-  // var svg = null;
-
-  // d3 selection that will be used
-  // for displaying visualizations
-  // var g = null;
-
-  // We will set the domain when the
-  // data is processed.
-  // @v4 using new scale names
-  // var xBarScale = d3.scaleLinear()
-  //   .range([0, width]);
-
-  // The bar chart display is horizontal
-  // so we can use an ordinal scale
-  // to get width and y locations.
-  // @v4 using new scale type
-  // var yBarScale = d3.scaleBand()
-  //   .paddingInner(0.08)
-  //   .domain([0, 1, 2])
-  //   .range([0, height - 50], 0.1, 0.1);
-
-  // Color is determined just by the index of the bars
-  // var barColors = { 0: '#008080', 1: '#399785', 2: '#5AAF8C' };
-
-  // The histogram display shows the
-  // first 30 minutes of data
-  // so the range goes from 0 to 30
-  // @v4 using new scale name
-  // var xHistScale = d3.scaleLinear()
-  //   .domain([0, 30])
-  //   .range([0, width - 20]);
-
-  // @v4 using new scale name
-  // var yHistScale = d3.scaleLinear()
-  //   .range([height, 0]);
-
-  // The color translation uses this
-  // scale to convert the progress
-  // through the section into a
-  // color value.
-  // @v4 using new scale name
-  // var coughColorScale = d3.scaleLinear()
-  //   .domain([0, 1.0])
-  //   .range(['#008080', 'red']);
-
-  // You could probably get fancy and
-  // use just one axis, modifying the
-  // scale, but I will use two separate
-  // ones to keep things easy.
-  // @v4 using new axis name
-  // var xAxisBar = d3.axisBottom()
-  //   .scale(xBarScale);
-
-  // // @v4 using new axis name
-  // var xAxisHist = d3.axisBottom()
-  //   .scale(xHistScale)
-  //   .tickFormat(function (d) { return d + ' min'; });
 
   // When scrolling to a new section
   // the activation function for that
@@ -101,47 +33,11 @@ var scrollVis = function () {
   *  to draw the visualization in. For this
   *  example, we will be drawing it in #vis
   */
+
   var chart = function (selection) {
     selection.each(function (rawData) {
-      // create svg and give it a width and height
-      // svg = d3.select(this).selectAll('svg').data([wordData]);
-      // var svgE = svg.enter().append('svg');
-      // @v4 use merge to combine enter and existing selection
-      // svg = svg.merge(svgE);
 
-      // svg.attr('width', width + margin.left + margin.right);
-      // svg.attr('height', height + margin.top + margin.bottom);
-      //
-      // svg.append('g');
-
-
-      // this group element will be used to contain all
-      // other elements.
-      // g = svg.select('g')
-      //   .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-      // perform some preprocessing on raw data
-      // var wordData = getWords(rawData);
-      // filter to just include filler words
-      // var fillerWords = getFillerWords(wordData);
-
-      // get the counts of filler words for the
-      // bar chart display
-      // var fillerCounts = groupByWord(fillerWords);
-      // set the bar scale's domain
-      // var countMax = d3.max(fillerCounts, function (d) { return d.value;});
-      // xBarScale.domain([0, countMax]);
-
-      // get aggregated histogram data
-
-      // var histData = getHistogram(fillerWords);
-      // set histogram's domain
-      // var histMax = d3.max(histData, function (d) { return d.length; });
-      // yHistScale.domain([0, histMax]);
-
-      // setupVis(wordData, fillerCounts, histData);
-
-      setupSections();
+      setupSections(rawData);
 
 
     });
@@ -150,7 +46,7 @@ var scrollVis = function () {
   // chart ends here
 
 
-  var setupSections = function () {
+  var setupSections = function (rawData) {
     // activateFunctions are called each
     // time the active section changes
     activateFunctions[0] = setMap;
@@ -158,7 +54,7 @@ var scrollVis = function () {
     activateFunctions[2] = newBoundaries;
     activateFunctions[3] = theWorm;
     activateFunctions[4] = blocksMap;
-    activateFunctions[5] = scatter;
+    activateFunctions[5] = function() { scatter(rawData) };
 
     // updateFunctions are called while
     // in a particular section to update
@@ -167,10 +63,8 @@ var scrollVis = function () {
     // for all scrolling and so are set to
     // no-op functions.
     for (var i = 0; i < 6; i++) {
-      // console.log("that", i)
       updateFunctions[i] = function () {};
     }
-    // updateFunctions[7] = updateCough;
   };
 
   /**
@@ -188,403 +82,6 @@ var scrollVis = function () {
     *
     */
 
-    /**
-    * showTitle - initial title
-    *
-    * hides: count title
-    * (no previous step to hide)
-    * shows: intro title
-    *
-    */
-    // function showTitle() {
-    //   g.selectAll('.count-title')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.openvis-title')
-    //     .transition()
-    //     .duration(600)
-    //     .attr('opacity', 1.0);
-    // }
-
-    /**
-    * showFillerTitle - filler counts
-    *
-    * hides: intro title
-    * hides: square grid
-    * shows: filler count title
-    *
-    */
-    // function showFillerTitle() {
-    //   g.selectAll('.openvis-title')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.square')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.count-title')
-    //     .transition()
-    //     .duration(600)
-    //     .attr('opacity', 1.0);
-    // }
-
-    /**
-    * showGrid - square grid
-    *
-    * hides: filler count title
-    * hides: filler highlight in grid
-    * shows: square grid
-    *
-    */
-    // function showGrid() {
-    //   g.selectAll('.count-title')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.square')
-    //     .transition()
-    //     .duration(600)
-    //     .delay(function (d) {
-    //       return 5 * d.row;
-    //     })
-    //     .attr('opacity', 1.0)
-    //     .attr('fill', '#ddd');
-    // }
-
-    /**
-    * highlightGrid - show fillers in grid
-    *
-    * hides: barchart, text and axis
-    * shows: square grid and highlighted
-    *  filler words. also ensures squares
-    *  are moved back to their place in the grid
-    */
-    // function highlightGrid() {
-    //   hideAxis();
-    //   g.selectAll('.bar')
-    //     .transition()
-    //     .duration(600)
-    //     .attr('width', 0);
-    //
-    //   g.selectAll('.bar-text')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //
-    //   g.selectAll('.square')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 1.0)
-    //     .attr('fill', '#ddd');
-    //
-    //   // use named transition to ensure
-    //   // move happens even if other
-    //   // transitions are interrupted.
-    //   g.selectAll('.fill-square')
-    //     .transition('move-fills')
-    //     .duration(800)
-    //     .attr('x', function (d) {
-    //       return d.x;
-    //     })
-    //     .attr('y', function (d) {
-    //       return d.y;
-    //     });
-    //
-    //   g.selectAll('.fill-square')
-    //     .transition()
-    //     .duration(800)
-    //     .attr('opacity', 1.0)
-    //     .attr('fill', function (d) { return d.filler ? '#008080' : '#ddd'; });
-    // }
-
-    /**
-    * showBar - barchart
-    *
-    * hides: square grid
-    * hides: histogram
-    * shows: barchart
-    *
-    */
-    // function showBar() {
-    //   // ensure bar axis is set
-    //   showAxis(xAxisBar);
-    //
-    //   g.selectAll('.square')
-    //     .transition()
-    //     .duration(800)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.fill-square')
-    //     .transition()
-    //     .duration(800)
-    //     .attr('x', 0)
-    //     .attr('y', function (d, i) {
-    //       return yBarScale(i % 3) + yBarScale.bandwidth() / 2;
-    //     })
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.hist')
-    //     .transition()
-    //     .duration(600)
-    //     .attr('height', function () { return 0; })
-    //     .attr('y', function () { return height; })
-    //     .style('opacity', 0);
-    //
-    //   g.selectAll('.bar')
-    //     .transition()
-    //     .delay(function (d, i) { return 300 * (i + 1);})
-    //     .duration(600)
-    //     .attr('width', function (d) { return xBarScale(d.value); });
-    //
-    //   g.selectAll('.bar-text')
-    //     .transition()
-    //     .duration(600)
-    //     .delay(1200)
-    //     .attr('opacity', 1);
-    // }
-
-    /**
-    * showHistPart - shows the first part
-    *  of the histogram of filler words
-    *
-    * hides: barchart
-    * hides: last half of histogram
-    * shows: first half of histogram
-    *
-    */
-    // function showHistPart() {
-    //   // switch the axis to histogram one
-    //   showAxis(xAxisHist);
-    //
-    //   g.selectAll('.bar-text')
-    //     .transition()
-    //     .duration(0)
-    //     .attr('opacity', 0);
-    //
-    //   g.selectAll('.bar')
-    //     .transition()
-    //     .duration(600)
-    //     .attr('width', 0);
-    //
-    //   // here we only show a bar if
-    //   // it is before the 15 minute mark
-    //   g.selectAll('.hist')
-    //     .transition()
-    //     .duration(600)
-    //     .attr('y', function (d) { return (d.x0 < 15) ? yHistScale(d.length) : height; })
-    //     .attr('height', function (d) { return (d.x0 < 15) ? height - yHistScale(d.length) : 0; })
-    //     .style('opacity', function (d) { return (d.x0 < 15) ? 1.0 : 1e-6; });
-    // }
-
-    /**
-    * showHistAll - show all histogram
-    *
-    * hides: cough title and color
-    * (previous step is also part of the
-      *  histogram, so we don't have to hide
-      *  that)
-      * shows: all histogram bars
-      *
-      */
-      // function showHistAll() {
-      //   // ensure the axis to histogram one
-      //   showAxis(xAxisHist);
-      //
-      //   g.selectAll('.cough')
-      //     .transition()
-      //     .duration(0)
-      //     .attr('opacity', 0);
-      //
-      //   // named transition to ensure
-      //   // color change is not clobbered
-      //   g.selectAll('.hist')
-      //     .transition('color')
-      //     .duration(500)
-      //     .style('fill', '#008080');
-      //
-      //   g.selectAll('.hist')
-      //     .transition()
-      //     .duration(1200)
-      //     .attr('y', function (d) { return yHistScale(d.length); })
-      //     .attr('height', function (d) { return height - yHistScale(d.length); })
-      //     .style('opacity', 1.0);
-      // }
-
-      /**
-      * showCough
-      *
-      * hides: nothing
-      * (previous and next sections are histograms
-        *  so we don't have to hide much here)
-        * shows: histogram
-        *
-        */
-        // function showCough() {
-        //   // ensure the axis to histogram one
-        //   showAxis(xAxisHist);
-        //
-        //   g.selectAll('.hist')
-        //     .transition()
-        //     .duration(600)
-        //     .attr('y', function (d) { return yHistScale(d.length); })
-        //     .attr('height', function (d) { return height - yHistScale(d.length); })
-        //     .style('opacity', 1.0);
-        // }
-
-        /**
-        * showAxis - helper function to
-        * display particular xAxis
-        *
-        * @param axis - the axis to show
-        *  (xAxisHist or xAxisBar)
-        */
-        // function showAxis(axis) {
-        //   g.select('.x.axis')
-        //     .call(axis)
-        //     .transition().duration(500)
-        //     .style('opacity', 1);
-        // }
-
-        /**
-        * hideAxis - helper function
-        * to hide the axis
-        *
-        */
-        // function hideAxis() {
-        //   g.select('.x.axis')
-        //     .transition().duration(500)
-        //     .style('opacity', 0);
-        // }
-
-        /**
-        * UPDATE FUNCTIONS
-        *
-        * These will be called within a section
-        * as the user scrolls through it.
-        *
-        * We use an immediate transition to
-        * update visual elements based on
-        * how far the user has scrolled
-        *
-        */
-
-        /**
-        * updateCough - increase/decrease
-        * cough text and color
-        *
-        * @param progress - 0.0 - 1.0 -
-        *  how far user has scrolled in section
-        */
-        // function updateCough(progress) {
-        //   g.selectAll('.cough')
-        //     .transition()
-        //     .duration(0)
-        //     .attr('opacity', progress);
-        //
-        //   g.selectAll('.hist')
-        //     .transition('cough')
-        //     .duration(0)
-        //     .style('fill', function (d) {
-        //       return (d.x0 >= 14) ? coughColorScale(progress) : '#008080';
-        //     });
-        // }
-
-        /**
-        * DATA FUNCTIONS
-        *
-        * Used to coerce the data into the
-        * formats we need to visualize
-        *
-        */
-
-        /**
-        * getWords - maps raw data to
-        * array of data objects. There is
-        * one data object for each word in the speach
-        * data.
-        *
-        * This function converts some attributes into
-        * numbers and adds attributes used in the visualization
-        *
-        * @param rawData - data read in from file
-        */
-        // function getWords(rawData) {
-        //   return rawData.map(function (d, i) {
-        //     // is this word a filler word?
-        //     d.filler = (d.filler === '1') ? true : false;
-        //     // time in seconds word was spoken
-        //     d.time = +d.time;
-        //     // time in minutes word was spoken
-        //     d.min = Math.floor(d.time / 60);
-        //
-        //     // positioning for square visual
-        //     // stored here to make it easier
-        //     // to keep track of.
-        //     d.col = i % numPerRow;
-        //     d.x = d.col * (squareSize + squarePad);
-        //     d.row = Math.floor(i / numPerRow);
-        //     d.y = d.row * (squareSize + squarePad);
-        //     return d;
-        //   });
-        // }
-
-        /**
-        * getFillerWords - returns array of
-        * only filler words
-        *
-        * @param data - word data from getWords
-        */
-        // function getFillerWords(data) {
-        //
-        //   return data.filter(function (d) {return d.filler; });
-        // }
-
-        /**
-        * getHistogram - use d3's histogram layout
-        * to generate histogram bins for our word data
-        *
-        * @param data - word data. we use filler words
-        *  from getFillerWords
-        */
-        // function getHistogram(data) {
-        //   // only get words from the first 30 minutes
-        //   var thirtyMins = data.filter(function (d) { return d.min < 30; });
-        //   // bin data into 2 minutes chuncks
-        //   // from 0 - 31 minutes
-        //   // @v4 The d3.histogram() produces a significantly different
-        //   // data structure then the old d3.layout.histogram().
-        //   // Take a look at this block:
-        //   // https://bl.ocks.org/mbostock/3048450
-        //   // to inform how you use it. Its different!
-        //   return d3.histogram()
-        //     .thresholds(xHistScale.ticks(10))
-        //     .value(function (d) { return d.min; })(thirtyMins);
-        // }
-
-        /**
-        * groupByWord - group words together
-        * using nest. Used to get counts for
-        * barcharts.
-        *
-        * @param words
-        */
-        // function groupByWord(words) {
-        //   return d3.nest()
-        //     .key(function (d) { return d.word; })
-        //     .rollup(function (v) { return v.length; })
-        //     .entries(words)
-        //     .sort(function (a, b) {return b.value - a.value;});
-        // }
-
         /**
         * activate -
         *
@@ -593,7 +90,6 @@ var scrollVis = function () {
         chart.activate = function (index) {
           activeIndex = index;
           var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
-          console.log(sign)
           var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
           scrolledSections.forEach(function (i) {
             activateFunctions[i]();
@@ -612,6 +108,7 @@ var scrollVis = function () {
         // };
 
         // return chart function
+        console.log(chart)
         return chart;
       };
       //scrollvis ends here
@@ -625,21 +122,15 @@ var scrollVis = function () {
       *
       * @param data - loaded tsv data
       */
-      function display(data) {
+      function display(rawData) {
 
         // create a new plot and
         // display it
         var plot = scrollVis();
+        console.log(plot)
         d3.select('#chart')
-        //   .datum(data)
+        .datum(rawData)
         .call(plot);
-
-        // setup scroll functionality
-        var scroll = scroller()
-        .container(d3.select('#graphic'));
-
-        // pass in .step selection as the steps
-        scroll(d3.selectAll('.step'));
 
         // setup scroll functionality
         var scroll = scroller()
@@ -660,4 +151,6 @@ var scrollVis = function () {
       }
 
       // load data and display
-      d3.tsv('data/source/words.tsv', display);
+      d3.csv("data/source/ashfordlewis_blocks.csv", function(data) {
+        display(data)
+      });

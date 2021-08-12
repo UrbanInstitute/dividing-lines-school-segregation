@@ -2,12 +2,19 @@
 
 #graphic {
   padding-top: 60px;
+  position: relative;
+}
+
+#scrollyContainer {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 #sections {
   position: relative;
   display: inline-block;
-  width: 400px;
+  width: 350px;
   top: 0px;
   z-index: 90;
   padding-bottom: 20px;
@@ -15,26 +22,38 @@
 }
 
 .step {
-  margin-bottom: 200px;
+  margin-bottom: 250px;
   font-size: 16px;
   line-height: 23px;
+  padding-right: 30px;
 }
 
-
-.step >  p > span {
-  font-weight: 700;
+.step > p {
+  font-size: 16px;
+  margin: 0 0 20px 0;
+  line-height: 1.7;
 }
 
-span#black-span {
-  color: #fdbf11;
+.step > p:nth-child(2) {
+  margin-bottom: 5px;
 }
 
-span#hispanic-span {
-  color: #55b748;
+span.black {
+  font-size: 16px;
+  border-bottom: 2px #fdbf11 solid;
+  padding: 0px 2px 2px 2px;
 }
 
-span#white-span {
-  color: #1696d2;
+span.hispanic {
+  font-size: 16px;
+  border-bottom: 2px #ca5800 solid;
+  padding: 0px 2px 2px 2px;
+}
+
+span.white {
+  font-size: 16px;
+  border-bottom: 2px #1696d2 solid;
+  padding: 0px 2px 2px 2px;
 }
 
 span#all-dot {
@@ -48,6 +67,65 @@ span#all-dot {
   background-color: darkgray;
 }
 
+#legendMap {
+  max-width: 250px;
+}
+
+#ranges > div {
+  display: inline-block;
+  width: 24%;
+  border-right: 1px black solid;
+  height: 15px;
+}
+
+#ranges > div:nth-child(4) {
+  border-right: 0px black solid;
+}
+
+#range1 {
+  background-color: #fff3d1;
+
+}
+
+#range2 {
+  background-color: #fce39e;
+
+}
+
+#range3 {
+  background-color: #fdd870;
+
+}
+
+#range4 {
+  background-color: #fdbf11;
+
+}
+
+#edition > p {
+  display: inline-block;
+  width: 21%;
+  margin: 0;
+  font-size: 15px;
+}
+
+#edition > p:nth-child(2) {
+  width: 24%;
+}
+
+#edition > p:nth-child(3) {
+  width: 23%;
+}
+
+span.underlineBoundaries {
+  font-size: 16px;
+}
+
+span.avg {
+  font-size: 16px;
+  border-bottom: 1px black dashed;
+  padding: 0px 2px 2px 2px;
+}
 
 #extra-space {
   height: 0px
@@ -56,43 +134,28 @@ span#all-dot {
 #chart {
   display: inline-block;
   z-index: 1;
-  margin-left: 0;
+  padding-left: 10;
   position: relative;
-  float: right;
+  width: 600px;
+  height: 600px;
+  vertical-align: top;
 }
 
-#chart.posFixed{
+#chart.stickyChart {
   position: fixed;
-  top: 20px;
+  top: 52px;
   padding-left: 10px;
 }
-#chart.posRelTop{
+
+#chart.relativeBottom {
   position: relative;
-  float: right;
-  padding-left: 10px;
-}
-#chart.posRelBottom{
-  position: relative;
-  float: inherit;
-  padding-left: 0px;
-  bottom: -110px;
-}
-#chart.posRelBottomSingleCol{
-  position: absolute;
-  float: inherit;
-  padding-left: 10px;
-}
-#chart.posRelTopSingleCol{
-   position: absolute;
-  float: inherit;
-  padding-left: 10px;
+  vertical-align: bottom;
 }
 
 #exploreMap {
-  max-width: 700px;
+  max-width: 600px;
   height: 600px;
 }
-
 
 /*CSS SCATTER PLOT*/
 #scatter {
@@ -119,4 +182,5 @@ span#all-dot {
   font-family: 'Lato', 'Arial', sans-sans-serif;
   font-weight: 700;
   fill: #353535;
+  font-size: 16px;
 }

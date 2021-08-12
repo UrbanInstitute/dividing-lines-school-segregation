@@ -134,7 +134,12 @@ span.allDot {
   width: 23%;
 }
 
+span.underlineBoundaries {
+  font-size: 16px;
+}
+
 span.avg {
+  font-size: 16px;
   border-bottom: 1px black dashed;
   padding: 0px 2px 2px 2px;
 }

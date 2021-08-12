@@ -19,6 +19,11 @@ function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
 
 
 function setMap() {
+
+  // map.on('idle',function(){
+  //   map.resize()
+  // })
+  //
   setTimeout(function() {
     document.getElementById("exploreMap").style.display = "block";
     document.getElementById("scatter").style.display = "none";
@@ -41,17 +46,6 @@ function setMap() {
     }
   }, 300)
 }
-
-// function openMap(sign) {
-//
-//     map.on('load', function() {
-//       // console.log(map.getStyle().layers)
-//       setMap()
-//
-//     });
-//
-//   document.getElementById("scatter").style.display = "none";
-// }
 
 function addDots() {
 
@@ -141,20 +135,18 @@ function blocksMap() {
 }
 
 
-function scatter() {
+function scatter(data) {
 
   document.getElementById("exploreMap").style.display = "none";
   document.getElementById("scatter").style.display = "block";
   document.getElementById("scatter").innerHTML = '';
-
-  function plot(data) {
 
     var colors = ["#fff3d1", "#fce39e", "#fdd870", "#fdbf11"]
 
     var widthWindow = (document.getElementById("scatter").offsetWidth),
     margin = {top: 25, right: 20, bottom: 70, left: 35},
     width = (widthWindow) - margin.left - margin.right,
-    height = 600 - margin.top - margin.bottom
+    height = 500 - margin.top - margin.bottom
 
     var svg = d3.select("#scatter")
       .append("svg")
@@ -317,7 +309,9 @@ function scatter() {
       .attr("x", width -100)
       .attr("y", (height / 2) -30)
       .text("Elementary")
-  }
 
-  d3.csv("data/source/ashfordlewis_blocks.csv", plot)
+
+     var legendBubbles = svg.selectAll("g.legend")
+        .append('g')
+        .attr("id", legendBubbles)
 }
