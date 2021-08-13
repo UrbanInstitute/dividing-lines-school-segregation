@@ -74,34 +74,45 @@ function scroller() {
     var startPos;
     sections.each(function (d, i) {
       var top = this.getBoundingClientRect().top;
+      console.log("HOLA", top)
       if (i === 0) {
         startPos = top;
       }
       sectionPositions.push(top - startPos);
     });
     containerStart = container.node().getBoundingClientRect().top + window.pageYOffset;
+    console.log("ADIOS", containerStart)
   }
 
   function fixVis() {
 
     var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY - 10;
-    var thisBottom = document.getElementsByClassName("lastStep")[0].getBoundingClientRect().bottom + window.scrollY -400;
+    var thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.scrollY -400;
 
     if(window.scrollY > thisTop && window.scrollY < thisBottom) {
       d3.select("#chart")
         .classed("stickyChart", true)
         .classed("relativeTop", false)
         .classed("relativeBottom", false)
+
+      d3.select("#lastStep")
+        .classed("lastStepShort", false)
     } else if(window.scrollY < thisTop && window.scrollY < thisBottom) {
       d3.select("#chart")
         .classed("stickyChart", false)
         .classed("relativeTop", true)
         .classed("relativeBottom", false)
+
+      d3.select(".lastStep")
+        .classed("lastStepShort", false)
     } else if(window.scrollY > thisTop && window.scrollY > thisBottom) {
       d3.select("#chart")
         .classed("stickyChart", false)
         .classed("relativeTop", false)
         .classed("relativeBottom", true)
+
+      d3.select("#lastStep")
+        .classed("lastStepShort", true)
     }
 
     // var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY;

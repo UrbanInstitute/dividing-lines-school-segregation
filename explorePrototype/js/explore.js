@@ -113,7 +113,7 @@ function drawBars(bb) {
         var bothSchools = '&#x1F3EB' + " " + schoolA + " and " + '&#x1F3EB' + " " + schoolB;
         allTheSchools.push(bothSchools);
 
-        var finalSchools = allTheSchools.join(' &#9658; ')
+        var finalSchools = allTheSchools.join(' | ')
       }
     } else {
     }

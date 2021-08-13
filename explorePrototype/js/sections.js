@@ -141,9 +141,13 @@ var scrollVis = function () {
 
         // setup event handling
         scroll.on('active', function (index) {
+
+          console.log(index)
+
           // highlight current step text
           d3.selectAll('.step')
-          .style('opacity', function (d, i) { return i === index ? 1 : 0.1; });
+          .style('opacity', function (d, i) {
+             return i === index ? 1 : 0.1; });
 
           // activate current section
           plot.activate(index);

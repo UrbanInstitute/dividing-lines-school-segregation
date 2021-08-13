@@ -3,7 +3,7 @@
   font-size: 20px;
   font-weight: 400;
   line-height: 24px;
-  color: #000000;
+  color: #353535;
   text-align: left;
 }
 
@@ -11,11 +11,25 @@ body {
   margin: 0;
 }
 
+#introMap {
+  height: 800px;
+  font-size: 16px;
+}
+
 #intro {
-  padding: 2rem;
+  position: relative;
+  margin-top: 2em;
   background-color: #E0E0E0;
   height: 800px;
-  margin-bottom: 80px;
+  margin-bottom: 100px;
+}
+
+#introText {
+  position: absolute;
+  color: white;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%,-50%);
 }
 
 #explorer {
@@ -28,10 +42,10 @@ h1, h2 {
   font-weight: 300;
   line-height: 1.2;
   text-align: center;
+  color: white;
 }
 
 h1 {
-  padding-top: 20%;
   font-weight: 700;
   margin-bottom: 15px;
   font-size: 3rem;
@@ -43,6 +57,7 @@ h2 {
 
 h3 {
   width: 95%;
+  line-height: 31px;
   max-width: 760px;
   font-weight: 700;
   margin: 0 auto;
@@ -50,11 +65,12 @@ h3 {
 
 p#date {
   font-size: 14px;
-  color: #696969;
+  color: #353535;
   text-align: center;
   margin: 0px auto;
   padding-top: 100px;
   max-width: 95%;
+  color: white;
 }
 
 .arrowDown {
@@ -69,8 +85,8 @@ p#date {
   display: inline-block;
   width: 35px;
   height: 35px;
-  border-right: 3px solid black;
-  border-bottom: 3px solid black;
+  border-right: 3px solid white;
+  border-bottom: 3px solid white;
   transform: rotate(45deg);
 }
 
@@ -150,12 +166,12 @@ h4 {
   text-align: center;
   padding: 10px;
   text-decoration: none !important;
-  color: #333 !important;
+  color: #353535 !important;
   margin-top: 5px;
 }
 .footerButton:hover{
   background: #fdbf11;
-  color: #fff !important;
+  color: #353535 !important;
 }
 .footerButton.researchButton{
   margin-left: 15px;
@@ -205,7 +221,7 @@ footer h3, footer h4{
 
 .urbanstatement {
   font-style: italic;
-  color: #848081;
+  color: #353535;
   font-size: 16px;
   line-height: 1.4;
   margin-bottom: 40px;
@@ -218,6 +234,17 @@ p.creditsWho {
 
 p.creditsWho > a {
   font-size: 16px;
+}
+
+
+/* Mapbox css */
+
+.mapboxgl-ctrl-attrib-inner > a {
+  font-size: 14px;
+}
+
+.mapboxgl-ctrl-attrib-button {
+  display: none;
 }
 
 

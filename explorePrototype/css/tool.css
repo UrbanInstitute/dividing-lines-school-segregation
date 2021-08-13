@@ -1,7 +1,7 @@
 #containerTool {
   max-width: 960px;
   width: 100%;
-  margin: 3rem auto;
+  margin: 5rem auto;
 }
 
 .ui-menu-item-wrapper {
@@ -9,10 +9,8 @@
 }
 
 #containerTool h6 {
-  font-size: 18px;
   line-height: 27px;
   font-weight: 700;
-  color: #353535;
   margin: 0px 0px 15px 0px;
 }
 
@@ -103,7 +101,6 @@ p.dek {
 
 .withinOne > p, .accrossTwo > p  {
   display: inline-block;
-  color: black;
   /* background-color: #fde8fa; */
   padding: 0px 6px 0px 3px;
   font-size: 15px;
@@ -185,7 +182,6 @@ p.dek {
   display: inline-block;
   top: -28px;
   font-size: 13px;
-  color: #332d2f;
 }
 
 .tick0 {
@@ -320,7 +316,7 @@ p.dek {
   background: #FAE9F2;
 }
 
-#exploreMap {
+#boundariesMap {
     width: 100%;
     margin-top: 5px;
 }
@@ -401,7 +397,7 @@ p.dek {
 
 
 #otherSchools > p {
-  color: #6e6e6e;
+  color: #353535;
   font-size: 16px;
 }
 
