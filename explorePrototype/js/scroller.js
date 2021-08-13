@@ -74,14 +74,12 @@ function scroller() {
     var startPos;
     sections.each(function (d, i) {
       var top = this.getBoundingClientRect().top;
-      console.log("HOLA", top)
       if (i === 0) {
         startPos = top;
       }
       sectionPositions.push(top - startPos);
     });
     containerStart = container.node().getBoundingClientRect().top + window.pageYOffset;
-    console.log("ADIOS", containerStart)
   }
 
   function fixVis() {
@@ -114,45 +112,6 @@ function scroller() {
       d3.select("#lastStep")
         .classed("lastStepShort", true)
     }
-
-    // var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY;
-
-    // if(true){
-    //   if(d3.select(".step").node().getBoundingClientRect().top <= 64){
-    //     if(d3.selectAll(".step").nodes()[d3.selectAll(".step").nodes().length-1].getBoundingClientRect().bottom <= 600+200+20){
-    //       d3.select("#chart")
-    //         .classed("posRelBottomSingleCol", false)
-    //         .classed("posRelTopSingleCol", false)
-    //         .classed("posRelBottom", true)
-    //         .classed("posRelTop", false)
-    //         .classed("posFixed", false)
-    //         .style("top", thisTop + 60 + "px")
-    //       d3.select("#sections")
-    //         .style("z-index",90)
-    //     }else{
-    //       d3.select("#chart")
-    //         .classed("posRelBottomSingleCol", false)
-    //         .classed("posRelTopSingleCol", false)
-    //         .classed("posRelBottom", false)
-    //         .classed("posRelTop", false)
-    //         .classed("posFixed", true)
-    //         .style("top", "20px")
-    //       d3.select("#sections")
-    //         .style("z-index",90)
-    //
-    //     }
-    //   }else{
-    //       d3.select("#chart")
-    //         .classed("posRelBottomSingleCol", false)
-    //         .classed("posRelTopSingleCol", false)
-    //         .classed("posRelBottom", false)
-    //         .classed("posRelTop", true)
-    //         .classed("posFixed", false)
-    //         .style("top", thisTop + 60 + "px")
-    //       d3.select("#sections")
-    //         .style("z-index",90)
-    //   }
-    // }
   }
   window.setInterval(function(){
     fixVis()
@@ -167,7 +126,7 @@ function scroller() {
    *
    */
   function position() {
-    var pos = window.pageYOffset - 10 - containerStart;
+    var pos = window.pageYOffset - 200 - containerStart;
     var sectionIndex = d3.bisect(sectionPositions, pos);
     fixVis()
     sectionIndex = Math.min(sections.size() - 1, sectionIndex);
