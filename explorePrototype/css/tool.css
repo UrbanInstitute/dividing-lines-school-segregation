@@ -399,6 +399,7 @@ p.dek {
 #otherSchools > p {
   color: #353535;
   font-size: 16px;
+  margin-bottom: 0px;
 }
 
 #otherSchools > p > span {
@@ -424,13 +425,72 @@ p.dek {
 /* SMALLER SCREENS MEDIA QUERIES */
 
 @media (max-width: 770px) {
+  #wrapGraphic {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 
+  }
+
+  #wrapGraphic > #containerExplore {
+    margin-right: 0;
+    order: 2;
+    max-width: 100%;
+  }
+
+  #wrapGraphic > #containerMap {
+    order: 1;
+    max-width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 20px;
+
+  }
+
+  #exploreList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-content: space-between;
+    height: auto;
+  }
+
+  .schoolContainer {
+    width: 40%;
+
+  }
+
+  .schoolA > p {
+  min-height: 79px;
+  }
+
+  #boundariesMap {
+    margin-top: 0px;
+  }
+
+  #containerMap > #colorLegend {
+    background: white;
+    padding-bottom: 5px;
+    margin-bottom: 0px;
+  }
 }
 
 @media (max-width: 600px) {
+
   #wrapGraphic {
     display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
 
+  }
+
+  #wrapGraphic > #containerExplore {
+    margin-right: 0;
+    order: 2;
+  }
+
+  #wrapGraphic > #containerMap {
+    order: 1;
   }
 }
 

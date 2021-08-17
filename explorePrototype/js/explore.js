@@ -223,17 +223,31 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
     .defer(d3.csv, "data/source/badbdy.csv")
     .await(function(error, bboxData, bbData) {
       if(error) throw error;
+        //
+        // let uniqueMetros = [
+        //   ...new Set(
+        //     bbData.map(function(o){
+        //       return o.maname
+        //     })
+        //     .sort(function(a,b){
+        //       return (a<b) ? - 1: 1;
+        //     })
+        //   )
+        // ];
+        var msaList = bbData.map(function(o){
+          return o.maname
+          })
 
-        let uniqueMetros = [
-          ...new Set(
-            bbData.map(function(o){
-              return o.maname
-            })
-            .sort(function(a,b){
-              return (a<b) ? - 1: 1;
-            })
-          )
-        ];
+          // uniq() found here https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
+
+          function uniq(a) {
+              return a.sort().filter(function(item, pos, ary) {
+                  return !pos || item != ary[pos - 1];
+              });
+          }
+
+          var uniqueMetros = uniq(msaList);
+
 
           setTimeout(buildExploreList(bbData, bboxData, msa), 500)
 

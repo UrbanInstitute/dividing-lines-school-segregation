@@ -108,7 +108,6 @@ var scrollVis = function () {
         // };
 
         // return chart function
-        console.log(chart)
         return chart;
       };
       //scrollvis ends here
@@ -127,7 +126,6 @@ var scrollVis = function () {
         // create a new plot and
         // display it
         var plot = scrollVis();
-        console.log(plot)
         d3.select('#chart')
         .datum(rawData)
         .call(plot);

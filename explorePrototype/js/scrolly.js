@@ -11,22 +11,27 @@ let map = new mapboxgl.Map({
 
 });
 
-function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
-  map.setPaintProperty(thisLayer, thisStyle, setTo);
+map.on('load',function(){
+  map.resize()
+})
 
-  map.getLayer(thisLayer).setPaintProperty(transitionStyle, {duration: thisDuration, delay: 0})
+function hasClass(element, className) {
+  console.log((' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1)
+  return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
 }
 
+function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
+
+    map.setPaintProperty(thisLayer, thisStyle, setTo);
+
+    map.getLayer(thisLayer).setPaintProperty(transitionStyle, {duration: thisDuration, delay: 0})
+
+}
 
 function setMap() {
 
-  // map.on('idle',function(){
-  //   map.resize()
-  // })
-  //
-  setTimeout(function() {
-    document.getElementById("exploreMap").style.display = "block";
-    document.getElementById("scatter").style.display = "none";
+  document.getElementById("exploreMap").style.display = "block";
+  document.getElementById("scatter").style.display = "none";
 
     let layerLabels = map.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
@@ -44,274 +49,308 @@ function setMap() {
       setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000);
 
     }
-  }, 300)
+
+
 }
 
 function addDots() {
 
-  document.getElementById("exploreMap").style.display = "block";
-  document.getElementById("scatter").style.display = "none";
-
-  setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
-  setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
+    setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
+    setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
 
 
-  if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-sab']})[0].layer.paint["line-opacity"] !== 0) {
+    if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-sab']})[0].layer.paint["line-opacity"] !== 0) {
 
-    setStyles("ashfordlewis-new-sab", 'line-opacity', 0, 'line-opacity-transition', 1000)
-    setStyles("ashfordlewis-old-sab", 'line-opacity', 1, 'line-opacity-transition', 2000)
+      setStyles("ashfordlewis-new-sab", 'line-opacity', 0, 'line-opacity-transition', 1000)
+      setStyles("ashfordlewis-old-sab", 'line-opacity', 1, 'line-opacity-transition', 2000)
 
-    let layerLabels = map.getStyle().layers[82].id,
-    filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
-    map.setFilter(layerLabels, filtersLabels);
+      let layerLabels = map.getStyle().layers[82].id,
+      filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
+      map.setFilter(layerLabels, filtersLabels);
 
-    // map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
-    //
-    // map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
-  }
+      // map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
+      //
+      // map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+    }
 
 }
 
 function newBoundaries() {
 
-  map.setPaintProperty("ashfordlewis-old-sab", 'line-opacity', 0);
-  map.setPaintProperty("ashfordlewis-new-sab", 'line-opacity', 1);
+    map.setPaintProperty("ashfordlewis-old-sab", 'line-opacity', 0);
+    map.setPaintProperty("ashfordlewis-new-sab", 'line-opacity', 1);
 
-  let layerLabels = map.getStyle().layers[82].id,
-  filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
-  map.setFilter(layerLabels, filtersLabels);
-
-  map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
-
-  map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
-
-  if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-worm']})[0].layer.paint["line-opacity"] !== 0) {
     let layerLabels = map.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
     map.setFilter(layerLabels, filtersLabels);
 
-    let layerSab = map.getStyle().layers[79].id,
-    filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
-    map.setFilter(layerSab, filtersSab);
+    map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
 
-    setStyles("ashfordlewis-new-worm", 'line-opacity', 0, 'line-opacity-transition', 1000)
+    map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
 
+    if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-worm']})[0].layer.paint["line-opacity"] !== 0) {
+      let layerLabels = map.getStyle().layers[82].id,
+      filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
+      map.setFilter(layerLabels, filtersLabels);
 
-  }
+      let layerSab = map.getStyle().layers[79].id,
+      filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
+      map.setFilter(layerSab, filtersSab);
+
+      setStyles("ashfordlewis-new-worm", 'line-opacity', 0, 'line-opacity-transition', 1000)
+    }
 }
 
 function theWorm() {
 
-  document.getElementById("exploreMap").style.display = "block";
-  document.getElementById("scatter").style.display = "none";
+    let layerSab = map.getStyle().layers[79].id,
+    filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
+    map.setFilter(layerSab, filtersSab);
 
-  let layerSab = map.getStyle().layers[79].id,
-  filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
-  map.setFilter(layerSab, filtersSab);
+    let layerLabels = map.getStyle().layers[82].id,
+    filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
+    map.setFilter(layerLabels, filtersLabels);
 
-  let layerLabels = map.getStyle().layers[82].id,
-  filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
-  map.setFilter(layerLabels, filtersLabels);
+    map.setPaintProperty("ashfordlewis-new-worm", 'line-opacity', 1);
+    map.getLayer("ashfordlewis-new-worm").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
 
-  map.setPaintProperty("ashfordlewis-new-worm", 'line-opacity', 1);
-  map.getLayer("ashfordlewis-new-worm").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+    if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
 
-  if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
+        setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 2000)
 
-      setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 2000)
+    }
 
-  }
 }
 
 function blocksMap() {
 
-  document.getElementById("exploreMap").style.display = "block";
-  document.getElementById("scatter").style.display = "none";
+  var isOut = hasClass(document.getElementById("exploreMap"), "transitionOut")
 
-  setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000)
-  setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000)
+  if(isOut === true) {
+    document.getElementById("scatter").className = "mapboxgl-map transitionOut";
+    document.getElementById("exploreMap").className = "mapboxgl-map transitionIn";
 
-  setStyles("blocks_choropleth", 'fill-opacity', 1, 'fill-opacity-transition', 2000)
+    setTimeout(transition, 700)
+  } else {
+
+    document.getElementById("exploreMap").className = "mapboxgl-map";
+    setTimeout(transition, 0)
+  }
+
+  function transition() {
+    document.getElementById("exploreMap").style.display = "block";
+    document.getElementById("scatter").style.display = "none";
+
+      setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000)
+      setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000)
+
+      setStyles("blocks_choropleth", 'fill-opacity', 1, 'fill-opacity-transition', 2000)
+  }
 }
 
 
 function scatter(data) {
 
-  document.getElementById("exploreMap").style.display = "none";
-  document.getElementById("scatter").style.display = "block";
-  document.getElementById("scatter").innerHTML = '';
-
-    var colors = ["#fff3d1", "#fce39e", "#fdd870", "#fdbf11"]
-
-    var widthWindow = (document.getElementById("scatter").offsetWidth),
-    margin = {top: 25, right: 20, bottom: 70, left: 35},
-    width = (widthWindow) - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom
-
-    var svg = d3.select("#scatter")
-      .append("svg")
-        .attr("width", widthWindow)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + " , " + margin.top + ")")
-
-    var xScale = d3.scaleLinear()
-      .domain([-1.5, 1.5])
-      .range([0, width])
-
-    var yScale = d3.scaleLinear()
-      .domain(d3.extent(data, function(d) {
-        return +d.BLACKHISP_PCT;
-      }))
-      .nice()
-      .range([height, 0])
-
-    var rScale = d3.scaleSqrt()
-      .domain(d3.extent(data, function(d) {
-        return +d.pop
-      }))
-      .range([1, 30])
-
-    svg.append("g")
-      .call(d3.axisLeft(yScale)
-      .ticks(4)
-      .tickSize(-width)
-      .tickValues([0, 25, 50, 75, 100])
-      .tickFormat(function(d) {
-        return d + "%";
-      }))
-      .call(g => g.select(".domain")
-      .remove())
-      .call(g => g.selectAll(".tick:not(:first-of-type) line")
-      .attr("stroke", "#dedddd"))
-
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(xScale)
-      .ticks(7)
-      .tickValues([-1.5, -1, -0.5, 0, 0.5, 1, 1.5]))
-
-      var value0 = xScale(0) + 0.5,
-      value79pct = yScale(79),
-      value13pct = yScale(13)
-
-      svg
-        .append("line")
-        .attr("id", "zero-line")
-        .style("stroke", "black")
-        .style("stroke-width", 1)
-        .attr("x1", value0)
-        .attr("y1", 0)
-        .attr("x2", value0)
-        .attr("y2", height)
-
-      svg
-        .append("line")
-        .attr("id", "79-line")
-        .style("stroke", "black")
-        .style("stroke-width", 1)
-        .attr("x1", 0)
-        .attr("y1", value79pct)
-        .attr("x2", value0)
-        .attr("y2", value79pct)
-        .style("stroke-dasharray", ("3, 3"))
-
-      svg
-        .append("line")
-        .attr("id", "13-line")
-        .style("stroke", "black")
-        .style("stroke-width", 1)
-        .attr("x1", value0)
-        .attr("y1", value13pct)
-        .attr("x2", width)
-        .attr("y2", value13pct)
-        .style("stroke-dasharray", ("3, 3"))
-
-    svg
-      .selectAll("dot")
-      .data(data)
-      .enter()
-      .append("circle")
-      .attr("r", 0)
-      .attr("class", "bubble")
-      .attr("id", function(d) {
-        return d.gisjoin
-      })
-      .attr("cx", function(d) {
-        return xScale((+d.dist) * -1)
-      })
-      .attr("cy", function(d) {
-        return yScale(+d.BLACKHISP_PCT)
-      })
-      .style("fill", function(d) {
-        if(+d.BLACKHISP_PCT < 25) {
-          return colors[0]
-        } else if(+d.BLACKHISP_PCT > 24 && +d.BLACKHISP_PCT < 50) {
-          return colors[1]
-        } else if(+d.BLACKHISP_PCT > 49 && +d.BLACKHISP_PCT < 75) {
-          return colors[2]
-        } else {
-          return colors[3]
-        }
-      })
-      .style("opacity", "0.6")
-      .attr("stroke", "black")
-      .transition()
-      .duration(1000)
-      .attr("r", function(d) {
-        return rScale(+d.pop)
-      })
-
-      svg
-      .append("text")
-        .attr("class", "label-axis")
-        .attr("text-anchor", "middle")
-        .attr("x", width / 2)
-        .attr("y", height + margin.top + 10)
-        .text("Distance to attendance boundary (kilometers)");
-
-      svg
-      .append("text")
-        .attr("text-anchor", "start")
-        .attr("class", "label-axis")
-        .attr("x", -margin.left + 2)
-        .attr("y", -14)
-        .text("Black or Hispanic share")
-
-      svg
-      .append("text")
-      .attr("tex-anchor", "start")
-      .attr("class", "school-names")
-      .attr("x", 0)
-      .attr("y", (height / 2) -50)
-      .text("John Lewis")
-
-      svg
-      .append("text")
-      .attr("tex-anchor", "start")
-      .attr("class", "school-names")
-      .attr("x", 0)
-      .attr("y", (height / 2) -30)
-      .text("Elementary")
-
-      svg
-      .append("text")
-      .attr("tex-anchor", "start")
-      .attr("class", "school-names")
-      .attr("x", width - 100)
-      .attr("y", (height / 2) -50)
-      .text("Ashford Park")
-
-      svg
-      .append("text")
-      .attr("tex-anchor", "start")
-      .attr("class", "school-names")
-      .attr("x", width -100)
-      .attr("y", (height / 2) -30)
-      .text("Elementary")
+  function transition() {
+    document.getElementById("exploreMap").style.display = "none";
+    document.getElementById("scatter").style.display = "block";
+    document.getElementById("scatter").innerHTML = '';
 
 
-     var legendBubbles = svg.selectAll("g.legend")
-        .append('g')
-        .attr("id", legendBubbles)
+        var colors = ["#fff3d1", "#fce39e", "#fdd870", "#fdbf11"]
+
+        var widthWindow = (document.getElementById("scatter").offsetWidth),
+        margin = {top: 25, right: 20, bottom: 70, left: 35},
+        width = (widthWindow) - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom
+
+        var svg = d3.select("#scatter")
+          .append("svg")
+            .attr("width", widthWindow)
+            .attr("height", height + margin.top + margin.bottom)
+          .append("g")
+            .attr("transform", "translate(" + margin.left + " , " + margin.top + ")")
+
+        var xScale = d3.scaleLinear()
+          .domain([-1.5, 1.5])
+          .range([0, width])
+
+        var yScale = d3.scaleLinear()
+          .domain(d3.extent(data, function(d) {
+            return +d.BLACKHISP_PCT;
+          }))
+          .nice()
+          .range([height, 0])
+
+        var rScale = d3.scaleSqrt()
+          .domain(d3.extent(data, function(d) {
+            return +d.pop
+          }))
+          .range([1, 30])
+
+        svg.append("g")
+          .call(d3.axisLeft(yScale)
+          .ticks(4)
+          .tickSize(-width)
+          .tickValues([0, 25, 50, 75, 100])
+          .tickFormat(function(d) {
+            return d + "%";
+          }))
+          .call(function(g) {
+            g.select(".domain")
+          .remove()
+        })
+          .call(function(g) {
+            g.selectAll(".tick:not(:first-of-type) line")
+            .attr("stroke", "#dedddd")
+          })
+
+        svg.append("g")
+          .attr("transform", "translate(0," + height + ")")
+          .call(d3.axisBottom(xScale)
+          .ticks(7)
+          .tickValues([-1.5, -1, -0.5, 0, 0.5, 1, 1.5]))
+
+          var value0 = xScale(0) + 0.5,
+          value79pct = yScale(79),
+          value13pct = yScale(13)
+
+          svg
+            .append("line")
+            .attr("id", "zero-line")
+            .style("stroke", "black")
+            .style("stroke-width", 1)
+            .attr("x1", value0)
+            .attr("y1", 0)
+            .attr("x2", value0)
+            .attr("y2", height)
+
+          svg
+            .append("line")
+            .attr("id", "79-line")
+            .style("stroke", "black")
+            .style("stroke-width", 1)
+            .attr("x1", 0)
+            .attr("y1", value79pct)
+            .attr("x2", value0)
+            .attr("y2", value79pct)
+            .style("stroke-dasharray", ("3, 3"))
+
+          svg
+            .append("line")
+            .attr("id", "13-line")
+            .style("stroke", "black")
+            .style("stroke-width", 1)
+            .attr("x1", value0)
+            .attr("y1", value13pct)
+            .attr("x2", width)
+            .attr("y2", value13pct)
+            .style("stroke-dasharray", ("3, 3"))
+
+        svg
+          .selectAll("dot")
+          .data(data)
+          .enter()
+          .append("circle")
+          .attr("r", 0)
+          .attr("class", "bubble")
+          .attr("id", function(d) {
+            return d.gisjoin
+          })
+          .attr("cx", function(d) {
+            return xScale((+d.dist) * -1)
+          })
+          .attr("cy", function(d) {
+            return yScale(+d.BLACKHISP_PCT)
+          })
+          .style("fill", function(d) {
+            if(+d.BLACKHISP_PCT < 25) {
+              return colors[0]
+            } else if(+d.BLACKHISP_PCT > 24 && +d.BLACKHISP_PCT < 50) {
+              return colors[1]
+            } else if(+d.BLACKHISP_PCT > 49 && +d.BLACKHISP_PCT < 75) {
+              return colors[2]
+            } else {
+              return colors[3]
+            }
+          })
+          .style("opacity", "0.6")
+          .attr("stroke", "black")
+          .transition()
+          .duration(1200)
+          .attr("r", function(d) {
+            return rScale(+d.pop)
+          })
+
+          svg
+          .append("text")
+            .attr("class", "label-axis")
+            .attr("text-anchor", "middle")
+            .attr("x", width / 2)
+            .attr("y", height + margin.top + 10)
+            .text("Distance to attendance boundary (kilometers)");
+
+          svg
+          .append("text")
+            .attr("text-anchor", "start")
+            .attr("class", "label-axis")
+            .attr("x", -margin.left + 2)
+            .attr("y", -14)
+            .text("Black or Hispanic share")
+
+          svg
+          .append("text")
+          .attr("tex-anchor", "start")
+          .attr("class", "school-names")
+          .attr("x", 0)
+          .attr("y", (height / 2) -50)
+          .text("John Lewis")
+
+          svg
+          .append("text")
+          .attr("tex-anchor", "start")
+          .attr("class", "school-names")
+          .attr("x", 0)
+          .attr("y", (height / 2) -30)
+          .text("Elementary")
+
+          svg
+          .append("text")
+          .attr("tex-anchor", "start")
+          .attr("class", "school-names")
+          .attr("x", width - 100)
+          .attr("y", (height / 2) -50)
+          .text("Ashford Park")
+
+          svg
+          .append("text")
+          .attr("tex-anchor", "start")
+          .attr("class", "school-names")
+          .attr("x", width -100)
+          .attr("y", (height / 2) -30)
+          .text("Elementary")
+
+
+         var legendBubbles = svg.selectAll("g.legend")
+            .append('g')
+            .attr("id", legendBubbles)
+  }
+
+  var isOut = hasClass(document.getElementById("exploreMap"), "transitionOut")
+
+  if(isOut === false) {
+    document.getElementById("exploreMap").className = "mapboxgl-map transitionOut";
+    document.getElementById("scatter").className = "mapboxgl-map transitionIn";
+
+    console.log("Oye, si, la última")
+
+    setTimeout(transition, 750)
+  } else {
+
+
+    setTimeout(transition, 0)
+
+    console.log("Oye, no, la última")
+  }
+
 }

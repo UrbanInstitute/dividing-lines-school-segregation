@@ -3,6 +3,20 @@
   position: relative;
 }
 
+.transitionOut {
+  opacity:0;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+  transition-timing-function: ease-in;
+}
+
+.transitionIn {
+  opacity:1;
+  transition: all 1s;
+  -webkit-transition: all 1s;
+  transition-timing-function: ease-in;
+}
+
 #scrollyContainer {
   max-width: 1000px;
   width: 100%;
@@ -14,7 +28,7 @@
   display: inline-block;
   width: 350px;
   top: 0px;
-  z-index: 90;
+  /* z-index: 90; */
   padding-bottom: 20px;
   pointer-events: auto;
 }
@@ -152,7 +166,7 @@ span.avg {
 
 #chart.stickyChart {
   position: fixed;
-  top: 52px;
+  top: 80px;
   padding-left: 4px;
 }
 
@@ -191,5 +205,5 @@ span.avg {
   font-family: 'Lato', 'Arial', sans-sans-serif;
   font-weight: 700;
   fill: #353535;
-  font-size: 16px;
+  font-size: 15px;
 }

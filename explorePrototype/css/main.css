@@ -101,6 +101,10 @@ p.general {
   line-height: 1.8rem;
 }
 
+p.postScrolly {
+  margin-top: 0;
+}
+
 a {
   color: #1696d2;
   text-decoration: none;
@@ -253,12 +257,36 @@ p.creditsWho > a {
 
 @media (max-width: 770px) {
 
+  #containerFeature {
+    margin: 0 5%;
+  }
+
+  #intro {
+    height: 96vh;
+    margin-left: -5%;
+    margin-right: -5%;
+  }
+
+  #introMap {
+    height: 96vh;
+  }
+
+  #introText {
+    width: 90%;
+    top: 50%;
+  }
+
+  h2 {
+    max-width: 95%;
+    font-size: 1.7rem;
+
+  }
 }
 
 @media (max-width: 600px) {
-  #wrapGraphic {
-    display: flex;
 
+  #containerFeature {
+    margin: 0 5%;
   }
 }
 

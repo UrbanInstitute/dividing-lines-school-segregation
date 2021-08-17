@@ -95,7 +95,7 @@ function scroller() {
 
       d3.select("#lastStep")
         .classed("lastStepShort", false)
-    } else if(window.scrollY < thisTop && window.scrollY < thisBottom) {
+    } else if(window.scrollY < thisTop && window.scrollY < thisBottom - 30) {
       d3.select("#chart")
         .classed("stickyChart", false)
         .classed("relativeTop", true)
@@ -103,7 +103,7 @@ function scroller() {
 
       d3.select(".lastStep")
         .classed("lastStepShort", false)
-    } else if(window.scrollY > thisTop && window.scrollY > thisBottom) {
+    } else if(window.scrollY > thisTop && window.scrollY > thisBottom - 15) {
       d3.select("#chart")
         .classed("stickyChart", false)
         .classed("relativeTop", false)
@@ -126,7 +126,7 @@ function scroller() {
    *
    */
   function position() {
-    var pos = window.pageYOffset - 200 - containerStart;
+    var pos = window.pageYOffset - 100 - containerStart;
     var sectionIndex = d3.bisect(sectionPositions, pos);
     fixVis()
     sectionIndex = Math.min(sections.size() - 1, sectionIndex);

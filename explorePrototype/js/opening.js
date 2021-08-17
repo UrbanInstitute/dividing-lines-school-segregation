@@ -11,9 +11,9 @@ let introMap = new mapboxgl.Map({
 });
 
 if(introMap.loaded()) {
-  console.log("HOLA")
+
 } else {
-  console.log("NOOOOOOO")
+
 }
 
 // introMap.on('load', function() {
@@ -21,16 +21,15 @@ if(introMap.loaded()) {
 //
 // })
 
-introMap.on('idle', function() {
+introMap.on('load', function() {
 
   introMap.resize();
+
+  console.log("hola")
 
   introMap.zoomTo(12, {
     duration: 11000,
     offset: [0, 0],
-    easing(t) {
-      return t * (2 - t)
-    },
     essential: true
   });
 })
