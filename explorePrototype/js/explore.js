@@ -7,7 +7,7 @@ let mapTool = new mapboxgl.Map({
   container: 'theMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position [lng, lat]
-  zoom: 13, // starting zoom
+  zoom: 14, // starting zoom
   interactive: true
 
 });

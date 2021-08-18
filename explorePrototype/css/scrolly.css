@@ -118,11 +118,15 @@ span#all-dot {
 
 }
 
+#edition {
+  margin-top: -5px;
+}
+
 #edition > p {
   display: inline-block;
   width: 21%;
   margin: 0;
-  font-size: 15px;
+  font-size: 14px;
 }
 
 #edition > p:nth-child(2) {
@@ -163,8 +167,6 @@ span.avg {
 
 #chart.relativeTop {
   position: relative;
-  width: 100%;
-  max-width: 600px;
 }
 
 #chart.stickyChart {
@@ -179,8 +181,6 @@ span.avg {
 }
 
 #exploreMap {
-  /* width: 100%;
-  max-width: 600px; */
   height: 600px;
 }
 
@@ -219,29 +219,27 @@ span.avg {
 
 @media (max-width: 600px) {
   #exploreMap {
-    width: 97% !important;
     height: 75vh;
     margin: 0 auto;
   }
 
-  #exploreMap >  div.mapboxgl-canvas-container {
+  /* #exploreMap >  div.mapboxgl-canvas-container {
     width: 97% !important;
   }
 
   #exploreMap > div.mapboxgl-canvas-container > canvas {
     width: 97% !important;
-  }
+  } */
 
   #sections {
     z-index: 1;
-    width: 100%;
-    max-width: 400px;
+    max-width: 93%;
     display: inherit;
     margin: 0 auto;
   }
 
   .step {
-    max-width: 100%;
+
     background: rgba(255, 255, 255, 1);
     box-shadow: rgb(136 136 136) 4px 4px 16px;
     padding: 5% 7% 5% 7%;
@@ -254,25 +252,27 @@ span.avg {
   #chart {
     width: 100%;
     z-index: 0;
+    height: 75vh;
   }
 
   #chart.relativeTop {
     position: absolute;
-    width: 100%;
     top: 0;
     left: 0px;
+    height: 75vh;
   }
 
   #chart.relativeBottom {
-    width: 100%;
     position: absolute;
     bottom: 0px;
+    height: 75vh;
   }
 
   #chart.stickyChart {
-    width: 100%;
     position: fixed;
     padding-left: 0px;
+    width: 90%;
+    height: 75vh;
   }
 
 }

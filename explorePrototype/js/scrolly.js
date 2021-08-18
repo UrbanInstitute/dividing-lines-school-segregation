@@ -6,13 +6,22 @@ let map = new mapboxgl.Map({
   container: 'exploreMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckqv6bmld0mu917qsfxupq41d/draft", // style URL
   center: [-84.319,33.855], // starting position ([lng, lat] for Mombasa, Kenya)
-  zoom: 12.35, // starting zoom
+  zoom: 11, // starting zoom
   interactive: false
 
 });
 
 map.on('load',function(){
 map.resize()
+// var bounds = map.getBounds(),
+// swLat = bounds._sw.lat,
+// swLng = bounds._sw.lng,
+// neLat = bounds._ne.lat,
+// neLng = bounds._ne.lng;
+//
+// console.log(bounds)
+
+map.fitBounds([[-84.35940483597442, 33.821439210685796], [-84.27859516402599, 33.888547607193985]]);
 })
 
 function hasClass(element, className) {
@@ -34,7 +43,7 @@ function setMap() {
   document.getElementById("exploreMap").style.display = "block";
   document.getElementById("scatter").style.display = "none";
 
-  map.resize()
+  // map.resize()
 
     let layerLabels = map.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
@@ -58,7 +67,7 @@ function setMap() {
 
 function addDots() {
 
-    map.resize()
+    // map.resize()
 
     setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
     setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
@@ -114,7 +123,7 @@ function newBoundaries() {
 
 function theWorm() {
 
-    map.resize()
+    // map.resize()
 
     let layerSab = map.getStyle().layers[79].id,
     filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
@@ -137,17 +146,17 @@ function theWorm() {
 
 function blocksMap() {
 
-  map.on('load',function(){
-    map.resize()
-  })
+  // map.on('load',function(){
+  //   map.resize()
+  // })
 
   var isOut = hasClass(document.getElementById("exploreMap"), "transitionOut")
 
   if(isOut === true) {
 
-    map.on('load',function(){
-      map.resize()
-    })
+    // map.on('load',function(){
+    //   map.resize()
+    // })
 
     document.getElementById("scatter").className = "transitionOut";
     document.getElementById("exploreMap").className = "mapboxgl-map transitionIn";
@@ -156,9 +165,9 @@ function blocksMap() {
 
   } else {
 
-    map.on('load',function(){
-      map.resize()
-    })
+    // map.on('load',function(){
+    //   map.resize()
+    // })
 
     document.getElementById("exploreMap").className = "mapboxgl-map";
 
@@ -167,9 +176,9 @@ function blocksMap() {
 
   function transition() {
 
-    map.on('load',function(){
-      map.resize()
-    })
+    // map.on('load',function(){
+    //   map.resize()
+    // })
 
     document.getElementById("exploreMap").style.display = "block";
     document.getElementById("scatter").style.display = "none";
