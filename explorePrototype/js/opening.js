@@ -10,22 +10,9 @@ let introMap = new mapboxgl.Map({
 
 });
 
-if(introMap.loaded()) {
-
-} else {
-
-}
-
-// introMap.on('load', function() {
-//   console.log("SOY LOAD")
-//
-// })
-
 introMap.on('load', function() {
 
   introMap.resize();
-
-  console.log("hola")
 
   introMap.zoomTo(12, {
     duration: 11000,

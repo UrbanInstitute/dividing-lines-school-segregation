@@ -84,10 +84,16 @@ function scroller() {
 
   function fixVis() {
 
-    var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY - 10;
-    var thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.scrollY -400;
+    var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.pageYOffset - 10;
+    var thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.pageYOffset - 400;
 
-    if(window.scrollY > thisTop && window.scrollY < thisBottom) {
+    // console.log(window.pageYOffset)
+    // console.log(thisTop)
+
+    // var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY - 10;
+    // var thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.scrollY -400;
+
+    if(window.pageYOffset > thisTop && window.pageYOffset < thisBottom) {
       d3.select("#chart")
         .classed("stickyChart", true)
         .classed("relativeTop", false)
@@ -95,7 +101,7 @@ function scroller() {
 
       d3.select("#lastStep")
         .classed("lastStepShort", false)
-    } else if(window.scrollY < thisTop && window.scrollY < thisBottom - 30) {
+    } else if(window.pageYOffset < thisTop && window.pageYOffset < thisBottom - 30) {
       d3.select("#chart")
         .classed("stickyChart", false)
         .classed("relativeTop", true)
@@ -103,7 +109,7 @@ function scroller() {
 
       d3.select(".lastStep")
         .classed("lastStepShort", false)
-    } else if(window.scrollY > thisTop && window.scrollY > thisBottom - 15) {
+    } else if(window.pageYOffset > thisTop && window.pageYOffset > thisBottom - 15) {
       d3.select("#chart")
         .classed("stickyChart", false)
         .classed("relativeTop", false)

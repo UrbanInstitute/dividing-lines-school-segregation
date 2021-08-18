@@ -27,6 +27,7 @@ body {
 #introText {
   position: absolute;
   color: white;
+  width: 80%;
   top: 60%;
   left: 50%;
   transform: translate(-50%,-50%);
@@ -258,7 +259,7 @@ p.creditsWho > a {
 @media (max-width: 770px) {
 
   #containerFeature {
-    margin: 0 5%;
+    margin: 0 8%;
   }
 
   #intro {
@@ -285,11 +286,42 @@ p.creditsWho > a {
 
 @media (max-width: 600px) {
 
+  #intro {
+    height: 94vh;
+  }
+
+  #introMap {
+    height: 94vh;
+  }
+
+  #introText {
+    width: 95%;
+    top: 53%;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p#date {
+    padding-top: 80px;
+  }
+
   #containerFeature {
     margin: 0 5%;
   }
 }
 
 @media (max-width: 350px) {
+  h1 {
+    font-size: 2rem;
+  }
 
+  h2 {
+    font-size: 1.2rem;
+  }
 }

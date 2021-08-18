@@ -140,8 +140,6 @@ var scrollVis = function () {
         // setup event handling
         scroll.on('active', function (index) {
 
-          console.log(index)
-
           // highlight current step text
           d3.selectAll('.step')
           .style('opacity', function (d, i) {

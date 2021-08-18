@@ -14,7 +14,7 @@ let mapTool = new mapboxgl.Map({
 
   mapTool.dragPan.disable();
   mapTool.dragRotate.disable();
-// mapTool.keyboard.disable();
+  mapTool.keyboard.disable();
   mapTool.scrollZoom.disable();
 
 
@@ -62,6 +62,8 @@ function drawBars(bb) {
     })
     .entries(bb)
 
+  // console.log("data parsera", dataParsed)
+
   dataLength = dataParsed.length;
 
   var containerGraphics = document.querySelector("#exploreList")
@@ -97,7 +99,7 @@ function drawBars(bb) {
     if(withinLength == 0 ) {
       var textOthers = "";
     } else if(withinLength == 1) {
-      var textOthers = "<p class=moreSchools>Other pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
+      var textOthers = "<p class=moreSchools>Other two schools share <span class=underlineBoundaries>this boundary</span></p>";
     } else {
       var textOthers = "<p class=moreSchools>Other " + withinLength + " pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
     }
@@ -168,14 +170,24 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
       thisSchoolB = bb[0].schidb;
     }
 
-    centerMap(bbox, thisSchoolA, thisSchoolB)
-
     drawBars(bb)
+
+    mapTool.on('load', function() {
+      centerMap(bbox, thisSchoolA, thisSchoolB)
+
+      showBoundary(thisSchoolA, thisSchoolB)
+
+      showLabels(thisSchoolA, 79, 'labels-schools-a');
+      showLabels(thisSchoolB, 80, 'labels-schools-b');
+    });
+
+    centerMap(bbox, thisSchoolA, thisSchoolB)
 
     showBoundary(thisSchoolA, thisSchoolB)
 
     showLabels(thisSchoolA, 79, 'labels-schools-a');
     showLabels(thisSchoolB, 80, 'labels-schools-b');
+
 
     var allContainers = document.querySelectorAll(".schoolContainer");
 
@@ -195,10 +207,10 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
         var theOtherSchools = this.getAttribute("data-schools");
 
-        theOtherSchools.replace(/,(?=[^\s])/g, ", ");
+        // theOtherSchools.replace(/,(?=[^\s])/g, ", ");
 
         if(theOtherSchools !== "") {
-          document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+          document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools that share this boundary:</span> " + theOtherSchools + "</p>"
         } else {
           document.getElementById("otherSchools").innerHTML = "";
         }
@@ -241,7 +253,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
           // uniq() found here https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
 
           function uniq(a) {
-              return a.sort().filter(function(item, pos, ary) {
+              return a.filter(function(item, pos, ary) {
                   return !pos || item != ary[pos - 1];
               });
           }
@@ -252,6 +264,15 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
           setTimeout(buildExploreList(bbData, bboxData, msa), 500)
 
           $("#exploreAutocomplete").autocomplete({
+            source: uniqueMetros,
+            select: function(event, ui) {
+              var msa  = ui.item.value;
+              document.getElementById("thisMsa").innerHTML = msa;
+              buildExploreList(bbData, bboxData, msa);
+            }
+          });
+
+          $("#exploreAutocompleteMobile").autocomplete({
             source: uniqueMetros,
             select: function(event, ui) {
               var msa  = ui.item.value;

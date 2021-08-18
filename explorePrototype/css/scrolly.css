@@ -26,7 +26,7 @@
 #sections {
   position: relative;
   display: inline-block;
-  width: 350px;
+  max-width: 350px;
   top: 0px;
   /* z-index: 90; */
   padding-bottom: 20px;
@@ -155,13 +155,16 @@ span.avg {
   display: inline-block;
   z-index: 1;
   position: relative;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   height: 600px;
   vertical-align: top;
 }
 
 #chart.relativeTop {
-
+  position: relative;
+  width: 100%;
+  max-width: 600px;
 }
 
 #chart.stickyChart {
@@ -176,7 +179,8 @@ span.avg {
 }
 
 #exploreMap {
-  max-width: 600px;
+  /* width: 100%;
+  max-width: 600px; */
   height: 600px;
 }
 
@@ -200,10 +204,79 @@ span.avg {
   fill: #353535;
 }
 
-
 .school-names {
   font-family: 'Lato', 'Arial', sans-sans-serif;
   font-weight: 700;
   fill: #353535;
   font-size: 15px;
+}
+
+@media (max-width: 770px) {
+#exploreMap {
+  height: 90vh;
+}
+}
+
+@media (max-width: 600px) {
+  #exploreMap {
+    width: 97% !important;
+    height: 75vh;
+    margin: 0 auto;
+  }
+
+  #exploreMap >  div.mapboxgl-canvas-container {
+    width: 97% !important;
+  }
+
+  #exploreMap > div.mapboxgl-canvas-container > canvas {
+    width: 97% !important;
+  }
+
+  #sections {
+    z-index: 1;
+    width: 100%;
+    max-width: 400px;
+    display: inherit;
+    margin: 0 auto;
+  }
+
+  .step {
+    max-width: 100%;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: rgb(136 136 136) 4px 4px 16px;
+    padding: 5% 7% 5% 7%;
+  }
+
+  .step > p:last-of-type {
+    margin-bottom: 0px;
+  }
+
+  #chart {
+    width: 100%;
+    z-index: 0;
+  }
+
+  #chart.relativeTop {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0px;
+  }
+
+  #chart.relativeBottom {
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+  }
+
+  #chart.stickyChart {
+    width: 100%;
+    position: fixed;
+    padding-left: 0px;
+  }
+
+}
+
+@media (max-width: 350px) {
+
 }

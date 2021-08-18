@@ -12,11 +12,11 @@ let map = new mapboxgl.Map({
 });
 
 map.on('load',function(){
-  map.resize()
+map.resize()
 })
 
 function hasClass(element, className) {
-  console.log((' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1)
+
   return (' ' + element.className + ' ').indexOf(' ' + className+ ' ') > -1;
 }
 
@@ -30,8 +30,11 @@ function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
 
 function setMap() {
 
+
   document.getElementById("exploreMap").style.display = "block";
   document.getElementById("scatter").style.display = "none";
+
+  map.resize()
 
     let layerLabels = map.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
@@ -54,6 +57,8 @@ function setMap() {
 }
 
 function addDots() {
+
+    map.resize()
 
     setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
     setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
@@ -99,9 +104,17 @@ function newBoundaries() {
 
       setStyles("ashfordlewis-new-worm", 'line-opacity', 0, 'line-opacity-transition', 1000)
     }
+
+    if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
+
+        setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 2000)
+
+    }
 }
 
 function theWorm() {
+
+    map.resize()
 
     let layerSab = map.getStyle().layers[79].id,
     filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
@@ -116,7 +129,7 @@ function theWorm() {
 
     if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
 
-        setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 2000)
+        setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 100)
 
     }
 
@@ -124,20 +137,40 @@ function theWorm() {
 
 function blocksMap() {
 
+  map.on('load',function(){
+    map.resize()
+  })
+
   var isOut = hasClass(document.getElementById("exploreMap"), "transitionOut")
 
   if(isOut === true) {
-    document.getElementById("scatter").className = "mapboxgl-map transitionOut";
+
+    map.on('load',function(){
+      map.resize()
+    })
+
+    document.getElementById("scatter").className = "transitionOut";
     document.getElementById("exploreMap").className = "mapboxgl-map transitionIn";
 
-    setTimeout(transition, 700)
+    setTimeout(transition, 0)
+
   } else {
 
+    map.on('load',function(){
+      map.resize()
+    })
+
     document.getElementById("exploreMap").className = "mapboxgl-map";
+
     setTimeout(transition, 0)
   }
 
   function transition() {
+
+    map.on('load',function(){
+      map.resize()
+    })
+
     document.getElementById("exploreMap").style.display = "block";
     document.getElementById("scatter").style.display = "none";
 
@@ -340,17 +373,11 @@ function scatter(data) {
 
   if(isOut === false) {
     document.getElementById("exploreMap").className = "mapboxgl-map transitionOut";
-    document.getElementById("scatter").className = "mapboxgl-map transitionIn";
-
-    console.log("Oye, si, la última")
+    document.getElementById("scatter").className = "transitionIn";
 
     setTimeout(transition, 750)
   } else {
-
-
     setTimeout(transition, 0)
-
-    console.log("Oye, no, la última")
   }
 
 }
