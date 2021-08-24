@@ -21,8 +21,6 @@ let mapScrolly = new mapboxgl.Map({
 
 });
 
-// mapScrolly.resize()
-
 mapScrolly.on('load',function(){
 mapScrolly.resize()
 // var bounds = mapScrolly.getBounds(),
@@ -35,6 +33,13 @@ mapScrolly.resize()
 
 mapScrolly.fitBounds([[-84.35940483597442, 33.821439210685796], [-84.27859516402599, 33.888547607193985]]);
 })
+
+var mapCanvasLoad = document.getElementById("scrollyMap").getElementsByClassName("mapboxgl-canvas-container")[0].childNodes[0].offsetHeight;
+
+// mapScrolly.on('idle', function() {
+//   console.log(document.getElementById('scrollyMap').clientHeight)
+//   mapScrolly.resize()
+// })
 
 function hasClass(element, className) {
 
@@ -51,13 +56,11 @@ function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
 
 function setMap() {
 
-      // mapScrolly.resize()
+  mapScrolly.resize()
 
 
   document.getElementById("scrollyMap").style.display = "block";
   document.getElementById("scatter").style.display = "none";
-
-  // mapScrolly.resize()
 
     let layerLabels = mapScrolly.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
@@ -81,7 +84,7 @@ function setMap() {
 
 function addDots() {
 
-    // mapScrolly.resize()
+    mapScrolly.resize()
 
     setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
     setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
@@ -105,7 +108,7 @@ function addDots() {
 
 function newBoundaries() {
 
-      // mapScrolly.resize()
+    mapScrolly.resize()
 
     mapScrolly.setPaintProperty("ashfordlewis-old-sab", 'line-opacity', 0);
     mapScrolly.setPaintProperty("ashfordlewis-new-sab", 'line-opacity', 1);
@@ -139,9 +142,7 @@ function newBoundaries() {
 
 function theWorm() {
 
-      // mapScrolly.resize()
-
-    // mapScrolly.resize()
+    mapScrolly.resize()
 
     let layerSab = mapScrolly.getStyle().layers[79].id,
     filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
@@ -172,17 +173,12 @@ function blocksMap() {
 
   if(isOut === true) {
 
-    // mapScrolly.on('load',function(){
-    //   mapScrolly.resize()
-    // })
-
     document.getElementById("scatter").className = "transitionOut";
     document.getElementById("scrollyMap").className = "mapboxgl-map transitionIn";
 
     setTimeout(transition, 0)
 
   } else {
-
 
     // mapScrolly.on('load',function(){
     //   mapScrolly.resize()
@@ -195,12 +191,29 @@ function blocksMap() {
 
   function transition() {
 
-    // mapScrolly.on('load',function(){
-    //   mapScrolly.resize()
-    // })
 
-    document.getElementById("scrollyMap").style.display = "block";
-    document.getElementById("scatter").style.display = "none";
+    var mapCanvas = document.getElementById("scrollyMap").getElementsByClassName("mapboxgl-canvas-container")[0].childNodes[0];
+
+    if(mapCanvas.offsetHeight < mapCanvasLoad) {
+
+      document.getElementById("scatter").style.display = "none";
+      document.getElementById("scrollyMap").style.visibility = "hidden";
+
+      setTimeout(function() {
+            document.getElementById("scrollyMap").style.display = "block";
+            mapScrolly.resize()
+            document.getElementById("scrollyMap").style.visibility = "visible";
+      }, 150)
+
+
+    } else {
+      document.getElementById("scatter").style.display = "none";
+      document.getElementById("scrollyMap").style.visibility = "hidden";
+      document.getElementById("scrollyMap").style.display = "block";
+      document.getElementById("scrollyMap").style.visibility = "visible";
+    }
+
+
 
       setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000)
       setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000)
@@ -389,7 +402,6 @@ function scatter(data) {
           .attr("x", width -100)
           .attr("y", (height / 2) -30)
           .text("Elementary")
-
 
          var legendBubbles = svg.selectAll("g.legend")
             .append('g')
