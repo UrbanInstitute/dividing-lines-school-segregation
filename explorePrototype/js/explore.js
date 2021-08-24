@@ -11,7 +11,7 @@ let mapTool = new mapboxgl.Map({
   center: [-84.331,33.858], // starting position [lng, lat]
   zoom: 11, // starting zoom
   maxZoom: 15,
-  minZoom: 10,
+  minZoom: 9,
   interactive: true
 
 });
@@ -160,8 +160,8 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
       "padding": {"top": 0, "bottom":0, "left": 0, "right": 0}, // padding around district, a bit more on bottom to accomodate logo
       "duration": 1000,
       "linear": true,
-      "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
-      "minZoom": 10
+      "essential": true // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
+      // "minZoom": 9
       // "maxZoom": 15
       // "minZoom": 13
     });
