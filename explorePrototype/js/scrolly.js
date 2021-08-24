@@ -1,9 +1,19 @@
+var widthDiv = (document.getElementById("scatter").offsetWidth),
+widthWindow = window.innerWidth,
+screenHeight = screen.height;
 
+if(widthDiv < 301 || screenHeight < 700) {
+  var fullHeight = 500
+} else if(widthDiv > 300 && widthWindow > 770 && widthWindow < 1100 && screenHeight > 1000) {
+  var fullHeight = 700
+} else {
+  var fullHeight = 600
+}
 
 mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
 
-let map = new mapboxgl.Map({
-  container: 'exploreMap', // container ID
+let mapScrolly = new mapboxgl.Map({
+  container: 'scrollyMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckqv6bmld0mu917qsfxupq41d/draft", // style URL
   center: [-84.319,33.855], // starting position ([lng, lat] for Mombasa, Kenya)
   zoom: 11, // starting zoom
@@ -11,9 +21,11 @@ let map = new mapboxgl.Map({
 
 });
 
-map.on('load',function(){
-map.resize()
-// var bounds = map.getBounds(),
+// mapScrolly.resize()
+
+mapScrolly.on('load',function(){
+mapScrolly.resize()
+// var bounds = mapScrolly.getBounds(),
 // swLat = bounds._sw.lat,
 // swLng = bounds._sw.lng,
 // neLat = bounds._ne.lat,
@@ -21,7 +33,7 @@ map.resize()
 //
 // console.log(bounds)
 
-map.fitBounds([[-84.35940483597442, 33.821439210685796], [-84.27859516402599, 33.888547607193985]]);
+mapScrolly.fitBounds([[-84.35940483597442, 33.821439210685796], [-84.27859516402599, 33.888547607193985]]);
 })
 
 function hasClass(element, className) {
@@ -31,23 +43,25 @@ function hasClass(element, className) {
 
 function setStyles(thisLayer, thisStyle, setTo, transitionStyle, thisDuration) {
 
-    map.setPaintProperty(thisLayer, thisStyle, setTo);
+    mapScrolly.setPaintProperty(thisLayer, thisStyle, setTo);
 
-    map.getLayer(thisLayer).setPaintProperty(transitionStyle, {duration: thisDuration, delay: 0})
+    mapScrolly.getLayer(thisLayer).setPaintProperty(transitionStyle, {duration: thisDuration, delay: 0})
 
 }
 
 function setMap() {
 
+      // mapScrolly.resize()
 
-  document.getElementById("exploreMap").style.display = "block";
+
+  document.getElementById("scrollyMap").style.display = "block";
   document.getElementById("scatter").style.display = "none";
 
-  // map.resize()
+  // mapScrolly.resize()
 
-    let layerLabels = map.getStyle().layers[82].id,
+    let layerLabels = mapScrolly.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
-    map.setFilter(layerLabels, filtersLabels);
+    mapScrolly.setFilter(layerLabels, filtersLabels);
 
     setStyles("ashfordlewis-old-sab", 'line-opacity', 1, 'line-opacity-transition', 1000)
 
@@ -55,7 +69,7 @@ function setMap() {
 
     setStyles("scrollyschools-labels", 'icon-opacity', 1, 'icon-opacity-transition', 2000)
 
-    if(map.queryRenderedFeatures({ layers: ['dots-black-hispanic']}).length !== 0) {
+    if(mapScrolly.queryRenderedFeatures({ layers: ['dots-black-hispanic']}).length !== 0) {
 
       setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000);
       setStyles("dots-others", 'circle-radius', 0, 'circle-radius-transition', 1000);
@@ -67,54 +81,56 @@ function setMap() {
 
 function addDots() {
 
-    // map.resize()
+    // mapScrolly.resize()
 
     setStyles("dots-black-hispanic", 'circle-radius', 1.5, 'circle-radius-transition', 1000)
     setStyles("dots-others", 'circle-radius', 1.5, 'circle-radius-transition', 2000)
 
 
-    if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-sab']})[0].layer.paint["line-opacity"] !== 0) {
+    if(mapScrolly.queryRenderedFeatures({ layers: ['ashfordlewis-new-sab']})[0].layer.paint["line-opacity"] !== 0) {
 
       setStyles("ashfordlewis-new-sab", 'line-opacity', 0, 'line-opacity-transition', 1000)
       setStyles("ashfordlewis-old-sab", 'line-opacity', 1, 'line-opacity-transition', 2000)
 
-      let layerLabels = map.getStyle().layers[82].id,
+      let layerLabels = mapScrolly.getStyle().layers[82].id,
       filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School']]
-      map.setFilter(layerLabels, filtersLabels);
+      mapScrolly.setFilter(layerLabels, filtersLabels);
 
-      // map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
+      // mapScrolly.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
       //
-      // map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+      // mapScrolly.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
     }
 
 }
 
 function newBoundaries() {
 
-    map.setPaintProperty("ashfordlewis-old-sab", 'line-opacity', 0);
-    map.setPaintProperty("ashfordlewis-new-sab", 'line-opacity', 1);
+      // mapScrolly.resize()
 
-    let layerLabels = map.getStyle().layers[82].id,
+    mapScrolly.setPaintProperty("ashfordlewis-old-sab", 'line-opacity', 0);
+    mapScrolly.setPaintProperty("ashfordlewis-new-sab", 'line-opacity', 1);
+
+    let layerLabels = mapScrolly.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
-    map.setFilter(layerLabels, filtersLabels);
+    mapScrolly.setFilter(layerLabels, filtersLabels);
 
-    map.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+    mapScrolly.getLayer("ashfordlewis-old-sab").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
 
-    map.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
+    mapScrolly.getLayer("ashfordlewis-new-sab").setPaintProperty('line-opacity-transition', {duration: 2000, delay: 0})
 
-    if(map.queryRenderedFeatures({ layers: ['ashfordlewis-new-worm']})[0].layer.paint["line-opacity"] !== 0) {
-      let layerLabels = map.getStyle().layers[82].id,
+    if(mapScrolly.queryRenderedFeatures({ layers: ['ashfordlewis-new-worm']})[0].layer.paint["line-opacity"] !== 0) {
+      let layerLabels = mapScrolly.getStyle().layers[82].id,
       filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
-      map.setFilter(layerLabels, filtersLabels);
+      mapScrolly.setFilter(layerLabels, filtersLabels);
 
-      let layerSab = map.getStyle().layers[79].id,
+      let layerSab = mapScrolly.getStyle().layers[79].id,
       filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'Montclair Elementary School', 'Woodward Elementary School', 'John Robert Lewis Elementary School']]
-      map.setFilter(layerSab, filtersSab);
+      mapScrolly.setFilter(layerSab, filtersSab);
 
       setStyles("ashfordlewis-new-worm", 'line-opacity', 0, 'line-opacity-transition', 1000)
     }
 
-    if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
+    if(mapScrolly.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
 
         setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 2000)
 
@@ -123,20 +139,22 @@ function newBoundaries() {
 
 function theWorm() {
 
-    // map.resize()
+      // mapScrolly.resize()
 
-    let layerSab = map.getStyle().layers[79].id,
+    // mapScrolly.resize()
+
+    let layerSab = mapScrolly.getStyle().layers[79].id,
     filtersSab = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
-    map.setFilter(layerSab, filtersSab);
+    mapScrolly.setFilter(layerSab, filtersSab);
 
-    let layerLabels = map.getStyle().layers[82].id,
+    let layerLabels = mapScrolly.getStyle().layers[82].id,
     filtersLabels = ["all", ['in', 'schname', 'Ashford Park Elementary School', 'John Robert Lewis Elementary School']]
-    map.setFilter(layerLabels, filtersLabels);
+    mapScrolly.setFilter(layerLabels, filtersLabels);
 
-    map.setPaintProperty("ashfordlewis-new-worm", 'line-opacity', 1);
-    map.getLayer("ashfordlewis-new-worm").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
+    mapScrolly.setPaintProperty("ashfordlewis-new-worm", 'line-opacity', 1);
+    mapScrolly.getLayer("ashfordlewis-new-worm").setPaintProperty('line-opacity-transition', {duration: 1000, delay: 0})
 
-    if(map.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
+    if(mapScrolly.queryRenderedFeatures({ layers: ['blocks_choropleth']})[0].layer.paint["fill-opacity"]!== 0) {
 
         setStyles("blocks_choropleth", 'fill-opacity', 0, 'fill-opacity-transition', 100)
 
@@ -146,41 +164,42 @@ function theWorm() {
 
 function blocksMap() {
 
-  // map.on('load',function(){
-  //   map.resize()
+  // mapScrolly.on('load',function(){
+  //   mapScrolly.resize()
   // })
 
-  var isOut = hasClass(document.getElementById("exploreMap"), "transitionOut")
+  var isOut = hasClass(document.getElementById("scrollyMap"), "transitionOut")
 
   if(isOut === true) {
 
-    // map.on('load',function(){
-    //   map.resize()
+    // mapScrolly.on('load',function(){
+    //   mapScrolly.resize()
     // })
 
     document.getElementById("scatter").className = "transitionOut";
-    document.getElementById("exploreMap").className = "mapboxgl-map transitionIn";
+    document.getElementById("scrollyMap").className = "mapboxgl-map transitionIn";
 
     setTimeout(transition, 0)
 
   } else {
 
-    // map.on('load',function(){
-    //   map.resize()
+
+    // mapScrolly.on('load',function(){
+    //   mapScrolly.resize()
     // })
 
-    document.getElementById("exploreMap").className = "mapboxgl-map";
+    document.getElementById("scrollyMap").className = "mapboxgl-map";
 
     setTimeout(transition, 0)
   }
 
   function transition() {
 
-    // map.on('load',function(){
-    //   map.resize()
+    // mapScrolly.on('load',function(){
+    //   mapScrolly.resize()
     // })
 
-    document.getElementById("exploreMap").style.display = "block";
+    document.getElementById("scrollyMap").style.display = "block";
     document.getElementById("scatter").style.display = "none";
 
       setStyles("dots-black-hispanic", 'circle-radius', 0, 'circle-radius-transition', 1000)
@@ -194,21 +213,20 @@ function blocksMap() {
 function scatter(data) {
 
   function transition() {
-    document.getElementById("exploreMap").style.display = "none";
+    document.getElementById("scrollyMap").style.display = "none";
     document.getElementById("scatter").style.display = "block";
     document.getElementById("scatter").innerHTML = '';
 
 
         var colors = ["#fff3d1", "#fce39e", "#fdd870", "#fdbf11"]
 
-        var widthWindow = (document.getElementById("scatter").offsetWidth),
-        margin = {top: 25, right: 20, bottom: 70, left: 35},
-        width = (widthWindow) - margin.left - margin.right,
-        height = 500 - margin.top - margin.bottom
+        var margin = {top: 25, right: 20, bottom: 70, left: 35},
+        width = (widthDiv) - margin.left - margin.right,
+        height = fullHeight - margin.top - margin.bottom
 
         var svg = d3.select("#scatter")
           .append("svg")
-            .attr("width", widthWindow)
+            .attr("width", widthDiv)
             .attr("height", height + margin.top + margin.bottom)
           .append("g")
             .attr("transform", "translate(" + margin.left + " , " + margin.top + ")")
@@ -378,13 +396,13 @@ function scatter(data) {
             .attr("id", legendBubbles)
   }
 
-  var isOut = hasClass(document.getElementById("exploreMap"), "transitionOut")
+  var isOut = hasClass(document.getElementById("scrollyMap"), "transitionOut")
 
   if(isOut === false) {
-    document.getElementById("exploreMap").className = "mapboxgl-map transitionOut";
+    document.getElementById("scrollyMap").className = "mapboxgl-map transitionOut";
     document.getElementById("scatter").className = "transitionIn";
 
-    setTimeout(transition, 750)
+    setTimeout(transition, 500)
   } else {
     setTimeout(transition, 0)
   }

@@ -5,15 +5,15 @@
 
 .transitionOut {
   opacity:0;
-  transition: all 1s;
-  -webkit-transition: all 1s;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
   transition-timing-function: ease-in;
 }
 
 .transitionIn {
   opacity:1;
-  transition: all 1s;
-  -webkit-transition: all 1s;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
   transition-timing-function: ease-in;
 }
 
@@ -28,7 +28,6 @@
   display: inline-block;
   max-width: 350px;
   top: 0px;
-  /* z-index: 90; */
   padding-bottom: 20px;
   pointer-events: auto;
 }
@@ -47,7 +46,7 @@
 }
 
 .step:first-of-type {
-  margin-top: 150px;
+  margin-top: 200px;
 }
 
 .step > p:nth-child(2) {
@@ -148,7 +147,7 @@ span.avg {
 }
 
 .lastStepShort {
- margin: 0px;
+  margin: 0px;
 }
 
 #extra-space {
@@ -161,26 +160,35 @@ span.avg {
   position: relative;
   width: 100%;
   max-width: 600px;
-  height: 600px;
+  /* height: 600px; */
   vertical-align: top;
+}
+
+
+#scrollyMap {
+  width: 100%;
+  max-width: 600px;
+  height: 600px;
 }
 
 #chart.relativeTop {
   position: relative;
+  max-width: 600px;
+  height: 600px;
 }
 
 #chart.stickyChart {
   position: fixed;
   top: 80px;
   padding-left: 4px;
+  max-width: 600px;
+  height: 600px;
 }
 
 #chart.relativeBottom {
   position: relative;
   vertical-align: bottom;
-}
-
-#exploreMap {
+  max-width: 600px;
   height: 600px;
 }
 
@@ -211,25 +219,99 @@ span.avg {
   font-size: 15px;
 }
 
-@media (max-width: 770px) {
-#exploreMap {
-  height: 90vh;
-}
+
+/* SMALLER DEVICES MEDIA QUERIES */
+
+@media (max-width: 1170px) {
+  #scrollyMap {
+    height: 60vh;
+  }
+
+  #chart {
+    height: 60vh;
+  }
+
+  #chart.relativeTop {
+    height: 60vh;
+  }
+
+  #chart.relativeBottom {
+    bottom: -2rem;
+    height: 60vh;
+  }
+
+  #chart.stickyChart {
+    height: 60vh;
+  }
 }
 
-@media (max-width: 600px) {
-  #exploreMap {
+@media (max-width: 770px) {
+
+  #scrollyMap {
+    margin: 0 auto;
+    max-width: 650px;
     height: 75vh;
+    width: 100%;
+  }
+
+  #sections {
+    z-index: 1;
+    max-width: 70%;
+    display: inherit;
     margin: 0 auto;
   }
 
-  /* #exploreMap >  div.mapboxgl-canvas-container {
-    width: 97% !important;
+  .step {
+    background: rgba(255, 255, 255, 1);
+    box-shadow: rgb(136 136 136) 4px 4px 16px;
+    padding: 5% 7% 5% 7%;
   }
 
-  #exploreMap > div.mapboxgl-canvas-container > canvas {
-    width: 97% !important;
-  } */
+  #chart {
+    z-index: 0;
+    height: 75vh;
+    max-width: 650px;
+    width: 100%;
+  }
+
+  #chart.relativeTop {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    height: 75vh;
+    max-width: 650px;
+    width: 100%;
+  }
+
+  #chart.relativeBottom {
+    position: absolute;
+    height: 75vh;
+    max-width: 650px;
+    width: 100%;
+    bottom: -95px;
+  }
+
+  #chart.stickyChart {
+    position: fixed;
+    padding-left: 0px;
+    max-width: 650px;
+    height: 75vh;
+    width: 100%;
+  }
+
+  #scatter {
+    width: 100%;
+    max-width: 650px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  #scrollyMap {
+    margin: 0 auto;
+    height: 80vh;
+    width: 90%;
+  }
 
   #sections {
     z-index: 1;
@@ -239,7 +321,6 @@ span.avg {
   }
 
   .step {
-
     background: rgba(255, 255, 255, 1);
     box-shadow: rgb(136 136 136) 4px 4px 16px;
     padding: 5% 7% 5% 7%;
@@ -250,33 +331,52 @@ span.avg {
   }
 
   #chart {
-    width: 100%;
     z-index: 0;
-    height: 75vh;
+    height: 80vh;
   }
 
   #chart.relativeTop {
     position: absolute;
     top: 0;
     left: 0px;
-    height: 75vh;
+    height: 80vh;
   }
 
   #chart.relativeBottom {
     position: absolute;
-    bottom: 0px;
-    height: 75vh;
+    height: 80vh;
+    width: 95%;
   }
 
   #chart.stickyChart {
     position: fixed;
     padding-left: 0px;
     width: 90%;
-    height: 75vh;
+    height: 80vh;
   }
 
 }
 
 @media (max-width: 350px) {
 
+  #scrollyMap {
+    height: 75vh;
+  }
+
+  #chart.relativeBottom {
+    height: 75vh;
+    bottom: 125px;
+  }
+
+  #chart {
+    height: 75vh;
+  }
+
+  #chart.relativeTop {
+    height: 75vh;
+  }
+
+  #chart.stickyChart {
+    height: 75vh;
+  }
 }

@@ -4,7 +4,7 @@ let introMap = new mapboxgl.Map({
   container: 'introMap', // container ID
   style: "mapbox://styles/urbaninstitute/cksamqg5n0t7f18t59c0b124x/draft", // style URL
   center: [-84.332476, 33.843571], // starting position ([lng, lat] for Mombasa, Kenya)
-  zoom: 17, // starting zoom,
+  zoom: 15, // starting zoom,
   attributionControl: true,
   interactive: false
 
@@ -15,7 +15,7 @@ introMap.on('load', function() {
   introMap.resize();
 
   introMap.zoomTo(12, {
-    duration: 11000,
+    duration: 10000,
     offset: [0, 0],
     essential: true
   });

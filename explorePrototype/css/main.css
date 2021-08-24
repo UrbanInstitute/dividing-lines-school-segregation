@@ -12,7 +12,7 @@ body {
 }
 
 #introMap {
-  height: 800px;
+  height: 900px;
   font-size: 16px;
 }
 
@@ -20,7 +20,7 @@ body {
   position: relative;
   margin-top: 2em;
   background-color: #E0E0E0;
-  height: 800px;
+  height: 900px;
   margin-bottom: 100px;
 }
 
@@ -93,7 +93,8 @@ p#date {
 
 #topText {
   background: #fff;
-position: relative;
+  position: relative;
+  margin-bottom: 0;
 }
 
 p.general {
@@ -103,7 +104,7 @@ p.general {
 }
 
 p.postScrolly {
-  margin-top: 0;
+  margin-top: 5rem;
 }
 
 a {
@@ -130,7 +131,6 @@ footer .content{
     margin: 0 auto;
 
 }
-
 
 h4 {
     font-size: 34px;
@@ -253,8 +253,14 @@ p.creditsWho > a {
 }
 
 
-
 /* SMALLER SCREENS MEDIA QUERIES */
+
+
+@media (max-width: 1170px) {
+  p.postScrolly {
+    margin-top: 0rem;
+  }
+}
 
 @media (max-width: 770px) {
 
@@ -264,8 +270,8 @@ p.creditsWho > a {
 
   #intro {
     height: 96vh;
-    margin-left: -5%;
-    margin-right: -5%;
+    margin-left: -10%;
+    margin-right: -10%;
   }
 
   #introMap {
@@ -275,6 +281,14 @@ p.creditsWho > a {
   #introText {
     width: 90%;
     top: 50%;
+  }
+
+  #topText {
+    margin-bottom: 5rem;
+  }
+
+  h3 {
+    width: 100%;
   }
 
   h2 {
@@ -288,6 +302,8 @@ p.creditsWho > a {
 
   #intro {
     height: 94vh;
+    margin-left: -5%;
+    margin-right: -5%;
   }
 
   #introMap {
@@ -314,6 +330,10 @@ p.creditsWho > a {
   #containerFeature {
     margin: 0 5%;
   }
+
+  p.postScrolly {
+    margin-top: 0rem;
+  }
 }
 
 @media (max-width: 350px) {
@@ -324,4 +344,32 @@ p.creditsWho > a {
   h2 {
     font-size: 1.2rem;
   }
+}
+
+/* ICONS */
+
+.material-icons-outlined {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  vertical-align: text-bottom;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
 }

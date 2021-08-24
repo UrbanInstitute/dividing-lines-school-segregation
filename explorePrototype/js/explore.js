@@ -1,5 +1,7 @@
 let msa = "Atlanta-Sandy Springs-Marietta, GA";
 
+var widthWindow = window.innerWidth;
+
 // defines map
 mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZTy4hI_PWXw3C3UFbDQ";
 
@@ -7,15 +9,21 @@ let mapTool = new mapboxgl.Map({
   container: 'theMap', // container ID
   style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
   center: [-84.331,33.858], // starting position [lng, lat]
-  zoom: 14, // starting zoom
+  zoom: 11, // starting zoom
+  maxZoom: 15,
+  minZoom: 10,
   interactive: true
 
 });
 
-  mapTool.dragPan.disable();
+  // mapTool.dragPan.disable();
   mapTool.dragRotate.disable();
   mapTool.keyboard.disable();
   mapTool.scrollZoom.disable();
+  mapTool.touchZoomRotate.disable();
+  mapTool.addControl(new mapboxgl.NavigationControl({
+    showCompass: false
+  }));
 
 
 mapTool.on('load', function() {
@@ -62,9 +70,7 @@ function drawBars(bb) {
     })
     .entries(bb)
 
-  // console.log("data parsera", dataParsed)
-
-  dataLength = dataParsed.length;
+  var dataLength = dataParsed.length;
 
   var containerGraphics = document.querySelector("#exploreList")
 
@@ -122,14 +128,17 @@ function drawBars(bb) {
 
     containerGraphics.innerHTML += "<div class=schoolContainer>" + blockBoundary + "<div class=schoolA id=" + schidA +  "> <p>" + data.schnamea + " and " + data.schnameb + "</p> <div class=graphicSchool> <div class=ticks><div class=tick0>0%</div> <div class=tick50>50%</div> <div class=tick100>100%</div></div> <div class=marks><div class=mark0></div> <div class=mark50></div> <div class=mark100></div></div> <div class=barchart> <div class=blackPct style=width:" + blackPctA + ";></div> <div class=hispPct style=width:"+ hispPctA + ";></div><div class=whitePct style=width:"+ whitePctA + ";></div> <div class=otherPct style=width:"+ otherPctA + ";></div> </div> </div> </div> <div class=schoolB id=" + schidB + "> <p>" + "</p> <div class=graphicSchool> <div class=marks><div class=mark0></div> <div class=mark50></div> <div class=mark100></div></div> <div class=barchart> <div class=blackPct style=width:" + blackPctB + ";></div> <div class=hispPct style=width:"+ hispPctB + ";></div><div class=whitePct style=width:"+ whitePctB + ";></div> <div class=otherPct style=width:"+ otherPctB + ";></div> </div> </div> </div>" + textOthers + "</div>";
 
-    document.getElementsByClassName("schoolContainer")[i].setAttribute("data-schools", finalSchools)
+    if(widthWindow > 770) {
 
-    if(i === 0) {
-      var theOtherSchools = document.getElementsByClassName("schoolContainer")[i].getAttribute("data-schools");
-      if(theOtherSchools !== "") {
-        document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
-      } else {
-        document.getElementById("otherSchools").innerHTML = "";
+      document.getElementsByClassName("schoolContainer")[i].setAttribute("data-schools", finalSchools)
+
+      if(i === 0) {
+        var theOtherSchools = document.getElementsByClassName("schoolContainer")[i].getAttribute("data-schools");
+        if(theOtherSchools !== "") {
+          document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+        } else {
+          document.getElementById("otherSchools").innerHTML = "";
+        }
       }
     }
   } // ends loop i
@@ -152,8 +161,13 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
       "duration": 1000,
       "linear": true,
       "essential": true, // If true , then the animation is considered essential and will not be affected by prefers-reduced-motion .
-      "minZoom": 0 // don't hit the minZoom 6 ceiling for the map, so for large distances the flyTo arc isn't truncated
+      "minZoom": 10
+      // "maxZoom": 15
+      // "minZoom": 13
     });
+
+    var zoom = mapTool.getZoom();
+    console.log(zoom)
   }
 
   // builds the list of cachments and adds piecharts
@@ -205,14 +219,15 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
         this.className += " selected";
 
-        var theOtherSchools = this.getAttribute("data-schools");
+        if(widthWindow > 770) {
 
-        // theOtherSchools.replace(/,(?=[^\s])/g, ", ");
+          var theOtherSchools = this.getAttribute("data-schools");
 
-        if(theOtherSchools !== "") {
-          document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools that share this boundary:</span> " + theOtherSchools + "</p>"
-        } else {
-          document.getElementById("otherSchools").innerHTML = "";
+          if(theOtherSchools !== "") {
+            document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools that share this boundary:</span> " + theOtherSchools + "</p>"
+          } else {
+            document.getElementById("otherSchools").innerHTML = "";
+          }
         }
 
         var schoolAId = this.querySelectorAll(".schoolA")[0].id,
@@ -235,17 +250,6 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
     .defer(d3.csv, "data/source/badbdy.csv")
     .await(function(error, bboxData, bbData) {
       if(error) throw error;
-        //
-        // let uniqueMetros = [
-        //   ...new Set(
-        //     bbData.map(function(o){
-        //       return o.maname
-        //     })
-        //     .sort(function(a,b){
-        //       return (a<b) ? - 1: 1;
-        //     })
-        //   )
-        // ];
         var msaList = bbData.map(function(o){
           return o.maname
           })
@@ -260,19 +264,17 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
           var uniqueMetros = uniq(msaList);
 
+          buildExploreList(bbData, bboxData, msa)
 
-          setTimeout(buildExploreList(bbData, bboxData, msa), 500)
+          var windowWidth = window.innerWidth;
 
-          $("#exploreAutocomplete").autocomplete({
-            source: uniqueMetros,
-            select: function(event, ui) {
-              var msa  = ui.item.value;
-              document.getElementById("thisMsa").innerHTML = msa;
-              buildExploreList(bbData, bboxData, msa);
-            }
-          });
+          if(windowWidth > 770) {
+            var thisMenu = "#exploreAutocomplete"
+          } else {
+            var thisMenu = "#exploreAutocompleteMobile"
+          }
 
-          $("#exploreAutocompleteMobile").autocomplete({
+          $(thisMenu).autocomplete({
             source: uniqueMetros,
             select: function(event, ui) {
               var msa  = ui.item.value;

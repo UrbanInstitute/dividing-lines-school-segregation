@@ -142,8 +142,11 @@ var scrollVis = function () {
 
           // highlight current step text
           d3.selectAll('.step')
+          .transition()
+          .duration(500)
+          .ease(d3.easeLinear)
           .style('opacity', function (d, i) {
-             return i === index ? 1 : 0.1; });
+             return i === index ? 1 : 0.1; })
 
           // activate current section
           plot.activate(index);

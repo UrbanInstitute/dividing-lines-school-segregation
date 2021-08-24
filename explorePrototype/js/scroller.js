@@ -6,6 +6,12 @@
  * to.
  *
  */
+ var widthDiv = (document.getElementById("scatter").offsetWidth),
+ widthWindow = window.innerWidth,
+ screenHeight = screen.height,
+ thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.pageYOffset - 100,
+ thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.pageYOffset - 400;
+
 function scroller() {
   var container = d3.select('body');
   // event dispatcher
@@ -75,7 +81,7 @@ function scroller() {
     sections.each(function (d, i) {
       var top = this.getBoundingClientRect().top;
       if (i === 0) {
-        startPos = top;
+        startPos = top - 20;
       }
       sectionPositions.push(top - startPos);
     });
@@ -83,15 +89,6 @@ function scroller() {
   }
 
   function fixVis() {
-
-    var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.pageYOffset - 10;
-    var thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.pageYOffset - 400;
-
-    // console.log(window.pageYOffset)
-    // console.log(thisTop)
-
-    // var thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.scrollY - 10;
-    // var thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.scrollY -400;
 
     if(window.pageYOffset > thisTop && window.pageYOffset < thisBottom) {
       d3.select("#chart")
@@ -115,6 +112,24 @@ function scroller() {
         .classed("relativeTop", false)
         .classed("relativeBottom", true)
 
+        var stickyChart = document.getElementsByClassName("relativeBottom")
+
+        if(widthWindow > 350 && widthWindow < 500 && screenHeight > 750) {
+
+          stickyChart[0].style.bottom = "20px";
+
+        } else if(widthWindow > 350 && widthWindow < 500 && screenHeight < 750) {
+
+          stickyChart[0].style.bottom = "50px";
+
+        } else if(widthWindow < 350 && screenHeight < 600) {
+
+          stickyChart[0].style.bottom = "125px";
+
+        } else {
+
+        }
+
       d3.select("#lastStep")
         .classed("lastStepShort", true)
     }
@@ -132,7 +147,8 @@ function scroller() {
    *
    */
   function position() {
-    var pos = window.pageYOffset - 100 - containerStart;
+    var pos = window.pageYOffset - 150 - containerStart;
+
     var sectionIndex = d3.bisect(sectionPositions, pos);
     fixVis()
     sectionIndex = Math.min(sections.size() - 1, sectionIndex);

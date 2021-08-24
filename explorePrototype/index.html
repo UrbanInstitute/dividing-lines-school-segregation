@@ -14,6 +14,8 @@
   <link rel="stylesheet" type="text/css" href="css/tool.css"/>
   <link rel="stylesheet" type="text/css" href="css/scrolly.css"/>
   <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic,900" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined"
+  rel="stylesheet">
 
 </head>
 
@@ -90,21 +92,21 @@
 
         <div id="sections">
           <section class="step">
+            <!-- <br>
             <br>
             <br>
-            <br>
-            <br>
+            <br> -->
             <p>Before John Lewis opened, Woodward and Montclair Elementary Schools were overcrowded. Ashford Park was not.</p>
+            <!-- <br>
             <br>
             <br>
-            <br>
-            <br>
+            <br> -->
           </section>
 
           <section class="step">
-            <p>To alleviate the overcrowding in the two predominately <span class="black">Black</span> and <span class="hispanic">Hispanic</span> districts, Dekalb County officials purchased land in the Ashford Park zone, which housed predominately <span class="white">white</span> residents.</p>
+            <p>To alleviate the overcrowding in the two predominantly <span class="black">Black</span> and <span class="hispanic">Hispanic</span> districts, Dekalb County officials purchased land in the Ashford Park zone, which housed predominantly <span class="white">white</span> residents.</p>
 
-            <p>Each dot in the map represents a household</p>
+            <p>The map shows the race and ethnicity of all households.</p>
           </section>
 
           <section class="step">
@@ -118,7 +120,7 @@
           <section class="step">
             <p>For neighborhoods along the boundary itself, the starkness of this dividing line remains apparent. These households share parks, transit stops, and stores, with the public school boundary the main difference between them.</p>
 
-            <p>Black or hispanic population within 500 meters of the boundary</p>
+            <p>Black or Hispanic population within 500 meters of the boundary</p>
             <div id="legendMap">
               <div id="ranges">
                 <div id="range1"></div><div id="range2"></div><div id="range3"></div><div id="range4"></div>
@@ -139,7 +141,7 @@
         </div>
 
         <div id="chart">
-          <div id="exploreMap"></div>
+          <div id="scrollyMap"></div>
           <div id="scatter"></div>
         </div>
       </div>
@@ -151,9 +153,50 @@
 
     <div id="containerTool">
       <h6>Where School Boundaries Segregate Black and Hispanic Students</h6>
-      <p class="dek">    This tool highlights <span class="underlineBoundaries">racially unequal school boundaries</span> nationwide, which we define as boundaries that separate schools with a 25 percentage-point difference in representation of Black or Hispanic households and in the representation of white households. The map shows the race and ethnicity of all households in the districts displayed, whereas the charts show the share of households by race and ethnicity within 500 meters of the boundary. The charts also display school pairs in ranked order, starting with the most unequal boundary in each metro area, and indicate whether a boundary separates schools <span class="withinLegend">within one school district</span> or <span class="acrossLegend">across two districts</span>.</p>
+      <p class="dek">This tool highlights <span class="underlineBoundaries">racially unequal school boundaries*</span> nationwide. The charts display school pairs in ranked order, starting with the most unequal boundary in each metro area, and indicate whether a boundary separates schools <span class="withinLegend">within one school district</span> or <span class="acrossLegend">across two districts</span>.</p>
 
       <div id="wrapGraphic">
+
+        <div id="containerMap">
+          <div id="searchInputMobile">
+            <img src="img/glass.png">
+            <input id="exploreAutocompleteMobile" placeholder="Search for your city">
+          </div>
+          <div id="containerText">
+            <p>Households in: <span id="thisMsa">Atlanta-Sandy Springs-Marietta, GA</span></p>
+          </div>
+          <div id="colorLegend">
+            <div class="legendContainer">
+              <div class="black"></div>
+              <p>Black</p>
+            </div>
+            <div class="legendContainer">
+              <div class="hispanic"></div>
+              <p>Hispanic</p>
+            </div>
+            <div class="legendContainer">
+              <div class="white"></div>
+              <p>White</p>
+            </div>
+            <div class="legendContainer">
+              <div class="asian"></div>
+              <p>Asian</p>
+            </div>
+            <div class="legendContainer">
+              <div class="other"></div>
+              <p>Other races</p>
+            </div>
+            <div class="legendContainer">
+              <div class="mixed"></div>
+              <p>Two or more races</p>
+            </div>
+          </div>
+          <div id="boundariesMap">
+            <div id="theMap"></div>
+            <div id="otherSchools"></div>
+            <p id="noteBoundaries">*We define racially unequal school boundaries as those that separate schools with a 25 percentage-point difference in representation of Black or Hispanic households and in the representation of white households.</p>
+          </div>
+        </div>
 
         <div id="containerExplore">
           <div id="searchInput">
@@ -170,48 +213,12 @@
         <p>Across two districts</p>
       </div>
     </div> -->
+    <p id="titleBars">Share of households within 500 meters of boundary</p>
+    <p id="swipeLegend"><span class="material-icons-outlined">swipe</span> Swipe and click to select a different boundary</p>
     <div id="exploreList"></div>
   </div>
 
-  <div id="containerMap">
-    <div id="searchInputMobile">
-      <img src="img/glass.png">
-      <input id="exploreAutocompleteMobile" placeholder="Search for your city">
-    </div>
-    <div id="containerText">
-      <p id="thisMsa">Atlanta-Sandy Springs-Marietta, GA</p>
-    </div>
-    <div id="colorLegend">
-      <div class="legendContainer">
-        <div class="black"></div>
-        <p>Black</p>
-      </div>
-      <div class="legendContainer">
-        <div class="hispanic"></div>
-        <p>Hispanic</p>
-      </div>
-      <div class="legendContainer">
-        <div class="white"></div>
-        <p>White</p>
-      </div>
-      <div class="legendContainer">
-        <div class="asian"></div>
-        <p>Asian</p>
-      </div>
-      <div class="legendContainer">
-        <div class="other"></div>
-        <p>Other races</p>
-      </div>
-      <div class="legendContainer">
-        <div class="mixed"></div>
-        <p>Two or more races</p>
-      </div>
-    </div>
-    <div id="boundariesMap">
-      <div id="theMap"></div>
-      <div id="otherSchools"></div>
-    </div>
-  </div>
+  <p id="noteBoundariesMobile">*We define racially unequal school boundaries as those that separate schools with a 25 percentage-point difference in representation of Black or Hispanic households and in the representation of white households.</p>
 </div>
 
 </div>
@@ -250,19 +257,19 @@
   <div class="content">
 
     <h4>About the Data</h4>
-    <p>This feature uses a dataset corresponding to 2,375 neighboring school pairs that our research has identified as racially unequal. Neighboring school pairs are defined as public schools that share an attendance boundary line, meaning that their attendance zones are geographically adjacent. Residential demographics are based on census block data from the U.S. Census Bureau. School attendance boundary map data (for the school year 2019-20) is obtained from data services firm Precisely. School location data comes from the 2018-19 NCES Common Core of Data, accessed via Urban’ Education Data Portal.</p>
+    <p>This feature uses a dataset corresponding to 2,375 neighboring school pairs that our research has identified as racially unequal. Neighboring school pairs are defined as public schools that share an attendance boundary line, meaning that their attendance zones are geographically adjacent. Residential demographics are based on census block data from the US Census Bureau. We obtained school attendance boundary map data (for the 2019–20 school year) from the data services firm Precisely. School location data come from the 2018–19 National Center for Education Statistics Common Core of Data, accessed via Urban’s Education Data Portal.</p>
 
-    <p>We define racially unequal neighboring schools as those that satisfy the following four conditions: (1) there is at least 25 percentage point in the share of Black or Hispanic residents living within 500 meters of the shared attendance boundary; (2) a similar 25 percentage point or greater gap holds for the total population living in the two attendance boundaries; (3) a similar 25 percentage point or greater gap holds for the total student enrollment at the two schools; and (4) there is a 25 percentage point or greater gap in the  share of white residents living within 500 meters of the shared attendance boundary.</p>
+    <p>We define racially unequal neighboring schools as those that satisfy the following four conditions: (1) there is gap of at least 25 percentage points in the share of Black or Hispanic residents living within 500 meters of the shared attendance boundary; (2) a similar gap of at least 25 percentage points holds for the total population living in the two attendance boundaries; (3) a similar gap of at least 25 percentage points holds for the total student enrollment at the two schools; and (4) there is a gap of at least 25 percentage points in the share of white residents living within 500 meters of the shared attendance boundary.</p>
 
-    <p>This definition guarantees that all neighboring school pairs in this dataset separate historically marginalized populations from white populations, thus constituting racially unequal boundaries.</p>
+    <p>This definition guarantees that all neighboring school pairs in this dataset separate Black and Hispanic students from white students, thus constituting racially unequal boundaries.</p>
 
-    <p>For more information about the data definition and policy implications, please see our accompanying research report.</p>
+    <p>For more information about the data definition and policy implications, see our accompanying research report.</p>
 
     <h4>Project credits</h4>
     <div class="urbanstatement">This feature was funded by the [funder goes here]. We are grateful to them and to all our funders, who make it possible for Urban to advance its mission. The views expressed are those of the authors and should not be attributed to the Urban Institute, its trustees, or its funders. Funders do not determine research findings or the insights and recommendations of our experts.</div>
 
     <h3 class="job">Research</h3>
-    <p class="creditsWho"><a  href = "https://www.urban.org/author/tomas-monarrez" target = "_blank">Tomas Monarrez</a>, and <a  href = "https://www.urban.org/author/carina-chien" target = "_blank">Carina Chien</a></p>
+    <p class="creditsWho"><a  href = "https://www.urban.org/author/tomas-monarrez" target = "_blank">Tomas Monarrez</a> and <a  href = "https://www.urban.org/author/carina-chien" target = "_blank">Carina Chien</a></p>
 
     <h3 class="job">Design</h3>
     <p class="creditsWho">Allison Feldman</p>
@@ -283,7 +290,6 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js"></script>
-<script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="js/vendor/d3.v4.min.js"></script>
 <script src = "js/opening.js"></script>
 <script src = "js/scrolly.js"></script>
