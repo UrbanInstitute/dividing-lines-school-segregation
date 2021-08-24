@@ -16,7 +16,10 @@ let mapTool = new mapboxgl.Map({
 
 });
 
-  // mapTool.dragPan.disable();
+  if(widthWindow < 1170) {
+    mapTool.dragPan.disable();
+  }
+
   mapTool.dragRotate.disable();
   mapTool.keyboard.disable();
   mapTool.scrollZoom.disable();
