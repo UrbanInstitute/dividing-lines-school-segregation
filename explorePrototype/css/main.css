@@ -21,7 +21,7 @@ body {
   margin-top: 2em;
   background-color: #E0E0E0;
   height: 900px;
-  margin-bottom: 100px;
+  margin-bottom: 5rem;
 }
 
 #introText {
@@ -284,7 +284,7 @@ p.creditsWho > a {
   }
 
   #topText {
-    margin-bottom: 5rem;
+    margin-bottom: 2.667rem;
   }
 
   h3 {
@@ -300,10 +300,20 @@ p.creditsWho > a {
 
 @media (max-width: 600px) {
 
+  * {
+    font-size: 18px;
+    line-height: 22px;
+  }
+
+  footer {
+    margin-top: 2.667rem;
+  }
+
   #intro {
     height: 94vh;
     margin-left: -5%;
     margin-right: -5%;
+    margin-bottom: 2.667rem;
   }
 
   #introMap {

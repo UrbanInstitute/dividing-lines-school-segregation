@@ -38,11 +38,11 @@ p.dek {
 }
 
 #searchInput {
-  display: block;
+  display: none;
 }
 
 #searchInputMobile {
-  display: none;
+  display: block;
 }
 
 #swipeLegend {
@@ -240,8 +240,8 @@ p.dek {
   }
 
   #noteBoundaries, #noteBoundariesMobile {
-    font-size: 14px;
-    color: #9d9d9d;
+    font-size: 16px;
+    color: #696969;
   }
 
   #noteBoundaries {
@@ -357,6 +357,7 @@ p.dek {
       display: inline-block;
       margin-left: 50px;
       width: 100%;
+      margin-top: 66px;
     }
 
     #searchInput, #searchInputMobile {
@@ -376,7 +377,7 @@ p.dek {
     #searchInput > img, #searchInputMobile > img {
       position: absolute;
       top: 15px;
-      right: 4%;
+      right: 52%;
       width: 17px;
     }
 
@@ -388,8 +389,9 @@ p.dek {
 
     #exploreList {
       width: 100%;
-      height: 447px;
+      height: 503px;
       overflow: auto;
+      margin-top: 22px;
     }
 
     .text {
@@ -487,6 +489,7 @@ p.dek {
 
       #containerTool {
         width: 100%;
+        margin: 2.667rem auto;
       }
 
       #containerMap {
@@ -519,6 +522,7 @@ p.dek {
         margin-left: 0;
         order: 2;
         max-width: 100%;
+        margin-top: 5px;
       }
 
       #wrapGraphic > #containerMap {
@@ -589,6 +593,7 @@ p.dek {
       #noteBoundariesMobile {
         display: block;
         order: 3;
+        margin-bottom: 0;
       }
     }
 

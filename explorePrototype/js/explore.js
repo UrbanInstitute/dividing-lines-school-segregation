@@ -109,9 +109,9 @@ function drawBars(bb) {
     if(withinLength == 0 ) {
       var textOthers = "";
     } else if(withinLength == 1) {
-      var textOthers = "<p class=moreSchools>Other two schools share <span class=underlineBoundaries>this boundary</span></p>";
+      var textOthers = "<p class=moreSchools>Another two schools share <span class=underlineBoundaries>this boundary</span></p>";
     } else {
-      var textOthers = "<p class=moreSchools>Other " + withinLength + " pair of schools share <span class=underlineBoundaries>this boundary</span></p>";
+      var textOthers = "<p class=moreSchools>Another " + withinLength + " pairs of schools share <span class=underlineBoundaries>this boundary</span></p>";
     }
 
     var moreShools = values.length;
@@ -278,11 +278,12 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
             var thisMenu = "#exploreAutocompleteMobile"
           }
 
-          $(thisMenu).autocomplete({
+          $("#exploreAutocompleteMobile").autocomplete({
             source: uniqueMetros,
             select: function(event, ui) {
               var msa  = ui.item.value;
               document.getElementById("thisMsa").innerHTML = msa;
+              document.getElementById("exploreList").scrollTo({ top: 0, left: 0});
               buildExploreList(bbData, bboxData, msa);
             }
           });

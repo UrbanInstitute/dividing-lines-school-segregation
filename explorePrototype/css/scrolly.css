@@ -34,15 +34,14 @@
 
 .step {
   margin-bottom: 250px;
-  font-size: 16px;
   line-height: 23px;
   padding-right: 30px;
 }
 
 .step > p {
-  font-size: 16px;
   margin: 0 0 20px 0;
   line-height: 1.7;
+  font-size: 18px;
 }
 
 .step:first-of-type {
@@ -53,33 +52,28 @@
   margin-bottom: 5px;
 }
 
+.scrollyLegend {
+  font-size: 16px !important;
+  color: #696969;
+  line-height: 1.5 !important;
+}
+
 span.black {
-  font-size: 16px;
+  font-size: 18px;
   border-bottom: 2px #fdbf11 solid;
   padding: 0px 2px 2px 2px;
 }
 
 span.hispanic {
-  font-size: 16px;
+  font-size: 18px;
   border-bottom: 2px #ca5800 solid;
   padding: 0px 2px 2px 2px;
 }
 
 span.white {
-  font-size: 16px;
+  font-size: 18px;
   border-bottom: 2px #1696d2 solid;
   padding: 0px 2px 2px 2px;
-}
-
-span#all-dot {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  -moz-border-radius: 7.5px;
-  -webkit-border-radius: 7.5px;
-  border-radius: 7.5px;
-  background-color: darkgray;
 }
 
 #legendMap {
@@ -137,11 +131,11 @@ span#all-dot {
 }
 
 span.underlineBoundaries {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 span.avg {
-  font-size: 16px;
+  font-size: 18px;
   border-bottom: 1px black dashed;
   padding: 0px 2px 2px 2px;
 }
