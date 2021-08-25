@@ -1,3 +1,7 @@
+.mapboxgl-ctrl-group {
+  display: block;
+}
+
 #containerTool {
   max-width: 960px;
   width: 100%;
@@ -460,6 +464,11 @@ p.dek {
 
 
     @media (max-width: 1170px) {
+
+      .mapboxgl-ctrl-group {
+        display: none;
+      }
+
       #containerTool {
         width: 96%;
       }

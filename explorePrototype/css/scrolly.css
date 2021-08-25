@@ -207,7 +207,7 @@ span.avg {
 }
 
 .label-axis {
-  font-size: 14px;
+  font-size: 15px;
   font-style: italic;
   fill: #353535;
 }
@@ -216,6 +216,13 @@ span.avg {
   font-family: 'Lato', 'Arial', sans-sans-serif;
   font-weight: 700;
   fill: #353535;
+  font-size: 15px;
+}
+
+.textLegend {
+  fill: #353535 !important;
+  font-family: 'Lato', 'Arial', sans-sans-serif;
+  font-weight: 400;
   font-size: 15px;
 }
 

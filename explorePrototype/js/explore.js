@@ -16,17 +16,18 @@ let mapTool = new mapboxgl.Map({
 
 });
 
-  if(widthWindow < 1170) {
-    mapTool.dragPan.disable();
-  }
-
   mapTool.dragRotate.disable();
   mapTool.keyboard.disable();
   mapTool.scrollZoom.disable();
   mapTool.touchZoomRotate.disable();
-  mapTool.addControl(new mapboxgl.NavigationControl({
+  var control = mapTool.addControl(new mapboxgl.NavigationControl({
     showCompass: false
   }));
+
+  if(widthWindow < 1170) {
+    mapTool.dragPan.disable()
+  }
+
 
 
 mapTool.on('load', function() {

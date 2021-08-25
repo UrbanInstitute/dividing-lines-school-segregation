@@ -403,9 +403,46 @@ function scatter(data) {
           .attr("y", (height / 2) -30)
           .text("Elementary")
 
-         var legendBubbles = svg.selectAll("g.legend")
-            .append('g')
-            .attr("id", legendBubbles)
+         var legendBubbles = svg.append('g')
+            .attr("class", "legendBubbles")
+
+         legendBubbles
+            .append("text")
+            .attr("tex-anchor", "middle")
+            .attr("class", "textLegend")
+            .attr("x", width - 92)
+            .attr("y", 22)
+            .text("3,000 people")
+
+          legendBubbles
+               .append("text")
+               .attr("tex-anchor", "middle")
+               .attr("class", "textLegend")
+               .attr("x", width - 63)
+               .attr("y", 72)
+               .text("100")
+
+        legendBubbles
+            .selectAll("circles")
+            .data([100, 3000])
+            .enter()
+            .append("circle")
+            .attr("cy", function(d, i) {
+              if(i === 0) {
+                return 60 + rScale(3000) - 6
+              } else {
+                return 60
+              }
+            })
+            .attr("cx", function(d) {
+              return width - 50
+            })
+            .attr("r", function(d) {
+              return rScale(d)
+            })
+            .style("opacity", "1")
+            .attr("stroke", "black")
+            .style("fill", "none")
   }
 
   var isOut = hasClass(document.getElementById("scrollyMap"), "transitionOut")
