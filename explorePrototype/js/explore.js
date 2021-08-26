@@ -192,11 +192,11 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
     mapTool.on('load', function() {
       centerMap(bbox, thisSchoolA, thisSchoolB)
-
       showBoundary(thisSchoolA, thisSchoolB)
 
-      showLabels(thisSchoolA, 79, 'labels-schools-a');
-      showLabels(thisSchoolB, 80, 'labels-schools-b');
+      showLabels(thisSchoolA, 79, 'labels-schools-a')
+
+      showLabels(thisSchoolB, 80, 'labels-schools-b')
     });
 
     centerMap(bbox, thisSchoolA, thisSchoolB)
@@ -212,6 +212,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
     if(msa === "Atlanta-Sandy Springs-Marietta, GA") {
       allContainers[1].className += " selected";
     } else {
+
       allContainers[0].className += " selected";
     }
 
@@ -254,12 +255,12 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
     .defer(d3.csv, "data/source/badbdy.csv")
     .await(function(error, bboxData, bbData) {
       if(error) throw error;
+
         var msaList = bbData.map(function(o){
           return o.maname
           })
 
           // uniq() found here https://stackoverflow.com/questions/9229645/remove-duplicate-values-from-js-array
-
           function uniq(a) {
               return a.filter(function(item, pos, ary) {
                   return !pos || item != ary[pos - 1];
@@ -268,7 +269,9 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
           var uniqueMetros = uniq(msaList);
 
-          buildExploreList(bbData, bboxData, msa)
+          setTimeout(function() {
+            buildExploreList(bbData, bboxData, msa)
+          }, 250)
 
           var windowWidth = window.innerWidth;
 
@@ -279,12 +282,20 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
           }
 
           $("#exploreAutocompleteMobile").autocomplete({
+
             source: uniqueMetros,
             select: function(event, ui) {
               var msa  = ui.item.value;
               document.getElementById("thisMsa").innerHTML = msa;
-              document.getElementById("exploreList").scrollTo({ top: 0, left: 0});
+
               buildExploreList(bbData, bboxData, msa);
+
+              if(widthWindow > 770) {
+                var topDiv  = document.getElementById("exploreList").scrollTop
+                document.getElementById("exploreList").scrolltop = 0;
+              } else {
+                document.getElementById("exploreList").scrollLeft = 0;
+              }
             }
-          });
+          }).val('');
     })
