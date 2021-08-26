@@ -271,7 +271,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
           setTimeout(function() {
             buildExploreList(bbData, bboxData, msa)
-          }, 250)
+          }, 200)
 
           var windowWidth = window.innerWidth;
 
@@ -287,15 +287,16 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
             select: function(event, ui) {
               var msa  = ui.item.value;
               document.getElementById("thisMsa").innerHTML = msa;
-
+              // if(widthWindow > 770) {
+              //   var topDiv  = document.getElementById("exploreList").scrollTop
+              //   document.getElementById("exploreList").scrolltop = 0;
+              // } else {
+              //   document.getElementById("exploreList").scrollLeft = 0;
+              // }
               buildExploreList(bbData, bboxData, msa);
-
-              if(widthWindow > 770) {
-                var topDiv  = document.getElementById("exploreList").scrollTop
-                document.getElementById("exploreList").scrolltop = 0;
-              } else {
-                document.getElementById("exploreList").scrollLeft = 0;
-              }
+              document.getElementById("exploreList").scrollTop = 0;
+              document.getElementById("exploreList").scrollLeft = 0;
+              // document.getElementById("exploreList").scrollTop;
             }
           }).val('');
     })
