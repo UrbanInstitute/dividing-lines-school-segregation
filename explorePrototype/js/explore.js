@@ -172,7 +172,6 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
     });
 
     var zoom = mapTool.getZoom();
-    console.log(zoom)
   }
 
   // builds the list of cachments and adds piecharts

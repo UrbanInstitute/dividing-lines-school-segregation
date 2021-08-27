@@ -106,7 +106,7 @@ p.dek {
 
 .withinOne, .accrossTwo {
   position: absolute;
-  top: -11px;
+  top: -10px;
   left: -8px;
   /* height: 25px;
   width: 141px; */
@@ -605,6 +605,16 @@ p.dek {
       .schoolContainer:last-of-type {
         border-bottom: 1px #D2D2D2 solid;
       }
+
+      .number::before {
+        height: 22px;
+        margin-bottom: -6px;
+      }
+
+      .withinOne > p, .accrossTwo > p {
+        transform: translateY(-6%);  
+      }
+
 
       .schoolA > p {
         min-height: 79px;

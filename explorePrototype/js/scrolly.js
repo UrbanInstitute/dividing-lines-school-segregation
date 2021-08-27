@@ -28,8 +28,6 @@ mapScrolly.resize()
 // swLng = bounds._sw.lng,
 // neLat = bounds._ne.lat,
 // neLng = bounds._ne.lng;
-//
-// console.log(bounds)
 
 mapScrolly.fitBounds([[-84.35940483597442, 33.821439210685796], [-84.27859516402599, 33.888547607193985]]);
 })
@@ -37,7 +35,6 @@ mapScrolly.fitBounds([[-84.35940483597442, 33.821439210685796], [-84.27859516402
 var mapCanvasLoad = document.getElementById("scrollyMap").getElementsByClassName("mapboxgl-canvas-container")[0].childNodes[0].offsetHeight;
 
 // mapScrolly.on('idle', function() {
-//   console.log(document.getElementById('scrollyMap').clientHeight)
 //   mapScrolly.resize()
 // })
 
