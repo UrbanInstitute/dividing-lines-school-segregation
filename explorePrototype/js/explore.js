@@ -140,7 +140,7 @@ function drawBars(bb) {
       if(i === 0) {
         var theOtherSchools = document.getElementsByClassName("schoolContainer")[i].getAttribute("data-schools");
         if(theOtherSchools !== "") {
-          document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+          document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools that share this boundary:</span> " + theOtherSchools + "</p>"
         } else {
           document.getElementById("otherSchools").innerHTML = "";
         }
