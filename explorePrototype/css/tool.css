@@ -110,7 +110,7 @@ p.dek {
   left: -8px;
   /* height: 25px;
   width: 141px; */
-  border: 0.5px #4d4d4d solid;
+  border: 1px #4d4d4d solid;
 }
 
 .accrossTwo > .number::before {
@@ -134,7 +134,7 @@ p.dek {
     padding-right: 6px;
     position: relative;
     top: 0%;
-    transform: translateY(-4%);
+    transform: translateY(-6%);
 
   }
 
@@ -142,7 +142,7 @@ p.dek {
     content: "";
     display: inline-block;
     width: 20px;
-    height: 27px;
+    height: 26px;
     margin-right: 1px;
     margin-bottom: -8px;
   }
@@ -607,12 +607,12 @@ p.dek {
       }
 
       .number::before {
-        height: 22px;
+        height: 24px;
         margin-bottom: -6px;
       }
 
       .withinOne > p, .accrossTwo > p {
-        transform: translateY(-6%);  
+        transform: translateY(-2%);
       }
 
 
