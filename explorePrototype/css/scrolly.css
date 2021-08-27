@@ -53,27 +53,36 @@
 }
 
 .scrollyLegend {
-  font-size: 16px !important;
-  color: #696969;
+  font-size: 14px !important;
+  color: #9d9d9d;
   line-height: 1.5 !important;
+  font-style: italic;
 }
 
-span.black {
+span.black, span.hispanic, span.white {
   font-size: 18px;
-  border-bottom: 2px #fdbf11 solid;
-  padding: 0px 2px 2px 2px;
+  font-weight: 700;
 }
 
-span.hispanic {
-  font-size: 18px;
-  border-bottom: 2px #ca5800 solid;
-  padding: 0px 2px 2px 2px;
+span.black:before, span.hispanic:before, span.white:before {
+    content:"\A";
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    display:inline-block;
+    margin:0 3px 3px 2px;
 }
 
-span.white {
-  font-size: 18px;
-  border-bottom: 2px #1696d2 solid;
-  padding: 0px 2px 2px 2px;
+span.black:before {
+  background-color: #fdbf11;
+}
+
+span.hispanic:before {
+  background-color: #ca5800;
+}
+
+span.white:before {
+  background-color: #1696d2;
 }
 
 #legendMap {

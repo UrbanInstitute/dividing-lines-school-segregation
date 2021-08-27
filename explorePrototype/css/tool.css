@@ -63,7 +63,7 @@ p.dek {
 .schoolContainer {
   position: relative;
   margin-bottom: 40px;
-  margin-left: 9px;
+  margin-left: 8px;
   border-bottom: 1px #D2D2D2 solid;
   padding: 14px 14px 10px 17px;
   max-width: 85%;
@@ -72,18 +72,31 @@ p.dek {
 }
 
 .schoolContainer:hover {
-  background-color: #fafafa;
+  background-color: #f8f8f8;
   box-shadow: #bdbdbd -1px 4px 4px -2px;
 }
 
+.schoolContainer:hover > .schoolA > p {
+  font-weight: 700;
+}
+
+.schoolContainer:hover > .withinOne > p, .schoolContainer:hover > .accrossTwo > p {
+  background-color: #f8f8f8;
+}
+
 .schoolContainer.selected {
-  background-color: #fafafa;
+  background-color: #f8f8f8;
   box-shadow: #bdbdbd -1px 4px 4px -2px;
+  cursor: default;
 }
 
 .schoolContainer.selected > .schoolA > p {
   font-weight: 700;
   font-size: 16px;
+}
+
+.schoolContainer.selected > .withinOne > p, .schoolContainer.selected > .accrossTwo > p {
+  background-color: #f8f8f8;
 }
 
 .schoolContainer:last-of-type {
@@ -94,38 +107,50 @@ p.dek {
 .withinOne, .accrossTwo {
   position: absolute;
   top: -11px;
-  left: -9px;
-  height: 25px;
-  padding-bottom: 2px;
-
+  left: -8px;
+  /* height: 25px;
+  width: 141px; */
+  border: 0.5px #4d4d4d solid;
 }
 
-.accrossTwo {
+.accrossTwo > .number::before {
   background: repeating-linear-gradient(
     45deg,
-    #FAE9F2,
-    #FAE9F2 5px,
-    #F2C9DE 5px,
-    #F2C9DE 10px
+    #f5cbdf,
+    #f5cbdf 5px,
+    #eb99c2 5px,
+    #eb99c2 10px
     )
   }
 
-  .withinOne {
-    background: #FAE9F2;
+  .withinOne > .number::before {
+    background: #f5cbdf;
   }
 
   .withinOne > p, .accrossTwo > p  {
     display: inline-block;
-    /* background-color: #fde8fa; */
-    padding: 0px 6px 0px 3px;
-    font-size: 15px;
-    margin:0;
+    font-size: 14px;
+    margin: 0;
+    padding-right: 6px;
+    position: relative;
+    top: 0%;
+    transform: translateY(-4%);
+
+  }
+
+  .number::before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 27px;
+    margin-right: 1px;
+    margin-bottom: -8px;
   }
 
   .number > span {
     font-weight: bolder;
-    padding-left: 4px;
-    font-size: 16px;
+    padding-left: 3px;
+    font-size: 15px;
   }
 
   .graphicSchool:first-child {
@@ -134,12 +159,22 @@ p.dek {
 
   .barchart {
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: -4px;
     max-width: 94%;
+  }
+
+  .barchart > div {
+    display: inline-block;
+    margin: 0;
+    height: 18px;
   }
 
   .schoolA {
     margin-top: 10px;
+  }
+
+  .schoolB {
+    margin-bottom: 10px;
   }
 
   .schoolA > p {
@@ -150,12 +185,6 @@ p.dek {
   .schoolB > p {
     margin: 0 0 10px 0;
     font-size: 16px;
-  }
-
-  .barchart > div {
-    display: inline-block;
-    margin: 0;
-    height: 22px;
   }
 
   .blackPct {
@@ -171,7 +200,7 @@ p.dek {
   }
 
   .otherPct {
-    background-color: none;
+    background-color: transparent;
   }
 
   .marks, .ticks {
@@ -189,7 +218,7 @@ p.dek {
     display: inline-block;
     width: 1px;
     background-color: #332d2f;
-    height: 59px;
+    height: 47px;
   }
 
   .ticks > div {
@@ -225,23 +254,20 @@ p.dek {
 
   #containerText > p {
     font-size: 16px;
-    line-height: 22px;
     margin-top: 0px;
-    margin-bottom: 15px;
-    font-size: 16px;
+    line-height: 25px;
   }
 
-  #thisMsa {
-    font-weight: 700;
-    line-height: 22px;
-    margin-top: 0px;
-    margin-bottom: 15px;
+  span#thisMsa {
     font-size: 16px;
+    margin-top: 0px;
+    line-height: 25px;
   }
 
   #noteBoundaries, #noteBoundariesMobile {
-    font-size: 16px;
-    color: #696969;
+    font-size: 14px;
+    color: #9d9d9d;
+    font-style: italic;
   }
 
   #noteBoundaries {
@@ -280,7 +306,7 @@ p.dek {
     border-radius: 20px;
     vertical-align: middle;
     margin-right: 1px;
-    margin-bottom: 2px;
+    margin-bottom: 0px;
   }
 
   #containerMap > #colorLegend > .legendContainer:last-of-type {
@@ -289,32 +315,32 @@ p.dek {
 
   .legendContainer > .hispanic {
     background-color: #ca5800;
-    border: 1px #ca5800 solid;
+    /* border: 1px #ca5800 solid; */
   }
 
   .legendContainer > .black {
     background-color: #fdbf11;
-    border: 1px #fdbf11 solid;
+    /* border: 1px #fdbf11 solid; */
   }
 
   .legendContainer > .white {
     background-color: #1696d2;
-    border: 1px #1696d2 solid
+    /* border: 1px #1696d2 solid */
   }
 
   .legendContainer > .asian {
     background-color: #55b748;
-    border: 1px #55b748 solid
+    /* border: 1px #55b748 solid */
   }
 
   .legendContainer > .other {
     background-color: #9d9d9d;
-    border: 1px #9d9d9d solid
+    /* border: 1px #9d9d9d solid */
   }
 
   .legendContainer > .mixed {
     background-color: #d2d2d2;
-    border: 1px #d2d2d2 solid
+    /* border: 1px #d2d2d2 solid */
   }
 
   .legendContainer > .rest {
@@ -329,22 +355,32 @@ p.dek {
     font-size: 16px;
   }
 
-  .acrossLegend {
+  .acrossLegend, .withinLegend {
     font-size: 16px;
-    padding: 0 5px 2px 5px;
+  }
+
+  .acrossLegend::before, .withinLegend::before {
+    content: "";
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-right: 4px;
+    margin-left: 3px;
+    margin-bottom: -3px;
+  }
+
+  .acrossLegend::before {
     background: repeating-linear-gradient(
       45deg,
-      #FAE9F2,
-      #FAE9F2 5px,
-      #F2C9DE 5px,
-      #F2C9DE 10px
+      #f5cbdf,
+      #f5cbdf 5px,
+      #eb99c2 5px,
+      #eb99c2 10px
       );
     }
 
-    .withinLegend {
-      font-size: 16px;
-      padding: 0 5px 2px 5px;
-      background: #FAE9F2;
+    .withinLegend::before {
+      background: #f5cbdf;
     }
 
     #boundariesMap {
@@ -357,7 +393,7 @@ p.dek {
       display: inline-block;
       margin-left: 50px;
       width: 100%;
-      margin-top: 66px;
+      margin-top: 68px;
     }
 
     #searchInput, #searchInputMobile {
@@ -383,15 +419,16 @@ p.dek {
 
     #titleBars {
       font-size: 16px;
-      font-weight: 700;
       margin-top: 0px;
+      line-height: 25px;
+      max-width: 70%;
     }
 
     #exploreList {
       width: 100%;
-      height: 503px;
+      height: 523px;
       overflow: auto;
-      margin-top: 22px;
+      margin-top: 27px;
     }
 
     .text {
@@ -437,13 +474,13 @@ p.dek {
 
     #otherSchools > p {
       color: #353535;
-      font-size: 16px;
+      font-size: 14px;
       margin-bottom: 0px;
     }
 
     #otherSchools > p > span {
       font-weight: 700;
-      font-size: 16px;
+      font-size: 14px;
     }
 
 
@@ -459,7 +496,7 @@ p.dek {
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #D2D2D2;
+      background: #a3a3a3;
     }
 
     /* SMALLER SCREENS MEDIA QUERIES */
@@ -514,10 +551,6 @@ p.dek {
         flex-direction: column;
       }
 
-      #thisMsa {
-        margin-bottom: 12px;
-      }
-
       #wrapGraphic > #containerExplore {
         margin-left: 0;
         order: 2;
@@ -548,6 +581,7 @@ p.dek {
 
       #titleBars {
         margin-top: 15px;
+        max-width: 100%;
       }
 
       #exploreList {
@@ -617,6 +651,20 @@ p.dek {
 
       #theMap {
         height: 300px;
+      }
+
+      p.dek {
+        margin-bottom: 34px;
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .dek > span.underlineBoundaries {
+        font-size: 18px;
+      }
+
+      .acrossLegend, .withinLegend {
+        font-size: 18px;
       }
     }
 

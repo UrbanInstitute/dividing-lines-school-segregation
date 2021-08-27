@@ -122,8 +122,9 @@ function drawBars(bb) {
         var thisData = values[p];
         var schoolA = thisData.schnamea;
         var schoolB = thisData.schnameb;
-        var bothSchools = '&#x1F3EB' + " " + schoolA + " and " + '&#x1F3EB' + " " + schoolB;
+        var bothSchools = "<span class=material-icons-outlined>school</span> " + schoolA + " and <span class=material-icons-outlined>school</span> " + schoolB;
         allTheSchools.push(bothSchools);
+
 
         var finalSchools = allTheSchools.join(' | ')
       }
@@ -139,7 +140,7 @@ function drawBars(bb) {
       if(i === 0) {
         var theOtherSchools = document.getElementsByClassName("schoolContainer")[i].getAttribute("data-schools");
         if(theOtherSchools !== "") {
-          document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
+          document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools schools that share this boundary:</span> " + theOtherSchools + "</p>"
         } else {
           document.getElementById("otherSchools").innerHTML = "";
         }
@@ -229,7 +230,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
           var theOtherSchools = this.getAttribute("data-schools");
 
           if(theOtherSchools !== "") {
-            document.getElementById("otherSchools").innerHTML = "<p><span>Other pair of schools that share this boundary:</span> " + theOtherSchools + "</p>"
+            document.getElementById("otherSchools").innerHTML = "<p><span>Other pairs of schools that share this boundary:</span> " + theOtherSchools + "</p>"
           } else {
             document.getElementById("otherSchools").innerHTML = "";
           }
@@ -271,7 +272,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
           setTimeout(function() {
             buildExploreList(bbData, bboxData, msa)
-          }, 200)
+          }, 250)
 
           var windowWidth = window.innerWidth;
 
@@ -287,16 +288,11 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
             select: function(event, ui) {
               var msa  = ui.item.value;
               document.getElementById("thisMsa").innerHTML = msa;
-              // if(widthWindow > 770) {
-              //   var topDiv  = document.getElementById("exploreList").scrollTop
-              //   document.getElementById("exploreList").scrolltop = 0;
-              // } else {
-              //   document.getElementById("exploreList").scrollLeft = 0;
-              // }
               buildExploreList(bbData, bboxData, msa);
               document.getElementById("exploreList").scrollTop = 0;
               document.getElementById("exploreList").scrollLeft = 0;
-              // document.getElementById("exploreList").scrollTop;
+              this.value = "";
+              return false;
             }
-          }).val('');
+          });
     })
