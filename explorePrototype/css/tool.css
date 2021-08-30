@@ -38,11 +38,11 @@ p.dek {
 }
 
 #searchInput {
-  display: none;
+  display: block;
 }
 
 #searchInputMobile {
-  display: block;
+  display: none;
 }
 
 #swipeLegend {
@@ -62,17 +62,16 @@ p.dek {
 
 .schoolContainer {
   position: relative;
-  margin-bottom: 40px;
-  margin-left: 8px;
+  margin-bottom: 26px;
   border-bottom: 1px #D2D2D2 solid;
-  padding: 14px 14px 10px 17px;
+  padding: 27px 14px 10px 17px;
   max-width: 85%;
   cursor: pointer;
-  margin-top: 11px;
+  background: #fcfcfc;
 }
 
 .schoolContainer:hover {
-  background-color: #f8f8f8;
+  background-color: #f6f6f6;
   box-shadow: #bdbdbd -1px 4px 4px -2px;
 }
 
@@ -80,12 +79,8 @@ p.dek {
   font-weight: 700;
 }
 
-.schoolContainer:hover > .withinOne > p, .schoolContainer:hover > .accrossTwo > p {
-  background-color: #f8f8f8;
-}
-
 .schoolContainer.selected {
-  background-color: #f8f8f8;
+  background-color: #f6f6f6;
   box-shadow: #bdbdbd -1px 4px 4px -2px;
   cursor: default;
 }
@@ -106,11 +101,8 @@ p.dek {
 
 .withinOne, .accrossTwo {
   position: absolute;
-  top: -10px;
-  left: -8px;
-  /* height: 25px;
-  width: 141px; */
-  border: 1px #4d4d4d solid;
+  top: 6px;
+  left: 8px;
 }
 
 .accrossTwo > .number::before {
@@ -141,10 +133,10 @@ p.dek {
   .number::before {
     content: "";
     display: inline-block;
-    width: 20px;
-    height: 26px;
+    width: 18px;
+    height: 18px;
     margin-right: 1px;
-    margin-bottom: -8px;
+    margin-bottom: -3px;
   }
 
   .number > span {
@@ -261,7 +253,9 @@ p.dek {
   span#thisMsa {
     font-size: 16px;
     margin-top: 0px;
-    line-height: 25px;
+    line-height: 30px;
+    font-weight: 700;
+    margin-top: 5px;
   }
 
   #noteBoundaries, #noteBoundariesMobile {
@@ -280,6 +274,7 @@ p.dek {
 
   #colorLegend {
     margin-bottom: 15px;
+    margin-top: 20px;
   }
 
   #containerMap > #colorLegend {
@@ -391,9 +386,9 @@ p.dek {
     #containerExplore {
       max-width: 305px;
       display: inline-block;
-      margin-left: 50px;
+      margin-right: 50px;
       width: 100%;
-      margin-top: 68px;
+      margin-top: 6px;
     }
 
     #searchInput, #searchInputMobile {
@@ -413,22 +408,23 @@ p.dek {
     #searchInput > img, #searchInputMobile > img {
       position: absolute;
       top: 15px;
-      right: 52%;
+      right: 4%;
       width: 17px;
     }
 
     #titleBars {
       font-size: 16px;
-      margin-top: 0px;
+      margin-top: 4px;
       line-height: 25px;
       max-width: 70%;
+      font-weight: 700;
     }
 
     #exploreList {
       width: 100%;
-      height: 523px;
+      height: 462px;
       overflow: auto;
-      margin-top: 27px;
+      margin-top: 8px;
     }
 
     .text {
@@ -517,7 +513,7 @@ p.dek {
       }
 
       #containerExplore {
-        margin-left: 5%;
+        margin-right: 5%;
         max-width: 32%;
       }
     }
@@ -552,7 +548,7 @@ p.dek {
       }
 
       #wrapGraphic > #containerExplore {
-        margin-left: 0;
+        margin-right: 0;
         order: 2;
         max-width: 100%;
         margin-top: 5px;

@@ -1,16 +1,17 @@
+var widthDiv = (document.getElementById("scatter").offsetWidth),
+widthWindow = window.innerWidth,
+screenHeight = screen.height,
+thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.pageYOffset - 100,
+thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.pageYOffset - 400;
+
 
 /**
- * scroller - handles the details
- * of figuring out which section
- * the user is currently scrolled
- * to.
- *
- */
- var widthDiv = (document.getElementById("scatter").offsetWidth),
- widthWindow = window.innerWidth,
- screenHeight = screen.height,
- thisTop = document.getElementById("graphic").getBoundingClientRect().top + window.pageYOffset - 100,
- thisBottom = document.getElementById("lastStep").getBoundingClientRect().bottom + window.pageYOffset - 400;
+* scroller - handles the details
+* of figuring out which section
+* the user is currently scrolled
+* to.
+*
+*/
 
 function scroller() {
   var container = d3.select('body');
@@ -30,14 +31,14 @@ function scroller() {
   // y coordinate of
   var containerStart = 0;
   /**
-   * scroll - constructor function.
-   * Sets up scroller to monitor
-   * scrolling of els selection.
-   *
-   * @param els - d3 selection of
-   *  elements that will be scrolled
-   *  through by user.
-   */
+  * scroll - constructor function.
+  * Sets up scroller to monitor
+  * scrolling of els selection.
+  *
+  * @param els - d3 selection of
+  *  elements that will be scrolled
+  *  through by user.
+  */
   function scroll(els) {
     sections = els;
 
@@ -45,8 +46,8 @@ function scroller() {
     // position. When it is resized
     // call resize.
     d3.select(window)
-      .on('scroll.scroller', position)
-      .on('resize.scroller', resize);
+    .on('scroll.scroller', position)
+    .on('resize.scroller', resize);
 
     // manually call resize
     // initially to setup
@@ -67,11 +68,11 @@ function scroller() {
   }
 
   /**
-   * resize - called initially and
-   * also when page is resized.
-   * Resets the sectionPositions
-   *
-   */
+  * resize - called initially and
+  * also when page is resized.
+  * Resets the sectionPositions
+  *
+  */
   function resize() {
     // sectionPositions will be each sections
     // starting position relative to the top
@@ -92,46 +93,46 @@ function scroller() {
 
     if(window.pageYOffset > thisTop && window.pageYOffset < thisBottom) {
       d3.select("#chart")
-        .classed("stickyChart", true)
-        .classed("relativeTop", false)
-        .classed("relativeBottom", false)
+      .classed("stickyChart", true)
+      .classed("relativeTop", false)
+      .classed("relativeBottom", false)
 
       d3.select("#lastStep")
-        .classed("lastStepShort", false)
+      .classed("lastStepShort", false)
     } else if(window.pageYOffset < thisTop && window.pageYOffset < thisBottom - 30) {
       d3.select("#chart")
-        .classed("stickyChart", false)
-        .classed("relativeTop", true)
-        .classed("relativeBottom", false)
+      .classed("stickyChart", false)
+      .classed("relativeTop", true)
+      .classed("relativeBottom", false)
 
       d3.select(".lastStep")
-        .classed("lastStepShort", false)
+      .classed("lastStepShort", false)
     } else if(window.pageYOffset > thisTop && window.pageYOffset > thisBottom - 15) {
       d3.select("#chart")
-        .classed("stickyChart", false)
-        .classed("relativeTop", false)
-        .classed("relativeBottom", true)
+      .classed("stickyChart", false)
+      .classed("relativeTop", false)
+      .classed("relativeBottom", true)
 
-        var stickyChart = document.getElementsByClassName("relativeBottom")
+      var stickyChart = document.getElementsByClassName("relativeBottom")
 
-        if(widthWindow > 350 && widthWindow < 500 && screenHeight > 750) {
+      if(widthWindow > 350 && widthWindow < 500 && screenHeight > 750) {
 
-          stickyChart[0].style.bottom = "20px";
+        stickyChart[0].style.bottom = "20px";
 
-        } else if(widthWindow > 350 && widthWindow < 500 && screenHeight < 750) {
+      } else if(widthWindow > 350 && widthWindow < 500 && screenHeight < 750) {
 
-          stickyChart[0].style.bottom = "50px";
+        stickyChart[0].style.bottom = "50px";
 
-        } else if(widthWindow < 350 && screenHeight < 600) {
+      } else if(widthWindow < 350 && screenHeight < 600) {
 
-          stickyChart[0].style.bottom = "125px";
+        stickyChart[0].style.bottom = "125px";
 
-        } else {
+      } else {
 
-        }
+      }
 
       d3.select("#lastStep")
-        .classed("lastStepShort", true)
+      .classed("lastStepShort", true)
     }
   }
   window.setInterval(function(){
@@ -140,12 +141,12 @@ function scroller() {
   }, 20);
 
   /**
-   * position - get current users position.
-   * if user has scrolled to new section,
-   * dispatch active event with new section
-   * index.
-   *
-   */
+  * position - get current users position.
+  * if user has scrolled to new section,
+  * dispatch active event with new section
+  * index.
+  *
+  */
   function position() {
     var pos = window.pageYOffset - 150 - containerStart;
 
@@ -167,13 +168,13 @@ function scroller() {
   }
 
   /**
-   * container - get/set the parent element
-   * of the sections. Useful for if the
-   * scrolling doesn't start at the very top
-   * of the page.
-   *
-   * @param value - the new container value
-   */
+  * container - get/set the parent element
+  * of the sections. Useful for if the
+  * scrolling doesn't start at the very top
+  * of the page.
+  *
+  * @param value - the new container value
+  */
   scroll.container = function (value) {
     if (arguments.length === 0) {
       return container;

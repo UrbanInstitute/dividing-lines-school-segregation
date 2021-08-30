@@ -281,7 +281,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
             var thisMenu = "#exploreAutocompleteMobile"
           }
 
-          $("#exploreAutocompleteMobile").autocomplete({
+          $(thisMenu).autocomplete({
 
             source: uniqueMetros,
             select: function(event, ui) {
