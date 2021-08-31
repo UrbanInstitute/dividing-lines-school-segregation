@@ -11,7 +11,7 @@ let mapTool = new mapboxgl.Map({
   center: [-84.331,33.858], // starting position [lng, lat]
   zoom: 11, // starting zoom
   maxZoom: 15,
-  minZoom: 9,
+  minZoom: 10,
   interactive: true
 
 });

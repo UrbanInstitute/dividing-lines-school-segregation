@@ -411,9 +411,9 @@
              .append("text")
              .attr("tex-anchor", "middle")
              .attr("class", "textLegend")
-             .attr("x", width - 92)
+             .attr("x", width - 100)
              .attr("y", 22)
-             .text("3,000 people")
+             .text("3,000 residents")
 
            legendBubbles
                 .append("text")
