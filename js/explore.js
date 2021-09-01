@@ -7,11 +7,11 @@ mapboxgl.accessToken = "pk.eyJ1IjoidXJiYW5pbnN0aXR1dGUiLCJhIjoiTEJUbmNDcyJ9.mbuZ
 
 let mapTool = new mapboxgl.Map({
   container: 'theMap', // container ID
-  style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z/draft", // style URL
+  style: "mapbox://styles/urbaninstitute/ckrasiw7s3ipt17pf3m3mbb4z", // style URL
   center: [-84.331,33.858], // starting position [lng, lat]
   zoom: 11, // starting zoom
   maxZoom: 15,
-  minZoom: 10,
+  minZoom: 9,
   interactive: true
 
 });
@@ -31,11 +31,9 @@ let mapTool = new mapboxgl.Map({
 
 
 mapTool.on('load', function() {
-    // mapTool.resize();
   // console.log(mapTool.getStyle().layers)
   // var test = mapTool.queryRenderedFeatures({ layers: ['labels-schools-a']});
   // var test2 = mapTool.queryRenderedFeatures({ layers: ['boundaries']});
-  // console.log(test2)
 });
 
 function showLabels(thisSchool, layerNumber, thisLayer) {
@@ -109,7 +107,7 @@ function drawBars(bb) {
     if(withinLength == 0 ) {
       var textOthers = "";
     } else if(withinLength == 1) {
-      var textOthers = "<p class=moreSchools>Another two schools share <span class=underlineBoundaries>this boundary</span></p>";
+      var textOthers = "<p class=moreSchools>Another 2 schools share <span class=underlineBoundaries>this boundary</span></p>";
     } else {
       var textOthers = "<p class=moreSchools>Another " + withinLength + " pairs of schools share <span class=underlineBoundaries>this boundary</span></p>";
     }

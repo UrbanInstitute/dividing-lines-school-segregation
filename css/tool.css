@@ -602,11 +602,6 @@ p.dek {
         border-bottom: 1px #D2D2D2 solid;
       }
 
-      .number::before {
-        height: 24px;
-        margin-bottom: -6px;
-      }
-
       .withinOne > p, .accrossTwo > p {
         transform: translateY(-2%);
       }

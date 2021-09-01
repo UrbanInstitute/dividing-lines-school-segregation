@@ -18,7 +18,7 @@
 
  let mapScrolly = new mapboxgl.Map({
    container: 'scrollyMap', // container ID
-   style: "mapbox://styles/urbaninstitute/ckqv6bmld0mu917qsfxupq41d/draft", // style URL
+   style: "mapbox://styles/urbaninstitute/ckqv6bmld0mu917qsfxupq41d", // style URL
    center: [-84.319,33.855], // starting position ([lng, lat] for Mombasa, Kenya)
    zoom: 11, // starting zoom
    interactive: false
