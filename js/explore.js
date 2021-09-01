@@ -269,7 +269,7 @@ function centerMap(bbox, thisSchoolA, thisSchoolB) {
 
           setTimeout(function() {
             buildExploreList(bbData, bboxData, msa)
-          }, 250)
+          }, 400)
 
           var windowWidth = window.innerWidth;
 

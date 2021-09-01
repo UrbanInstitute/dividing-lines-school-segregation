@@ -60,6 +60,12 @@
 }
 
 span.black, span.hispanic, span.white {
+  white-space: nowrap;
+
+}
+
+span.black > span, span.hispanic > span, span.white > span {
+  white-space: normal;
   font-size: 18px;
   font-weight: 700;
 }
@@ -274,7 +280,7 @@ span.avg {
   .step {
     background: rgba(255, 255, 255, 1);
     box-shadow: rgb(136 136 136) 4px 4px 16px;
-    padding: 5% 7% 5% 7%;
+    padding: 5% 5% 5% 7%;
   }
 
   #chart {
