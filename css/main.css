@@ -512,17 +512,17 @@ h4 {
   clear: both;
   padding-top: 14px;
 }
-#learnMore{
+#learnMore {
     display: inline-block;
     padding-bottom: 33px;
     padding-top: 9px;
 }
-#learnMore a{
+#learnMore a {
   display: inline-block;
   line-height: 20px;
 }
 
-footer p {
+footer p, footer a {
     font-size: 16px;
 }
 
